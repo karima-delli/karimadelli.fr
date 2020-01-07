@@ -1,0 +1,14 @@
+@import './variables.scss';
+
+:export {
+  breakpoint: {
+    tablet: $tablet;
+    tabletBefore: $tablet - 1px;
+    desktop: $desktop;
+    desktopBefore: $desktop - 1px;
+    widescreen: $widescreen; 
+    widescreenBefore: $widescreen - 1px; 
+    fullhd: $fullhd;
+    fullhdBefore: $fullhd - 1px;
+  }
+}

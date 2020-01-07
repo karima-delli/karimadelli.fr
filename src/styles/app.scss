@@ -1,0 +1,9 @@
+@import './variables.scss';
+@import '~bulma/bulma.sass';
+
+html {
+  font-size: 16px;
+  @media (min-width: $desktop) {
+    font-size: 17px;
+  }
+}
