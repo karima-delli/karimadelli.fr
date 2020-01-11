@@ -12,7 +12,7 @@ console.log(`APP_ENV ${APP_ENV}`);
 
 const isProduction = APP_ENV === `production`;
 
-let siteUrl = 'http://localhost:8002'; // TODO: should automatically fetch that
+let siteUrl = 'http://localhost:8002'; // TODO: should automatically the port
 
 if (NETLIFY) {
   if (isProduction) {
@@ -35,21 +35,21 @@ module.exports = {
   siteMetadata,
   plugins: [
     'gatsby-transformer-sharp',
-    `gatsby-plugin-sharp`,
-    // {
-    //   resolve: 'gatsby-source-filesystem',
-    //   options: {
-    //     name: 'imagesSrc',
-    //     path: `${__dirname}/src/images`,
-    //   },
-    // },
-    // {
-    //   resolve: 'gatsby-source-filesystem',
-    //   options: {
-    //     name: 'imagesStatic',
-    //     path: `${__dirname}/static/images`,
-    //   },
-    // },
+    'gatsby-plugin-sharp',
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        path: `${__dirname}/static`,
+      },
+    },
+    {
+      resolve: 'gatsby-source-contentful',
+      options: {
+        spaceId: 'nfkuui87vtpc',
+        accessToken: '7jYbnE24YkxT_A1O_Ub3jm6nJJ18binBZM8CbIvy1do',
+        downloadLocal: true,
+      },
+    },
     {
       resolve: `gatsby-plugin-layout`,
       options: {
@@ -104,6 +104,13 @@ module.exports = {
     //     respectDNT: true,
     //   },
     // },
+    {
+      resolve: 'gatsby-plugin-google-fonts',
+      options: {
+        fonts: ['Alegreya Sans:800', 'Ubuntu:300,400,700'],
+        display: 'swap',
+      },
+    },
     {
       resolve: 'gatsby-plugin-robots-txt',
       options: {},

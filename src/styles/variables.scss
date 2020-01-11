@@ -2,5 +2,15 @@
 @import './theme.scss';
 
 // global
+$family-sans-serif: $font-family-main;
+$body-background-color: $white;
 $widescreen-enabled: false;
 $fullhd-enabled: false;
+
+// navbar
+$navbar-item-hover-background-color: transparent;
+
+// footer
+$footer-background-color: $office-green;
+$footer-color: $white;
+$footer-padding: 3rem 1.5rem;

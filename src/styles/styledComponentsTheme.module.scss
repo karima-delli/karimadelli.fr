@@ -1,6 +1,27 @@
 @import './variables.scss';
 
 :export {
+  // theme
+  office-green: $office-green;
+  boring-green: $boring-green;
+  fluorescent-orange: $fluorescent-orange;
+  marigold: $marigold;
+  smoky-topaz: $smoky-topaz;
+  // black & white & grey
+  licorice: $licorice;
+  grey: $grey;
+  brown-grey: $brown-grey;
+  very-light-pink: $very-light-pink;
+  black: $black;
+  white: $white;
+  // font families
+  font-families: {
+    main: $font-family-main;
+    alternate: $font-family-alternate;
+  }  
+  // triangles
+  angle: $angle;
+  // breakpoints
   breakpoint: {
     tablet: $tablet;
     tabletBefore: $tablet - 1px;
