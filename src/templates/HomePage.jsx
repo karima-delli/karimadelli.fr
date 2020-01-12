@@ -5,6 +5,7 @@ import HeroSection from '../components/home/Hero';
 import LogosSection from '../components/home/Logos';
 import CarouselSection from '../components/home/Carousel';
 import NewsSection from '../components/home/News';
+import ContactUs from '../components/ContactUs';
 
 const HomePage = ({ data }) => (
   <>
@@ -55,11 +56,11 @@ const HomePage = ({ data }) => (
       calendarTitle={data.page.calendarTitle}
       calendarEvents={data.events.nodes}
     />
-    <section className="section">
-      <div className="container">
-        <h2>Nous contacter</h2>
-      </div>
-    </section>
+    <ContactUs
+      title={data.contactBlock.title}
+      text={data.contactBlock.text.text}
+      button={data.contactBlock.button}
+    />
   </>
 );
 
@@ -68,6 +69,16 @@ HomePage.propTypes = {
     site: PropTypes.shape({
       siteMetadata: PropTypes.shape({
         calendarUrlPublicUrl: PropTypes.string.isRequired,
+      }).isRequired,
+    }).isRequired,
+    contactBlock: PropTypes.shape({
+      text: PropTypes.shape({
+        text: PropTypes.string.isRequired,
+      }).isRequired,
+      title: PropTypes.string.isRequired,
+      button: PropTypes.shape({
+        title: PropTypes.string.isRequired,
+        url: PropTypes.string.isRequired,
       }).isRequired,
     }).isRequired,
     page: PropTypes.shape({
@@ -121,6 +132,7 @@ export const pageQuery = graphql`
   query HomePageQuery($locale: String!, $id: String!) {
     ...Header
     ...Footer
+    ...ContactBlock
     site {
       siteMetadata {
         calendarUrlPublicUrl

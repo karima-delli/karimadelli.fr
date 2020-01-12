@@ -4,7 +4,7 @@ import styled, { ThemeContext } from 'styled-components';
 import Button from '../../Button';
 import TextMarkdown from '../../TextMarkdown';
 import TwitterTimelineWidget from '../../TwitterTimelineWidget';
-import SectionTitle from '../SectionTitle';
+import SectionTitle from '../../SectionTitle';
 import ParliamentaryActivities from './ParliamentaryActivities';
 import Calendar from './Calendar';
 
