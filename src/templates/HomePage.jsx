@@ -4,6 +4,7 @@ import { graphql } from 'gatsby';
 import HeroSection from '../components/home/Hero';
 import LogosSection from '../components/home/Logos';
 import CarouselSection from '../components/home/Carousel';
+import NewsSection from '../components/home/News';
 
 const HomePage = ({ data }) => (
   <>
@@ -32,11 +33,43 @@ const HomePage = ({ data }) => (
         };
       })}
     />
+    <section className="section">
+      <div className="container">
+        <h2>Nos campagnes</h2>
+      </div>
+    </section>
+    <section className="section">
+      <div className="container">
+        <h2>Newsletter</h2>
+      </div>
+    </section>
+    <NewsSection
+      title={data.page.newsTitle}
+      text={data.page.newsText.newsText}
+      readMoreButtonTitle={data.page.readMoreButtonTitle}
+      parliamentTitle={data.page.parliamentTitle}
+      parliamentaryActivities={data.parliamentaryActivities.activities}
+      parliamentaryActivitiesUrl={data.parliamentaryActivities.url}
+      twitterTitle={data.page.twitterTitle}
+      calendarUrl={data.site.siteMetadata.calendarUrlPublicUrl}
+      calendarTitle={data.page.calendarTitle}
+      calendarEvents={data.events.nodes}
+    />
+    <section className="section">
+      <div className="container">
+        <h2>Nous contacter</h2>
+      </div>
+    </section>
   </>
 );
 
 HomePage.propTypes = {
   data: PropTypes.shape({
+    site: PropTypes.shape({
+      siteMetadata: PropTypes.shape({
+        calendarUrlPublicUrl: PropTypes.string.isRequired,
+      }).isRequired,
+    }).isRequired,
     page: PropTypes.shape({
       title: PropTypes.string.isRequired,
       heroImage: PropTypes.shape({
@@ -63,6 +96,21 @@ HomePage.propTypes = {
           }).isRequired,
         })
       ).isRequired,
+      newsTitle: PropTypes.string.isRequired,
+      newsText: PropTypes.shape({
+        newsText: PropTypes.string.isRequired,
+      }).isRequired,
+      readMoreButtonTitle: PropTypes.string.isRequired,
+      parliamentTitle: PropTypes.string.isRequired,
+      twitterTitle: PropTypes.string.isRequired,
+      calendarTitle: PropTypes.string.isRequired,
+    }).isRequired,
+    parliamentaryActivities: PropTypes.shape({
+      url: PropTypes.string.isRequired,
+      activities: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+    }).isRequired,
+    events: PropTypes.shape({
+      nodes: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
     }).isRequired,
   }).isRequired,
 };
@@ -73,6 +121,11 @@ export const pageQuery = graphql`
   query HomePageQuery($locale: String!, $id: String!) {
     ...Header
     ...Footer
+    site {
+      siteMetadata {
+        calendarUrlPublicUrl
+      }
+    }
     page: contentfulHomePage(
       contentful_id: { eq: $id }
       node_locale: { eq: $locale }
@@ -121,6 +174,38 @@ export const pageQuery = graphql`
         text {
           text
         }
+      }
+      newsTitle
+      newsText {
+        newsText
+      }
+      readMoreButtonTitle
+      parliamentTitle
+      twitterTitle
+      calendarTitle
+    }
+    parliamentaryActivities(lang: { eq: $locale }) {
+      url
+      activities {
+        category
+        date
+        title
+        url
+      }
+    }
+    events: allIcal(
+      limit: 3
+      sort: { fields: start, order: ASC }
+      filter: { isFuture: { eq: true }, summary: { ne: "" } }
+    ) {
+      nodes {
+        id
+        dateFormattedFr: start(formatString: "DD/MM/YYYY")
+        dateFormattedEn: start(formatString: "MM/DD/YYYY")
+        hour: start(formatString: "HH:mm")
+        summary
+        location
+        description
       }
     }
   }

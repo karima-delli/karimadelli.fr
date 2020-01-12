@@ -29,6 +29,10 @@ const siteMetadata = {
   siteUrl,
   siteName: 'Karima Delli',
   title: 'Karima Delli',
+  calendarUrlPublicUrl:
+    'https://calendar.google.com/calendar/ical/6vu133k9t7tbd2h811ov5b6uvc%40group.calendar.google.com/private-7a32091834bcb8e180b8abc4928ba0ac/basic.ics',
+  calendarUrlIcalUrl:
+    'https://calendar.google.com/calendar/ical/6vu133k9t7tbd2h811ov5b6uvc%40group.calendar.google.com/private-7a32091834bcb8e180b8abc4928ba0ac/basic.ics',
 };
 
 module.exports = {
@@ -36,6 +40,14 @@ module.exports = {
   plugins: [
     'gatsby-transformer-sharp',
     'gatsby-plugin-sharp',
+    {
+      resolve: 'gatsby-source-ical',
+      options: {
+        name: 'events',
+        url: siteMetadata.calendarUrlIcalUrl,
+      },
+    },
+    'gatsby-source-europarl',
     {
       resolve: 'gatsby-source-filesystem',
       options: {

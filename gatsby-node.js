@@ -103,12 +103,16 @@ exports.createPages = async ({ actions, graphql }) => {
             nodes: data[contentType].nodes,
           });
 
+          // To be able to get the events, we need the date in the page context
+          const nowDate = new Date();
+
           const page = {
             path: getPagePath({ slug, locale }),
             component: path.resolve(`src/templates/${templateName}.jsx`),
             context: {
               id,
               locale,
+              nowDate,
               url: pageUrl,
               alternates,
             },
@@ -117,6 +121,22 @@ exports.createPages = async ({ actions, graphql }) => {
         }
       );
     });
+};
+
+// https://github.com/gatsbyjs/gatsby/issues/17159#issuecomment-549091641
+exports.createSchemaCustomization = ({ actions, schema }) => {
+  actions.createTypes([
+    schema.buildObjectType({
+      name: 'Ical',
+      interfaces: ['Node'],
+      fields: {
+        isFuture: {
+          type: 'Boolean!',
+          resolve: source => new Date(source.start) > new Date(),
+        },
+      },
+    }),
+  ]);
 };
 
 exports.onCreateWebpackConfig = ({ stage, actions }) => {

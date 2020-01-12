@@ -3,6 +3,7 @@
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import smoothscroll from 'smoothscroll-polyfill';
+import 'whatwg-fetch';
 import theme from './src/styles/styledComponentsTheme.module.scss';
 
 export const onClientEntry = () => {
