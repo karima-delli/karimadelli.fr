@@ -85,6 +85,7 @@ module.exports = {
         printRejected: false,
       },
     },
+    'gatsby-plugin-twitter',
     // {
     //   resolve: 'gatsby-plugin-manifest',
     //   options: {

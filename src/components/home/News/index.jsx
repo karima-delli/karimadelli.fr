@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled, { ThemeContext } from 'styled-components';
 import Button from '../../Button';
 import TextMarkdown from '../../TextMarkdown';
+import TwitterTimelineWidget from '../../TwitterTimelineWidget';
 import SectionTitle from '../SectionTitle';
 import ParliamentaryActivities from './ParliamentaryActivities';
 import Calendar from './Calendar';
@@ -36,6 +37,23 @@ const ReadMoreButtonContainerStyled = styled.div`
   margin-top: 1rem;
 `;
 
+const TwitterColumnStyled = styled.div`
+  @media (min-width: ${({ theme }) => theme.breakpointTablet}) {
+    display: flex !important;
+    flex-direction: column;
+  }
+`;
+
+const TwitterWidgetContainer = styled.div`
+  height: 80vh;
+  min-height: 500px;
+  overflow: hidden;
+
+  @media (min-width: ${({ theme }) => theme.breakpointTablet}) {
+    flex-grow: 1;
+  }
+`;
+
 const NewsSection = ({
   title,
   text,
@@ -49,6 +67,7 @@ const NewsSection = ({
   calendarEvents,
 }) => {
   const theme = useContext(ThemeContext);
+
   return (
     <SectionStyled className="section">
       <div className="container">
@@ -82,9 +101,12 @@ const NewsSection = ({
               />
             </ReadMoreButtonContainerStyled>
           </div>
-          <div className="column">
+          <TwitterColumnStyled className="column">
             <BlockTitleStyled>{twitterTitle}</BlockTitleStyled>
-          </div>
+            <TwitterWidgetContainer>
+              <TwitterTimelineWidget />
+            </TwitterWidgetContainer>
+          </TwitterColumnStyled>
         </div>
       </div>
     </SectionStyled>
