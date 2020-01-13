@@ -34,12 +34,3 @@ campaignsSection:
   allButton: 
     title: Voir toutes les campagnes
     url: /campagnes
-
-newsSection:
-  title: Nos actualités
-  text: Jour après jour, au parlement européen ou sur le terrain
-  readMoreButtonTitle: Voir plus
-  parliamentTitle: Au parlement
-  calendarTitle: Mon agenda
-  twitterTitle: L’actualité politique
-  

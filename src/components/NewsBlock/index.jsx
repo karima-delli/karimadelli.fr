@@ -1,10 +1,11 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import styled, { ThemeContext } from 'styled-components';
-import Button from '../../Button';
-import TextMarkdown from '../../TextMarkdown';
-import TwitterTimelineWidget from '../../TwitterTimelineWidget';
-import SectionTitle from '../../SectionTitle';
+import { graphql } from 'gatsby';
+import Button from '../Button';
+import TextMarkdown from '../TextMarkdown';
+import TwitterTimelineWidget from '../TwitterTimelineWidget';
+import SectionTitle from '../SectionTitle';
 import ParliamentaryActivities from './ParliamentaryActivities';
 import Calendar from './Calendar';
 
@@ -54,7 +55,7 @@ const TwitterWidgetContainer = styled.div`
   }
 `;
 
-const NewsSection = ({
+const NewsBlock = ({
   title,
   text,
   readMoreButtonTitle,
@@ -113,7 +114,7 @@ const NewsSection = ({
   );
 };
 
-NewsSection.propTypes = {
+NewsBlock.propTypes = {
   title: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
   readMoreButtonTitle: PropTypes.string.isRequired,
@@ -126,4 +127,41 @@ NewsSection.propTypes = {
   calendarEvents: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
 };
 
-export default NewsSection;
+export default NewsBlock;
+
+export const query = graphql`
+  fragment NewsBlock on Query {
+    newsBlock: newsBlockYaml(lang: { eq: $lang }) {
+      title
+      text
+      readMoreButtonTitle
+      parliamentTitle
+      calendarTitle
+      twitterTitle
+    }
+    parliamentaryActivities(lang: { eq: $lang }) {
+      url
+      activities {
+        category
+        date
+        title
+        url
+      }
+    }
+    events: allIcal(
+      limit: 3
+      sort: { fields: start, order: ASC }
+      filter: { isFuture: { eq: true }, summary: { ne: "" } }
+    ) {
+      nodes {
+        id
+        dateFormattedFr: start(formatString: "DD/MM/YYYY")
+        dateFormattedEn: start(formatString: "MM/DD/YYYY")
+        hour: start(formatString: "HH:mm")
+        summary
+        location
+        description
+      }
+    }
+  }
+`;

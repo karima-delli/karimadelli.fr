@@ -8,6 +8,6 @@ menu:
     - title: Parcours
       url: /parcours/
     - title: Actualités
-      url: "#news"
+      url: /actualites/
     - title: Campagnes
       url: /campagnes/

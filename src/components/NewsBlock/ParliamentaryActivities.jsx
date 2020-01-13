@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { darken } from 'polished';
-import ExternalLinkIcon from '../../Icons/ExternalLink';
-import Link from '../../Link';
+import ExternalLinkIcon from '../Icons/ExternalLink';
+import Link from '../Link';
 
 const ActivityHeaderStyled = styled.div`
   display: flex;

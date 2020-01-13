@@ -5,7 +5,7 @@ import HeroSection from '../components/home/Hero';
 import LogosSection from '../components/home/Logos';
 import CarouselSection from '../components/home/Carousel';
 import CampaignsSection from '../components/home/Campaigns';
-import NewsSection from '../components/home/News';
+import NewsBlock from '../components/NewsBlock';
 import ContactUs from '../components/ContactUs';
 import Metadata from '../components/Metadata';
 
@@ -62,16 +62,16 @@ const HomePage = ({ data, pageContext }) => (
       </div>
     </section>
 
-    <NewsSection
-      title={data.page.newsSection.title}
-      text={data.page.newsSection.text}
-      readMoreButtonTitle={data.page.newsSection.readMoreButtonTitle}
-      parliamentTitle={data.page.newsSection.parliamentTitle}
+    <NewsBlock
+      title={data.newsBlock.title}
+      text={data.newsBlock.text}
+      readMoreButtonTitle={data.newsBlock.readMoreButtonTitle}
+      parliamentTitle={data.newsBlock.parliamentTitle}
       parliamentaryActivities={data.parliamentaryActivities.activities}
       parliamentaryActivitiesUrl={data.parliamentaryActivities.url}
-      twitterTitle={data.page.newsSection.twitterTitle}
+      twitterTitle={data.newsBlock.twitterTitle}
       calendarUrl={data.site.siteMetadata.calendarUrlPublicUrl}
-      calendarTitle={data.page.newsSection.calendarTitle}
+      calendarTitle={data.newsBlock.calendarTitle}
       calendarEvents={data.events.nodes}
     />
     <ContactUs
@@ -93,14 +93,6 @@ HomePage.propTypes = {
     site: PropTypes.shape({
       siteMetadata: PropTypes.shape({
         calendarUrlPublicUrl: PropTypes.string.isRequired,
-      }).isRequired,
-    }).isRequired,
-    contactUs: PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      text: PropTypes.string.isRequired,
-      button: PropTypes.shape({
-        title: PropTypes.string.isRequired,
-        url: PropTypes.string.isRequired,
       }).isRequired,
     }).isRequired,
     page: PropTypes.shape({
@@ -137,14 +129,6 @@ HomePage.propTypes = {
           url: PropTypes.string.isRequired,
         }).isRequired,
       }).isRequired,
-      newsSection: PropTypes.shape({
-        title: PropTypes.string.isRequired,
-        text: PropTypes.string.isRequired,
-        readMoreButtonTitle: PropTypes.string.isRequired,
-        parliamentTitle: PropTypes.string.isRequired,
-        twitterTitle: PropTypes.string.isRequired,
-        calendarTitle: PropTypes.string.isRequired,
-      }).isRequired,
     }),
     slider: PropTypes.shape({
       slides: PropTypes.arrayOf(
@@ -176,6 +160,22 @@ HomePage.propTypes = {
         })
       ).isRequired,
     }).isRequired,
+    contactUs: PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      text: PropTypes.string.isRequired,
+      button: PropTypes.shape({
+        title: PropTypes.string.isRequired,
+        url: PropTypes.string.isRequired,
+      }).isRequired,
+    }).isRequired,
+    newsBlock: PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      text: PropTypes.string.isRequired,
+      readMoreButtonTitle: PropTypes.string.isRequired,
+      parliamentTitle: PropTypes.string.isRequired,
+      calendarTitle: PropTypes.string.isRequired,
+      twitterTitle: PropTypes.string.isRequired,
+    }).isRequired,
     parliamentaryActivities: PropTypes.shape({
       url: PropTypes.string.isRequired,
       activities: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
@@ -192,6 +192,7 @@ export const pageQuery = graphql`
   query HomePageQuery($lang: String!) {
     ...Header
     ...Footer
+    ...NewsBlock
     ...ContactBlock
     site {
       siteMetadata {
@@ -240,14 +241,6 @@ export const pageQuery = graphql`
           url
         }
       }
-      newsSection {
-        title
-        text
-        readMoreButtonTitle
-        parliamentTitle
-        calendarTitle
-        twitterTitle
-      }
     }
     slider: contentfulSlider(
       title: { eq: "Home Slider" }
@@ -287,30 +280,6 @@ export const pageQuery = graphql`
         title
         subTitle
         category
-      }
-    }
-    parliamentaryActivities(lang: { eq: $lang }) {
-      url
-      activities {
-        category
-        date
-        title
-        url
-      }
-    }
-    events: allIcal(
-      limit: 3
-      sort: { fields: start, order: ASC }
-      filter: { isFuture: { eq: true }, summary: { ne: "" } }
-    ) {
-      nodes {
-        id
-        dateFormattedFr: start(formatString: "DD/MM/YYYY")
-        dateFormattedEn: start(formatString: "MM/DD/YYYY")
-        hour: start(formatString: "HH:mm")
-        summary
-        location
-        description
       }
     }
   }

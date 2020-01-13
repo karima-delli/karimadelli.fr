@@ -73,7 +73,14 @@ exports.createPages = async ({ actions, graphql }) => {
           lang
         }
       }
-      allBrevesYaml {
+      allBriefListYaml {
+        nodes {
+          id
+          slug
+          lang
+        }
+      }
+      allNewsYaml {
         nodes {
           id
           slug
