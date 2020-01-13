@@ -1,8 +1,19 @@
 const path = require('path');
 
-const DEFAULT_LOCALE = 'fr';
+const DEFAULT_LANG = 'fr';
 
-function getPagePath({ slug, locale }) {
+function getLocaleFromLang(lang) {
+  if (lang === 'fr') {
+    return 'fr-FR';
+  }
+  if (lang === 'en') {
+    return 'en-US';
+  }
+
+  return null;
+}
+
+function getPagePath({ slug, lang }) {
   // Generate page path
   let pagePath = `/${slug}/`;
 
@@ -11,26 +22,27 @@ function getPagePath({ slug, locale }) {
     pagePath = '/';
   }
 
-  // Add locale
-  if (locale !== DEFAULT_LOCALE) {
-    pagePath = `/${locale}${pagePath}`;
+  // Add lang to the path
+  if (lang !== DEFAULT_LANG) {
+    pagePath = `/${lang}${pagePath}`;
   }
 
   return pagePath;
 }
 
-function getPageAlternates({ siteUrl, locale, nodes }) {
+function getPageAlternates({ siteUrl, lang, nodes }) {
   return nodes.map(node => {
-    const nodeLocale = node.node_locale || node.lang;
+    const nodeLang = node.node_locale || node.lang;
     const pagePath = getPagePath({
       slug: node.node,
-      locale: nodeLocale,
+      lang: nodeLang,
     });
     return {
-      current: nodeLocale === locale,
-      default: nodeLocale === DEFAULT_LOCALE,
+      current: nodeLang === lang,
+      default: nodeLang === DEFAULT_LANG,
       path: pagePath,
-      locale,
+      lang: nodeLang,
+      locale: getLocaleFromLang(nodeLang),
       url: `${siteUrl}${pagePath}`,
     };
   });
@@ -105,10 +117,10 @@ exports.createPages = async ({ actions, graphql }) => {
     }
   `);
 
-  const getParentSlug = ({ locale, contentType }) => {
+  const getParentSlug = ({ lang, contentType }) => {
     if (contentType === 'allContentfulCampaign') {
       const parent = data.allCampaignsYaml.nodes.find(node => {
-        return node.lang === locale;
+        return node.lang === lang;
       });
       return parent.slug;
     }
@@ -127,13 +139,14 @@ exports.createPages = async ({ actions, graphql }) => {
       // Generate template name
       const templateName = contentType.replace(/all(.*)Yaml/, '$1');
 
-      data[contentType].nodes.forEach(({ slug, id, lang: locale }) => {
-        const pagePath = getPagePath({ slug, locale });
+      data[contentType].nodes.forEach(({ slug, id, lang }) => {
+        const pagePath = getPagePath({ slug, lang });
         const pageUrl = `${siteUrl}${pagePath}`;
+        const locale = getLocaleFromLang(lang);
 
         const alternates = getPageAlternates({
           siteUrl,
-          locale,
+          lang,
           nodes: data[contentType].nodes,
         });
 
@@ -143,6 +156,7 @@ exports.createPages = async ({ actions, graphql }) => {
           context: {
             name: templateName,
             id,
+            lang,
             locale,
             url: pageUrl,
             alternates,
@@ -162,19 +176,20 @@ exports.createPages = async ({ actions, graphql }) => {
       const templateName = contentType.replace('allContentful', '');
 
       data[contentType].nodes.forEach(
-        ({ slug, contentful_id: id, node_locale: locale, ...rest }) => {
-          const parentSlug = getParentSlug({ locale, contentType });
+        ({ slug, contentful_id: id, node_locale: lang, ...rest }) => {
+          const parentSlug = getParentSlug({ lang, contentType });
+          const locale = getLocaleFromLang(lang);
 
           let fullSlug = slug;
           if (parentSlug) {
             fullSlug = `${parentSlug}/${fullSlug}`;
           }
-          const pagePath = getPagePath({ slug: fullSlug, locale });
+          const pagePath = getPagePath({ slug: fullSlug, lang });
           const pageUrl = `${siteUrl}${pagePath}`;
 
           const alternates = getPageAlternates({
             siteUrl,
-            locale,
+            lang,
             nodes: data[contentType].nodes,
           });
 
@@ -196,6 +211,7 @@ exports.createPages = async ({ actions, graphql }) => {
             context: {
               name: templateName,
               id,
+              lang,
               locale,
               url: pageUrl,
               alternates,

@@ -6,9 +6,17 @@ import LogosSection from '../components/home/Logos';
 import CarouselSection from '../components/home/Carousel';
 import NewsSection from '../components/home/News';
 import ContactUs from '../components/ContactUs';
+import Metadata from '../components/Metadata';
 
-const HomePage = ({ data }) => (
+const HomePage = ({ data, pageContext }) => (
   <>
+    <Metadata
+      metadata={data.page.metadata}
+      locale={pageContext.locale}
+      lang={pageContext.lang}
+      url={pageContext.url}
+      alternates={pageContext.alternates}
+    />
     <HeroSection
       image={data.page.hero.image.childImageSharp}
       text={data.page.hero.text}
@@ -64,6 +72,12 @@ const HomePage = ({ data }) => (
 );
 
 HomePage.propTypes = {
+  pageContext: PropTypes.shape({
+    lang: PropTypes.string.isRequired,
+    locale: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired,
+    alternates: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  }).isRequired,
   data: PropTypes.shape({
     site: PropTypes.shape({
       siteMetadata: PropTypes.shape({
@@ -79,6 +93,10 @@ HomePage.propTypes = {
       }).isRequired,
     }).isRequired,
     page: PropTypes.shape({
+      metadata: PropTypes.shape({
+        title: PropTypes.string.isRequired,
+        description: PropTypes.string.isRequired,
+      }).isRequired,
       hero: PropTypes.shape({
         image: PropTypes.shape({
           childImageSharp: PropTypes.shape({}).isRequired,
@@ -135,7 +153,7 @@ HomePage.propTypes = {
 export default HomePage;
 
 export const pageQuery = graphql`
-  query HomePageQuery($locale: String!) {
+  query HomePageQuery($lang: String!) {
     ...Header
     ...Footer
     ...ContactBlock
@@ -144,7 +162,11 @@ export const pageQuery = graphql`
         calendarUrlPublicUrl
       }
     }
-    page: homeYaml(lang: { eq: $locale }) {
+    page: homeYaml(lang: { eq: $lang }) {
+      metadata {
+        title
+        description
+      }
       hero {
         image {
           childImageSharp {
@@ -192,7 +214,7 @@ export const pageQuery = graphql`
     }
     slider: contentfulSlider(
       title: { eq: "Home Slider" }
-      node_locale: { eq: $locale }
+      node_locale: { eq: $lang }
     ) {
       slides {
         image {
@@ -210,7 +232,7 @@ export const pageQuery = graphql`
         }
       }
     }
-    parliamentaryActivities(lang: { eq: $locale }) {
+    parliamentaryActivities(lang: { eq: $lang }) {
       url
       activities {
         category

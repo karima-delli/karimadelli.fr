@@ -5,13 +5,13 @@ import GatsbyLink from 'gatsby-link';
 
 export const Context = createContext();
 
-export const Provider = ({ locale, alternates, children }) => (
-  <Context.Provider value={{ locale, alternates }}>{children}</Context.Provider>
+export const Provider = ({ lang, alternates, children }) => (
+  <Context.Provider value={{ lang, alternates }}>{children}</Context.Provider>
 );
 
 Provider.propTypes = {
   children: PropTypes.node.isRequired,
-  locale: PropTypes.string.isRequired,
+  lang: PropTypes.string.isRequired,
   alternates: PropTypes.arrayOf(
     PropTypes.shape({
       current: PropTypes.bool.isRequired,
@@ -70,21 +70,21 @@ const LangStyled = styled.div`
 `;
 
 const LangSwitcher = ({ color, hasLightBackground, onClick }) => {
-  const { locale, alternates } = useContext(Context);
+  const { lang, alternates } = useContext(Context);
 
   const { path: alternateUrl } = alternates.find(({ current }) => !current);
-  const locales = ['fr', 'en'];
+  const langs = ['fr', 'en'];
 
   return (
     <ContainerStyled
       className={`${hasLightBackground ? 'has-light-background' : ''}`}
     >
       <GatsbyLink to={alternateUrl} onClick={onClick}>
-        {locales.map(aLang => (
+        {langs.map(aLang => (
           <LangStyled
             key={aLang}
             color={color}
-            className={`${locale === aLang ? 'is-current' : ''}`}
+            className={`${lang === aLang ? 'is-current' : ''}`}
           >
             {aLang}
           </LangStyled>

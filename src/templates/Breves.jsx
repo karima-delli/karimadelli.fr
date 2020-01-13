@@ -20,10 +20,10 @@ BrevesPage.propTypes = {
 export default BrevesPage;
 
 export const pageQuery = graphql`
-  query BrevesPageQuery($locale: String!) {
+  query BrevesPageQuery($lang: String!) {
     ...Header
     ...Footer
-    page: brevesYaml(lang: { eq: $locale }) {
+    page: brevesYaml(lang: { eq: $lang }) {
       metadata {
         title
         description

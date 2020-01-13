@@ -4,14 +4,25 @@ import { graphql } from 'gatsby';
 import RichText from '../components/RichText';
 import Hero from '../components/campaign/Hero';
 import ShortContent from '../components/campaign/ShortContent';
+import Metadata from '../components/Metadata';
 
-const Campaign = ({ data }) => {
+const Campaign = ({ data, pageContext }) => {
   const readingTime = Math.ceil(
     data.content.shortContent.readingTime + data.content.content.readingTime
   );
 
   return (
     <article>
+      <Metadata
+        metadata={{
+          title: data.content.title,
+          description: data.content.subTitle,
+        }}
+        locale={pageContext.locale}
+        lang={pageContext.lang}
+        url={pageContext.url}
+        alternates={pageContext.alternates}
+      />
       <Hero
         image={data.content.image.localFile.childImageSharp}
         readingTime={readingTime}
@@ -40,6 +51,12 @@ const Campaign = ({ data }) => {
 };
 
 Campaign.propTypes = {
+  pageContext: PropTypes.shape({
+    lang: PropTypes.string.isRequired,
+    locale: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired,
+    alternates: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  }).isRequired,
   data: PropTypes.shape({
     page: PropTypes.shape({
       readingTime: PropTypes.string.isRequired,
@@ -73,15 +90,15 @@ Campaign.propTypes = {
 export default Campaign;
 
 export const pageQuery = graphql`
-  query CampaignQuery($locale: String!, $id: String!, $assetIds: [String!]!) {
+  query CampaignQuery($lang: String!, $id: String!, $assetIds: [String!]!) {
     ...Header
     ...Footer
-    page: campaignYaml(lang: { eq: $locale }) {
+    page: campaignYaml(lang: { eq: $lang }) {
       readingTime
       shortContentTitle
     }
     contentRichTextAssets: allContentfulAsset(
-      filter: { contentful_id: { in: $assetIds }, node_locale: { eq: $locale } }
+      filter: { contentful_id: { in: $assetIds }, node_locale: { eq: $lang } }
     ) {
       nodes {
         contentful_id
@@ -96,7 +113,7 @@ export const pageQuery = graphql`
     }
     content: contentfulCampaign(
       contentful_id: { eq: $id }
-      node_locale: { eq: $locale }
+      node_locale: { eq: $lang }
     ) {
       image {
         localFile {

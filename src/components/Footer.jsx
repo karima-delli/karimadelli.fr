@@ -144,7 +144,7 @@ export default Footer;
 
 export const query = graphql`
   fragment Footer on Query {
-    footer: footerYaml(lang: { eq: $locale }) {
+    footer: footerYaml(lang: { eq: $lang }) {
       logo {
         url
       }

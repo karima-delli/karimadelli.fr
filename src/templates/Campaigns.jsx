@@ -20,10 +20,10 @@ CampaignsPage.propTypes = {
 export default CampaignsPage;
 
 export const pageQuery = graphql`
-  query CampaignsPageQuery($locale: String!) {
+  query CampaignsPageQuery($lang: String!) {
     ...Header
     ...Footer
-    page: campaignsYaml(lang: { eq: $locale }) {
+    page: campaignsYaml(lang: { eq: $lang }) {
       metadata {
         title
         description

@@ -7,13 +7,13 @@ import '../styles/app.scss';
 
 const Layout = ({ data, children, pageContext }) => (
   <LangSwitchProvider
-    locale={pageContext.locale}
+    lang={pageContext.lang}
     alternates={pageContext.alternates}
   >
     <Header
       header={data.header}
       socialLinks={data.headerSocialLinks}
-      isTransparent={pageContext.name === 'HomePage'}
+      isTransparent={pageContext.name === 'Home'}
     />
     {children}
     <Footer footer={data.footer} socialLinks={data.footerSocialLinks} />
@@ -23,7 +23,7 @@ const Layout = ({ data, children, pageContext }) => (
 Layout.propTypes = {
   pageContext: PropTypes.shape({
     name: PropTypes.string.isRequired,
-    locale: PropTypes.string.isRequired,
+    lang: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired,
     alternates: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   }).isRequired,

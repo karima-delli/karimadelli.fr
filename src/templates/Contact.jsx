@@ -20,10 +20,10 @@ ContactPage.propTypes = {
 export default ContactPage;
 
 export const pageQuery = graphql`
-  query ContactPageQuery($locale: String!) {
+  query ContactPageQuery($lang: String!) {
     ...Header
     ...Footer
-    page: contactYaml(lang: { eq: $locale }) {
+    page: contactYaml(lang: { eq: $lang }) {
       metadata {
         title
         description

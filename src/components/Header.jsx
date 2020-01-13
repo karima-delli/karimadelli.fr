@@ -325,7 +325,7 @@ export default Header;
 
 export const query = graphql`
   fragment Header on Query {
-    header: headerYaml(lang: { eq: $locale }) {
+    header: headerYaml(lang: { eq: $lang }) {
       logo {
         url
       }

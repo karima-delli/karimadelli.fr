@@ -20,12 +20,12 @@ Page.propTypes = {
 export default Page;
 
 export const pageQuery = graphql`
-  query PageQuery($locale: String!, $id: String!) {
+  query PageQuery($lang: String!, $id: String!) {
     ...Header
     ...Footer
     page: contentfulPage(
       contentful_id: { eq: $id }
-      node_locale: { eq: $locale }
+      node_locale: { eq: $lang }
     ) {
       title
     }
