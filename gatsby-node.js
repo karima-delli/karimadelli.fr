@@ -105,6 +105,17 @@ exports.createPages = async ({ actions, graphql }) => {
     }
   `);
 
+  const getParentSlug = ({ locale, contentType }) => {
+    if (contentType === 'allContentfulCampaign') {
+      const parent = data.allCampaignsYaml.nodes.find(node => {
+        return node.lang === locale;
+      });
+      return parent.slug;
+    }
+
+    return null;
+  };
+
   const { siteUrl } = data.site.siteMetadata;
 
   // Create static pages
@@ -127,7 +138,7 @@ exports.createPages = async ({ actions, graphql }) => {
         });
 
         const page = {
-          path: getPagePath({ slug, locale }),
+          path: pagePath,
           component: path.resolve(`src/templates/${templateName}.jsx`),
           context: {
             name: templateName,
@@ -152,7 +163,13 @@ exports.createPages = async ({ actions, graphql }) => {
 
       data[contentType].nodes.forEach(
         ({ slug, contentful_id: id, node_locale: locale, ...rest }) => {
-          const pagePath = getPagePath({ slug, locale });
+          const parentSlug = getParentSlug({ locale, contentType });
+
+          let fullSlug = slug;
+          if (parentSlug) {
+            fullSlug = `${parentSlug}/${fullSlug}`;
+          }
+          const pagePath = getPagePath({ slug: fullSlug, locale });
           const pageUrl = `${siteUrl}${pagePath}`;
 
           const alternates = getPageAlternates({
@@ -174,7 +191,7 @@ exports.createPages = async ({ actions, graphql }) => {
           }
 
           const page = {
-            path: getPagePath({ slug, locale }),
+            path: pagePath,
             component: path.resolve(`src/templates/${templateName}.jsx`),
             context: {
               name: templateName,
