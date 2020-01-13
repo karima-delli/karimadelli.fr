@@ -4,6 +4,7 @@ import { graphql } from 'gatsby';
 import HeroSection from '../components/home/Hero';
 import LogosSection from '../components/home/Logos';
 import CarouselSection from '../components/home/Carousel';
+import CampaignsSection from '../components/home/Campaigns';
 import NewsSection from '../components/home/News';
 import ContactUs from '../components/ContactUs';
 import Metadata from '../components/Metadata';
@@ -41,16 +42,26 @@ const HomePage = ({ data, pageContext }) => (
         };
       })}
     />
-    <section className="section">
-      <div className="container">
-        <h2>Nos campagnes</h2>
-      </div>
-    </section>
+    <CampaignsSection
+      title={data.page.campaignsSection.title}
+      text={data.page.campaignsSection.text}
+      readMoreButtonTitle={data.page.campaignsSection.readMoreButtonTitle}
+      campaignsSlug={data.page.campaignsSection.campaignsSlug}
+      allButton={data.page.campaignsSection.allButton}
+      campaigns={data.campaigns.nodes.map(node => {
+        return {
+          ...node,
+          image: node.image.localFile.childImageSharp,
+        };
+      })}
+    />
+
     <section className="section">
       <div className="container">
         <h2>Newsletter</h2>
       </div>
     </section>
+
     <NewsSection
       title={data.page.newsSection.title}
       text={data.page.newsSection.text}
@@ -116,6 +127,16 @@ HomePage.propTypes = {
       slider: PropTypes.shape({
         button: PropTypes.shape({}).isRequired,
       }).isRequired,
+      campaignsSection: PropTypes.shape({
+        title: PropTypes.string.isRequired,
+        text: PropTypes.string.isRequired,
+        readMoreButtonTitle: PropTypes.string.isRequired,
+        campaignsSlug: PropTypes.string.isRequired,
+        allButton: PropTypes.shape({
+          title: PropTypes.string.isRequired,
+          url: PropTypes.string.isRequired,
+        }).isRequired,
+      }).isRequired,
       newsSection: PropTypes.shape({
         title: PropTypes.string.isRequired,
         text: PropTypes.string.isRequired,
@@ -137,6 +158,21 @@ HomePage.propTypes = {
           text: PropTypes.shape({
             text: PropTypes.string.isRequired,
           }).isRequired,
+        })
+      ).isRequired,
+    }).isRequired,
+    campaigns: PropTypes.shape({
+      nodes: PropTypes.arrayOf(
+        PropTypes.shape({
+          image: PropTypes.shape({
+            localFile: PropTypes.shape({
+              childImageSharp: PropTypes.shape({}).isRequired,
+            }).isRequired,
+          }).isRequired,
+          title: PropTypes.string.isRequired,
+          subTitle: PropTypes.string.isRequired,
+          slug: PropTypes.string.isRequired,
+          category: PropTypes.string.isRequired,
         })
       ).isRequired,
     }).isRequired,
@@ -198,6 +234,7 @@ export const pageQuery = graphql`
         title
         text
         readMoreButtonTitle
+        campaignsSlug
         allButton {
           title
           url
@@ -230,6 +267,26 @@ export const pageQuery = graphql`
         text {
           text
         }
+      }
+    }
+    campaigns: allContentfulCampaign(
+      limit: 3
+      filter: { node_locale: { eq: $lang } }
+    ) {
+      nodes {
+        image {
+          localFile {
+            childImageSharp {
+              fluid(maxWidth: 2000, quality: 100) {
+                ...GatsbyImageSharpFluid
+              }
+            }
+          }
+        }
+        slug
+        title
+        subTitle
+        category
       }
     }
     parliamentaryActivities(lang: { eq: $lang }) {

@@ -30,9 +30,10 @@ campaignsSection:
   title: Nos campagnes
   text: Pour une **Europe écologique, sociale et heureuse.**
   readMoreButtonTitle: Lire l'article
+  campaignsSlug: /campaigns
   allButton: 
     title: Voir toutes les campagnes
-    url: /campagnes
+    url: /campaigns
 
 newsSection:
   title: Nos actualités
