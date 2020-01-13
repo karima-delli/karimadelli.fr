@@ -48,6 +48,19 @@ module.exports = {
       },
     },
     'gatsby-source-europarl',
+    'gatsby-transformer-yaml',
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        path: `${__dirname}/src/data`,
+      },
+    },
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        path: `${__dirname}/src/images`,
+      },
+    },
     {
       resolve: 'gatsby-source-filesystem',
       options: {
@@ -60,6 +73,18 @@ module.exports = {
         spaceId: 'nfkuui87vtpc',
         accessToken: '7jYbnE24YkxT_A1O_Ub3jm6nJJ18binBZM8CbIvy1do',
         downloadLocal: true,
+      },
+    },
+    {
+      resolve: 'gatsby-contentful-rich-text-reading-time',
+      options: {
+        types: [
+          { name: 'contentfulCampaignContentRichTextNode', field: 'content' },
+          {
+            name: 'contentfulCampaignShortContentRichTextNode',
+            field: 'shortContent',
+          },
+        ],
       },
     },
     {
@@ -86,26 +111,26 @@ module.exports = {
       },
     },
     'gatsby-plugin-twitter',
-    // {
-    //   resolve: 'gatsby-plugin-manifest',
-    //   options: {
-    //     name: 'Karima Delli',
-    //     short_name: 'Karima Delli',
-    //     start_url: '/',
-    //     lang: 'fr',
-    //     background_color: '#ffffff',
-    //     theme_color: '#00456e', // TODO: configure from theme
-    //     display: 'standalone',
-    //     icon: 'src/images/favicon.png',
-    //     legacy: true,
-    //     localize: [
-    //       {
-    //         start_url: '/en/',
-    //         lang: 'en',
-    //       },
-    //     ],
-    //   },
-    // },
+    {
+      resolve: 'gatsby-plugin-manifest',
+      options: {
+        name: 'Karima Delli',
+        short_name: 'Karima Delli',
+        start_url: '/',
+        lang: 'fr',
+        background_color: '#ffffff',
+        theme_color: '#126e00',
+        display: 'standalone',
+        icon: 'src/images/favicon.png',
+        legacy: true,
+        localize: [
+          {
+            start_url: '/en/',
+            lang: 'en',
+          },
+        ],
+      },
+    },
     'gatsby-plugin-react-helmet',
     // {
     //   resolve: `gatsby-plugin-google-analytics`,

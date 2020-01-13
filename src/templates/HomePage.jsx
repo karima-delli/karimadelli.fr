@@ -10,23 +10,22 @@ import ContactUs from '../components/ContactUs';
 const HomePage = ({ data }) => (
   <>
     <HeroSection
-      image={data.page.heroImage.localFile.childImageSharp}
-      text={data.page.heroText.heroText}
-      button={data.page.heroButton}
-      logos={data.page.logos}
+      image={data.page.hero.image.childImageSharp}
+      text={data.page.hero.text}
+      button={data.page.hero.button}
     />
     <LogosSection
       logos={data.page.logos.map(logo => {
         return {
           ...logo,
-          title: logo.alt,
-          image: logo.image.localFile.publicURL,
+          title: logo.title,
+          image: logo.image.publicURL,
         };
       })}
     />
     <CarouselSection
-      button={data.page.sliderButton}
-      slides={data.page.slides.map(slide => {
+      button={data.page.slider.button}
+      slides={data.content.slides.map(slide => {
         return {
           ...slide,
           text: slide.text.text,
@@ -45,21 +44,21 @@ const HomePage = ({ data }) => (
       </div>
     </section>
     <NewsSection
-      title={data.page.newsTitle}
-      text={data.page.newsText.newsText}
-      readMoreButtonTitle={data.page.readMoreButtonTitle}
-      parliamentTitle={data.page.parliamentTitle}
+      title={data.page.newsSection.title}
+      text={data.page.newsSection.text}
+      readMoreButtonTitle={data.page.newsSection.readMoreButtonTitle}
+      parliamentTitle={data.page.newsSection.parliamentTitle}
       parliamentaryActivities={data.parliamentaryActivities.activities}
       parliamentaryActivitiesUrl={data.parliamentaryActivities.url}
-      twitterTitle={data.page.twitterTitle}
+      twitterTitle={data.page.newsSection.twitterTitle}
       calendarUrl={data.site.siteMetadata.calendarUrlPublicUrl}
-      calendarTitle={data.page.calendarTitle}
+      calendarTitle={data.page.newsSection.calendarTitle}
       calendarEvents={data.events.nodes}
     />
     <ContactUs
-      title={data.contactBlock.title}
-      text={data.contactBlock.text.text}
-      button={data.contactBlock.button}
+      title={data.contactUs.title}
+      text={data.contactUs.text}
+      button={data.contactUs.button}
     />
   </>
 );
@@ -71,29 +70,45 @@ HomePage.propTypes = {
         calendarUrlPublicUrl: PropTypes.string.isRequired,
       }).isRequired,
     }).isRequired,
-    contactBlock: PropTypes.shape({
-      text: PropTypes.shape({
-        text: PropTypes.string.isRequired,
-      }).isRequired,
+    contactUs: PropTypes.shape({
       title: PropTypes.string.isRequired,
+      text: PropTypes.string.isRequired,
       button: PropTypes.shape({
         title: PropTypes.string.isRequired,
         url: PropTypes.string.isRequired,
       }).isRequired,
     }).isRequired,
     page: PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      heroImage: PropTypes.shape({
-        localFile: PropTypes.shape({
+      hero: PropTypes.shape({
+        image: PropTypes.shape({
           childImageSharp: PropTypes.shape({}).isRequired,
         }).isRequired,
+        text: PropTypes.string.isRequired,
+        button: PropTypes.shape({}).isRequired,
       }).isRequired,
-      heroText: PropTypes.shape({
-        heroText: PropTypes.string.isRequired,
+      logos: PropTypes.arrayOf(
+        PropTypes.shape({
+          image: PropTypes.shape({
+            publicURL: PropTypes.string.isRequired,
+          }).isRequired,
+          title: PropTypes.string.isRequired,
+          url: PropTypes.string.isRequired,
+        })
+      ).isRequired,
+      slider: PropTypes.shape({
+        button: PropTypes.shape({}).isRequired,
       }).isRequired,
-      heroButton: PropTypes.shape({}).isRequired,
-      logos: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-      sliderButton: PropTypes.shape({}).isRequired,
+      newsSection: PropTypes.shape({
+        title: PropTypes.string.isRequired,
+        text: PropTypes.string.isRequired,
+        readMoreButtonTitle: PropTypes.string.isRequired,
+        parliamentTitle: PropTypes.string.isRequired,
+        twitterTitle: PropTypes.string.isRequired,
+        calendarTitle: PropTypes.string.isRequired,
+      }).isRequired,
+    }),
+    content: PropTypes.shape({
+      title: PropTypes.string.isRequired,
       slides: PropTypes.arrayOf(
         PropTypes.shape({
           image: PropTypes.shape({
@@ -107,14 +122,6 @@ HomePage.propTypes = {
           }).isRequired,
         })
       ).isRequired,
-      newsTitle: PropTypes.string.isRequired,
-      newsText: PropTypes.shape({
-        newsText: PropTypes.string.isRequired,
-      }).isRequired,
-      readMoreButtonTitle: PropTypes.string.isRequired,
-      parliamentTitle: PropTypes.string.isRequired,
-      twitterTitle: PropTypes.string.isRequired,
-      calendarTitle: PropTypes.string.isRequired,
     }).isRequired,
     parliamentaryActivities: PropTypes.shape({
       url: PropTypes.string.isRequired,
@@ -138,7 +145,53 @@ export const pageQuery = graphql`
         calendarUrlPublicUrl
       }
     }
-    page: contentfulHomePage(
+    page: homeYaml(lang: { eq: $locale }) {
+      hero {
+        image {
+          childImageSharp {
+            fluid(maxWidth: 2000, quality: 100) {
+              ...GatsbyImageSharpFluid
+            }
+          }
+        }
+        text
+        button {
+          title
+          url
+        }
+      }
+      logos {
+        image {
+          publicURL
+        }
+        title
+        url
+      }
+      slider {
+        button {
+          title
+          url
+        }
+      }
+      campaignsSection {
+        title
+        text
+        readMoreButtonTitle
+        allButton {
+          title
+          url
+        }
+      }
+      newsSection {
+        title
+        text
+        readMoreButtonTitle
+        parliamentTitle
+        calendarTitle
+        twitterTitle
+      }
+    }
+    content: contentfulHomePage(
       contentful_id: { eq: $id }
       node_locale: { eq: $locale }
     ) {

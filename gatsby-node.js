@@ -35,6 +35,14 @@ function getPageAlternates({ siteUrl, locale, nodes }) {
   });
 }
 
+function getAssetIdsFromRichTextJson(json) {
+  return json.content
+    .filter(node => {
+      return node.nodeType === 'embedded-asset-block';
+    })
+    .map(node => node.data.target.sys.contentful_id);
+}
+
 exports.createPages = async ({ actions, graphql }) => {
   const { createPage } = actions;
 
@@ -63,6 +71,12 @@ exports.createPages = async ({ actions, graphql }) => {
           contentful_id
           node_locale
           slug
+          shortContent {
+            json
+          }
+          content {
+            json
+          }
         }
       }
       allContentfulContactPage {
@@ -93,7 +107,7 @@ exports.createPages = async ({ actions, graphql }) => {
       const templateName = contentType.replace('allContentful', '');
 
       data[contentType].nodes.forEach(
-        ({ slug, contentful_id: id, node_locale: locale }) => {
+        ({ slug, contentful_id: id, node_locale: locale, ...rest }) => {
           const pagePath = getPagePath({ slug, locale });
           const pageUrl = `${siteUrl}${pagePath}`;
 
@@ -103,18 +117,28 @@ exports.createPages = async ({ actions, graphql }) => {
             nodes: data[contentType].nodes,
           });
 
-          // To be able to get the events, we need the date in the page context
-          const nowDate = new Date();
+          const assetIds = [];
+          if (contentType === 'allContentfulCampaign') {
+            if (rest.content && rest.content.json) {
+              assetIds.push(...getAssetIdsFromRichTextJson(rest.content.json));
+            }
+            if (rest.shortContent && rest.shortContent.json) {
+              assetIds.push(
+                ...getAssetIdsFromRichTextJson(rest.shortContent.json)
+              );
+            }
+          }
 
           const page = {
             path: getPagePath({ slug, locale }),
             component: path.resolve(`src/templates/${templateName}.jsx`),
             context: {
+              name: templateName,
               id,
               locale,
-              nowDate,
               url: pageUrl,
               alternates,
+              assetIds,
             },
           };
           createPage(page);
@@ -123,9 +147,11 @@ exports.createPages = async ({ actions, graphql }) => {
     });
 };
 
-// https://github.com/gatsbyjs/gatsby/issues/17159#issuecomment-549091641
 exports.createSchemaCustomization = ({ actions, schema }) => {
-  actions.createTypes([
+  const { createTypes } = actions;
+
+  // https://github.com/gatsbyjs/gatsby/issues/17159#issuecomment-549091641
+  createTypes([
     schema.buildObjectType({
       name: 'Ical',
       interfaces: ['Node'],

@@ -43,10 +43,8 @@ export default ContactUs;
 
 export const query = graphql`
   fragment ContactBlock on Query {
-    contactBlock: contentfulContactBlock(node_locale: { eq: $locale }) {
-      text {
-        text
-      }
+    contactUs: contactUsYaml(lang: { eq: $locale }) {
+      text
       title
       button {
         title

@@ -6,7 +6,7 @@ const PolygonStyled = styled.polygon`
   fill: ${({ color }) => color};
 `;
 
-const Triangle = ({ color, direction, ...rest }) => {
+const Triangle = ({ color, direction, reverse, ...rest }) => {
   const theme = useContext(ThemeContext);
 
   const width = 320;
@@ -17,13 +17,23 @@ const Triangle = ({ color, direction, ...rest }) => {
   );
 
   const points = [];
-  points.push('0,0');
-  points.push(`${width},0`);
+  if (!reverse) {
+    points.push('0,0');
+    points.push(`${width},0`);
 
-  if (direction === 'left') {
-    points.push(`0,${height}`);
+    if (direction === 'left') {
+      points.push(`0,${height}`);
+    } else {
+      points.push(`${width},${height}`);
+    }
   } else {
+    points.push(`0,${height}`);
     points.push(`${width},${height}`);
+    if (direction === 'left') {
+      points.push('0,0');
+    } else {
+      points.push(`${width},0`);
+    }
   }
 
   return (
@@ -36,6 +46,11 @@ const Triangle = ({ color, direction, ...rest }) => {
 Triangle.propTypes = {
   color: PropTypes.string.isRequired,
   direction: PropTypes.oneOf(['right', 'left']).isRequired,
+  reverse: PropTypes.bool,
+};
+
+Triangle.defaultProps = {
+  reverse: false,
 };
 
 export default Triangle;

@@ -1,0 +1,9 @@
+{
+  "name": "gatsby-contentful-rich-text-reading-time",
+  "dependencies": {
+    "@contentful/rich-text-react-renderer": "^13.4.0",
+    "html-to-text": "^5.1.1",
+    "react-dom": "^16.12.0",
+    "word-regex": "^0.1.2"
+  }
+}

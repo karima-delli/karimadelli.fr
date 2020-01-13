@@ -13,7 +13,7 @@ const Layout = ({ data, children, pageContext }) => (
     <Header
       menu={data.headerMenu}
       socialLinks={data.headerSocialLinks}
-      isTransparent
+      isTransparent={pageContext.name === 'HomePage'}
     />
     {children}
     <Footer
@@ -27,6 +27,7 @@ const Layout = ({ data, children, pageContext }) => (
 
 Layout.propTypes = {
   pageContext: PropTypes.shape({
+    name: PropTypes.string.isRequired,
     locale: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired,
     alternates: PropTypes.arrayOf(PropTypes.shape({})).isRequired,

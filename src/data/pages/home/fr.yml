@@ -1,0 +1,38 @@
+lang: fr
+
+hero: 
+  image: images/hero.jpg
+  button: 
+    title: Toutes mes campagnes
+    url: /campagnes
+  text: Depuis 2009, je me bats pour une Europe qui trace une voie écologique et sociale. Pour tous. 
+
+logos:
+  - image: images/eelv.svg
+    title: EELV
+    url: https://eelv.fr/
+  - image: images/greens-efa.svg
+    title: Greens EFA
+    url: https://www.greens-efa.eu/
+
+slider:
+  button:
+    title: Mon parcours
+    url: /parcours
+
+campaignsSection:
+  title: Nos campagnes
+  text: Pour une **Europe écologique, sociale et heureuse.**
+  readMoreButtonTitle: Lire l'article
+  allButton: 
+    title: Voir toutes les campagnes
+    url: /campagnes
+
+newsSection:
+  title: Nos actualités
+  text: Jour après jour, au parlement européen ou sur le terrain
+  readMoreButtonTitle: Voir plus
+  parliamentTitle: Au parlement
+  calendarTitle: Mon agenda
+  twitterTitle: L’actualité politique
+  

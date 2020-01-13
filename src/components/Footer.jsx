@@ -77,38 +77,40 @@ const Footer = ({ menu, content, socialLinks }) => {
   };
   return (
     <FooterStyled className="footer">
-      <FooterHeaderStyled>
-        <Logo reverse />
-        <LangSwitcherContainerStyled>
-          <LangSwitcher color={theme.officeGreen} />
-        </LangSwitcherContainerStyled>
-      </FooterHeaderStyled>
+      <div className="container">
+        <FooterHeaderStyled>
+          <Logo reverse />
+          <LangSwitcherContainerStyled>
+            <LangSwitcher color={theme.officeGreen} />
+          </LangSwitcherContainerStyled>
+        </FooterHeaderStyled>
 
-      <TextStyled>{content.text.text}</TextStyled>
-      <TitleStyled>{content.titleMenu}</TitleStyled>
-      <MenuStyled>
-        {menu.links.map(link => (
-          <MenuLinkStyled key={link.path} url={link.path}>
-            {link.title}
-          </MenuLinkStyled>
-        ))}
-      </MenuStyled>
-      <TitleStyled>{content.titleSocialLinks}</TitleStyled>
+        <TextStyled>{content.text.text}</TextStyled>
+        <TitleStyled>{content.titleMenu}</TitleStyled>
+        <MenuStyled>
+          {menu.links.map(link => (
+            <MenuLinkStyled key={link.path} url={link.path}>
+              {link.title}
+            </MenuLinkStyled>
+          ))}
+        </MenuStyled>
+        <TitleStyled>{content.titleSocialLinks}</TitleStyled>
 
-      <IconLinksStyled>
-        <IconLinkStyled url={getSocialLinkUrl('Twitter')} reverse>
-          <TwitterIcon />
-        </IconLinkStyled>
-        <IconLinkStyled url={getSocialLinkUrl('Instagram')} reverse>
-          <InstagramIcon />
-        </IconLinkStyled>
-        <IconLinkStyled url={getSocialLinkUrl('Facebook')} reverse>
-          <FacebookIcon />
-        </IconLinkStyled>
-        <IconLinkStyled url={getSocialLinkUrl('Youtube')} reverse>
-          <YoutubeIcon />
-        </IconLinkStyled>
-      </IconLinksStyled>
+        <IconLinksStyled>
+          <IconLinkStyled url={getSocialLinkUrl('Twitter')} reverse>
+            <TwitterIcon />
+          </IconLinkStyled>
+          <IconLinkStyled url={getSocialLinkUrl('Instagram')} reverse>
+            <InstagramIcon />
+          </IconLinkStyled>
+          <IconLinkStyled url={getSocialLinkUrl('Facebook')} reverse>
+            <FacebookIcon />
+          </IconLinkStyled>
+          <IconLinkStyled url={getSocialLinkUrl('Youtube')} reverse>
+            <YoutubeIcon />
+          </IconLinkStyled>
+        </IconLinksStyled>
+      </div>
     </FooterStyled>
   );
 };
