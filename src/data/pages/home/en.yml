@@ -1,5 +1,11 @@
 lang: en
 
+slug: ""
+
+metadata:
+  title: Karima Delli
+  description: Depuis 2009, je me bats pour une Europe qui trace une voie écologique et sociale. Pour tous. 
+
 hero: 
   image: images/hero.jpg
   button: 

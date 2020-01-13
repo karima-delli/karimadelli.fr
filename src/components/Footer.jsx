@@ -70,43 +70,41 @@ const IconLinkStyled = styled(IconLink)`
   }
 `;
 
-const Footer = ({ menu, content, socialLinks }) => {
+const Footer = ({ footer, socialLinks }) => {
   const theme = useContext(ThemeContext);
-  const getSocialLinkUrl = platform => {
-    return socialLinks.find(link => link.platform === platform).url;
-  };
+
   return (
     <FooterStyled className="footer">
       <div className="container">
         <FooterHeaderStyled>
-          <Logo reverse />
+          <Logo reverse url={footer.logo.url} />
           <LangSwitcherContainerStyled>
             <LangSwitcher color={theme.officeGreen} />
           </LangSwitcherContainerStyled>
         </FooterHeaderStyled>
 
-        <TextStyled>{content.text.text}</TextStyled>
-        <TitleStyled>{content.titleMenu}</TitleStyled>
+        <TextStyled>{footer.text}</TextStyled>
+        <TitleStyled>{footer.menu.title}</TitleStyled>
         <MenuStyled>
-          {menu.links.map(link => (
-            <MenuLinkStyled key={link.path} url={link.path}>
+          {footer.menu.links.map(link => (
+            <MenuLinkStyled key={link.url} url={link.url}>
               {link.title}
             </MenuLinkStyled>
           ))}
         </MenuStyled>
-        <TitleStyled>{content.titleSocialLinks}</TitleStyled>
+        <TitleStyled>{footer.socialLinks.title}</TitleStyled>
 
         <IconLinksStyled>
-          <IconLinkStyled url={getSocialLinkUrl('Twitter')} reverse>
+          <IconLinkStyled url={socialLinks.twitter} reverse>
             <TwitterIcon />
           </IconLinkStyled>
-          <IconLinkStyled url={getSocialLinkUrl('Instagram')} reverse>
+          <IconLinkStyled url={socialLinks.instagram} reverse>
             <InstagramIcon />
           </IconLinkStyled>
-          <IconLinkStyled url={getSocialLinkUrl('Facebook')} reverse>
+          <IconLinkStyled url={socialLinks.facebook} reverse>
             <FacebookIcon />
           </IconLinkStyled>
-          <IconLinkStyled url={getSocialLinkUrl('Youtube')} reverse>
+          <IconLinkStyled url={socialLinks.youtube} reverse>
             <YoutubeIcon />
           </IconLinkStyled>
         </IconLinksStyled>
@@ -116,44 +114,57 @@ const Footer = ({ menu, content, socialLinks }) => {
 };
 
 Footer.propTypes = {
-  menu: PropTypes.shape({
-    links: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  }).isRequired,
-  content: PropTypes.shape({
-    titleMenu: PropTypes.string.isRequired,
-    titleSocialLinks: PropTypes.string.isRequired,
-    text: PropTypes.shape({
-      text: PropTypes.string.isRequired,
+  footer: PropTypes.shape({
+    logo: PropTypes.shape({
+      url: PropTypes.string.isRequired,
+    }).isRequired,
+    text: PropTypes.string.isRequired,
+    menu: PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      links: PropTypes.arrayOf(
+        PropTypes.shape({
+          title: PropTypes.string.isRequired,
+          url: PropTypes.string.isRequired,
+        })
+      ).isRequired,
+    }).isRequired,
+    socialLinks: PropTypes.shape({
+      title: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
-  socialLinks: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  socialLinks: PropTypes.shape({
+    facebook: PropTypes.string.isRequired,
+    twitter: PropTypes.string.isRequired,
+    instagram: PropTypes.string.isRequired,
+    youtube: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default Footer;
 
 export const query = graphql`
   fragment Footer on Query {
-    footerMenu: contentfulMenu(
-      name: { eq: "Footer menu" }
-      node_locale: { eq: $locale }
-    ) {
-      links {
-        title
-        path
-      }
-    }
-    footer: contentfulFooter(node_locale: { eq: $locale }) {
-      titleMenu
-      titleSocialLinks
-      text {
-        text
-      }
-    }
-    footerSocialLinks: allContentfulSocialLink {
-      nodes {
-        platform
+    footer: footerYaml(lang: { eq: $locale }) {
+      logo {
         url
       }
+      text
+      menu {
+        title
+        links {
+          title
+          url
+        }
+      }
+      socialLinks {
+        title
+      }
+    }
+    footerSocialLinks: socialLinksYaml {
+      facebook
+      twitter
+      instagram
+      youtube
     }
   }
 `;

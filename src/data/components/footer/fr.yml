@@ -1,0 +1,25 @@
+lang: fr
+
+logo:
+  url: /
+
+text: Karima Delli est une femme politique française, députée européenne et présidente de la commission du transport et du tourisme au Parlement Européen.
+
+menu: 
+  title: Menu
+  links:
+    - title: Parcours
+      url: /parcours/
+    - title: Campagnes
+      url: /campagnes/
+    - title: Actualités
+      url: /news/      
+    - title: Nous contacter
+      url: /contact/      
+    - title: Mentions légales
+      url: /mentions-legales/      
+    - title: Brèves
+      url: /breves/  
+
+socialLinks:
+  title: Sur les réseaux sociaux

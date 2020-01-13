@@ -25,7 +25,7 @@ const HomePage = ({ data }) => (
     />
     <CarouselSection
       button={data.page.slider.button}
-      slides={data.content.slides.map(slide => {
+      slides={data.slider.slides.map(slide => {
         return {
           ...slide,
           text: slide.text.text,
@@ -107,8 +107,7 @@ HomePage.propTypes = {
         calendarTitle: PropTypes.string.isRequired,
       }).isRequired,
     }),
-    content: PropTypes.shape({
-      title: PropTypes.string.isRequired,
+    slider: PropTypes.shape({
       slides: PropTypes.arrayOf(
         PropTypes.shape({
           image: PropTypes.shape({
@@ -136,7 +135,7 @@ HomePage.propTypes = {
 export default HomePage;
 
 export const pageQuery = graphql`
-  query HomePageQuery($locale: String!, $id: String!) {
+  query HomePageQuery($locale: String!) {
     ...Header
     ...Footer
     ...ContactBlock
@@ -191,40 +190,10 @@ export const pageQuery = graphql`
         twitterTitle
       }
     }
-    content: contentfulHomePage(
-      contentful_id: { eq: $id }
+    slider: contentfulSlider(
+      title: { eq: "Home Slider" }
       node_locale: { eq: $locale }
     ) {
-      title
-      heroImage {
-        localFile {
-          childImageSharp {
-            fluid(maxWidth: 2000, quality: 100) {
-              ...GatsbyImageSharpFluid
-            }
-          }
-        }
-      }
-      heroText {
-        heroText
-      }
-      heroButton {
-        title
-        url
-      }
-      logos {
-        url
-        alt
-        image {
-          localFile {
-            publicURL
-          }
-        }
-      }
-      sliderButton {
-        url
-        title
-      }
       slides {
         image {
           localFile {
@@ -240,14 +209,6 @@ export const pageQuery = graphql`
           text
         }
       }
-      newsTitle
-      newsText {
-        newsText
-      }
-      readMoreButtonTitle
-      parliamentTitle
-      twitterTitle
-      calendarTitle
     }
     parliamentaryActivities(lang: { eq: $locale }) {
       url

@@ -1,14 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 import { graphql } from 'gatsby';
 import RichText from '../components/RichText';
 import Hero from '../components/campaign/Hero';
 import ShortContent from '../components/campaign/ShortContent';
 
 const Campaign = ({ data }) => {
-  console.log(data);
-
   const readingTime = Math.ceil(
     data.content.shortContent.readingTime + data.content.content.readingTime
   );

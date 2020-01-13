@@ -11,17 +11,12 @@ const Layout = ({ data, children, pageContext }) => (
     alternates={pageContext.alternates}
   >
     <Header
-      menu={data.headerMenu}
+      header={data.header}
       socialLinks={data.headerSocialLinks}
       isTransparent={pageContext.name === 'HomePage'}
     />
     {children}
-    <Footer
-      menu={data.footerMenu}
-      content={data.footer}
-      socialLinks={data.footerSocialLinks.nodes}
-      {...data.footer}
-    />
+    <Footer footer={data.footer} socialLinks={data.footerSocialLinks} />
   </LangSwitchProvider>
 );
 
@@ -33,14 +28,11 @@ Layout.propTypes = {
     alternates: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   }).isRequired,
   data: PropTypes.shape({
-    headerMenu: PropTypes.shape({}).isRequired,
+    header: PropTypes.shape({}).isRequired,
     headerSocialLinks: PropTypes.shape({}).isRequired,
     page: PropTypes.shape({}).isRequired,
-    footerMenu: PropTypes.shape({}).isRequired,
     footer: PropTypes.shape({}).isRequired,
-    footerSocialLinks: PropTypes.shape({
-      nodes: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-    }).isRequired,
+    footerSocialLinks: PropTypes.shape({}).isRequired,
   }).isRequired,
   children: PropTypes.node.isRequired,
 };

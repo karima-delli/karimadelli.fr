@@ -2,14 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
 
-const ContentPage = ({ data }) => (
+const Page = ({ data }) => (
   <div>
     content page
     <div>{data.page.title}</div>
   </div>
 );
 
-ContentPage.propTypes = {
+Page.propTypes = {
   data: PropTypes.shape({
     page: PropTypes.shape({
       title: PropTypes.string.isRequired,
@@ -17,13 +17,13 @@ ContentPage.propTypes = {
   }).isRequired,
 };
 
-export default ContentPage;
+export default Page;
 
 export const pageQuery = graphql`
-  query ContentPageQuery($locale: String!, $id: String!) {
+  query PageQuery($locale: String!, $id: String!) {
     ...Header
     ...Footer
-    page: contentfulContentPage(
+    page: contentfulPage(
       contentful_id: { eq: $id }
       node_locale: { eq: $locale }
     ) {

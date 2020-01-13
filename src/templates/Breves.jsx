@@ -2,14 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
 
-const ContactPage = ({ data }) => (
+const BrevesPage = ({ data }) => (
   <div>
-    contact page
+    breves page
     <div>{data.page.title}</div>
   </div>
 );
 
-ContactPage.propTypes = {
+BrevesPage.propTypes = {
   data: PropTypes.shape({
     page: PropTypes.shape({
       title: PropTypes.string.isRequired,
@@ -17,17 +17,17 @@ ContactPage.propTypes = {
   }).isRequired,
 };
 
-export default ContactPage;
+export default BrevesPage;
 
 export const pageQuery = graphql`
-  query ContactPageQuery($locale: String!, $id: String!) {
+  query BrevesPageQuery($locale: String!) {
     ...Header
     ...Footer
-    page: contentfulContactPage(
-      contentful_id: { eq: $id }
-      node_locale: { eq: $locale }
-    ) {
-      title
+    page: brevesYaml(lang: { eq: $locale }) {
+      metadata {
+        title
+        description
+      }
     }
   }
 `;

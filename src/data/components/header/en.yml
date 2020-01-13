@@ -1,0 +1,13 @@
+lang: en
+
+logo:
+  url: /en/
+
+menu:
+  links: 
+    - title: Career
+      url: /en/career/
+    - title: News
+      url: "#news"
+    - title: Campaigns
+      url: /en/campaigns/

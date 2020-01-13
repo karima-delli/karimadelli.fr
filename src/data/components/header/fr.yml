@@ -1,0 +1,13 @@
+lang: fr
+
+logo:
+  url: /
+
+menu:
+  links: 
+    - title: Parcours
+      url: /parcours/
+    - title: Actualités
+      url: "#news"
+    - title: Campagnes
+      url: /campagnes/

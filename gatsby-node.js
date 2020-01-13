@@ -21,13 +21,14 @@ function getPagePath({ slug, locale }) {
 
 function getPageAlternates({ siteUrl, locale, nodes }) {
   return nodes.map(node => {
+    const nodeLocale = node.node_locale || node.lang;
     const pagePath = getPagePath({
       slug: node.node,
-      locale: node.node_locale,
+      locale: nodeLocale,
     });
     return {
-      current: node.node_locale === locale,
-      default: node.node_locale === DEFAULT_LOCALE,
+      current: nodeLocale === locale,
+      default: nodeLocale === DEFAULT_LOCALE,
       path: pagePath,
       locale,
       url: `${siteUrl}${pagePath}`,
@@ -53,17 +54,32 @@ exports.createPages = async ({ actions, graphql }) => {
           siteUrl
         }
       }
-      allContentfulHomePage {
+      allHomeYaml {
         nodes {
-          contentful_id
-          node_locale
+          id
+          slug
+          lang
         }
       }
-      allContentfulCampaignsPage {
+      allBrevesYaml {
         nodes {
-          contentful_id
-          node_locale
+          id
           slug
+          lang
+        }
+      }
+      allCampaignsYaml {
+        nodes {
+          id
+          slug
+          lang
+        }
+      }
+      allContactYaml {
+        nodes {
+          id
+          slug
+          lang
         }
       }
       allContentfulCampaign {
@@ -79,14 +95,7 @@ exports.createPages = async ({ actions, graphql }) => {
           }
         }
       }
-      allContentfulContactPage {
-        nodes {
-          contentful_id
-          node_locale
-          slug
-        }
-      }
-      allContentfulContentPage {
+      allContentfulPage {
         nodes {
           contentful_id
           node_locale
@@ -98,6 +107,41 @@ exports.createPages = async ({ actions, graphql }) => {
 
   const { siteUrl } = data.site.siteMetadata;
 
+  // Create static pages
+  Object.keys(data)
+    .filter(contentType => {
+      return !!contentType.match(/all(.*)Yaml/);
+    })
+    .forEach(contentType => {
+      // Generate template name
+      const templateName = contentType.replace(/all(.*)Yaml/, '$1');
+
+      data[contentType].nodes.forEach(({ slug, id, lang: locale }) => {
+        const pagePath = getPagePath({ slug, locale });
+        const pageUrl = `${siteUrl}${pagePath}`;
+
+        const alternates = getPageAlternates({
+          siteUrl,
+          locale,
+          nodes: data[contentType].nodes,
+        });
+
+        const page = {
+          path: getPagePath({ slug, locale }),
+          component: path.resolve(`src/templates/${templateName}.jsx`),
+          context: {
+            name: templateName,
+            id,
+            locale,
+            url: pageUrl,
+            alternates,
+          },
+        };
+        createPage(page);
+      });
+    });
+
+  // Create contentful pages
   Object.keys(data)
     .filter(contentType => {
       return contentType.indexOf('allContentful') === 0;

@@ -136,7 +136,7 @@ const NavbarStyled = styled.nav`
   }
 `;
 
-const Header = ({ isTransparent, menu, socialLinks }) => {
+const Header = ({ isTransparent, header, socialLinks }) => {
   const theme = useContext(ThemeContext);
   const [navbarMenuActive, setNavbarActive] = useState(false);
 
@@ -171,10 +171,6 @@ const Header = ({ isTransparent, menu, socialLinks }) => {
 
   const navbarStyle = isTransparent && !navbarMenuActive ? 1 : 2;
 
-  const getSocialLinkUrl = platform => {
-    return socialLinks.nodes.find(link => link.platform === platform).url;
-  };
-
   return (
     <NavbarStyled
       className={`navbar ${navbarMenuActive ? 'is-active' : ''}`}
@@ -196,13 +192,13 @@ const Header = ({ isTransparent, menu, socialLinks }) => {
           </BurgerStyled>
           <LogoTwitterWrapperStyled>
             <LogoWrapperStyled>
-              <Logo reverse={navbarStyle === 2} />
+              <Logo reverse={navbarStyle === 2} url={header.logo.url} />
             </LogoWrapperStyled>
 
             <div className="is-hidden-desktop is-flex">
               <IconLink
                 className="navbar-item"
-                url={getSocialLinkUrl('Twitter')}
+                url={socialLinks.twitter}
                 onClick={() => setNavbarActive(false)}
                 reverse={navbarStyle === 2}
               >
@@ -210,7 +206,7 @@ const Header = ({ isTransparent, menu, socialLinks }) => {
               </IconLink>
               <IconLink
                 className="navbar-item is-hidden-mobile"
-                url={getSocialLinkUrl('Instagram')}
+                url={socialLinks.instagram}
                 onClick={() => setNavbarActive(false)}
                 reverse={navbarStyle === 2}
               >
@@ -218,7 +214,7 @@ const Header = ({ isTransparent, menu, socialLinks }) => {
               </IconLink>
               <IconLink
                 className="navbar-item is-hidden-mobile"
-                url={getSocialLinkUrl('Facebook')}
+                url={socialLinks.facebook}
                 onClick={() => setNavbarActive(false)}
                 reverse={navbarStyle === 2}
               >
@@ -226,7 +222,7 @@ const Header = ({ isTransparent, menu, socialLinks }) => {
               </IconLink>
               <IconLink
                 className="navbar-item is-hidden-mobile"
-                url={getSocialLinkUrl('Youtube')}
+                url={socialLinks.youtube}
                 onClick={() => setNavbarActive(false)}
                 reverse={navbarStyle === 2}
               >
@@ -240,11 +236,11 @@ const Header = ({ isTransparent, menu, socialLinks }) => {
           className={`navbar-menu ${navbarMenuActive ? 'is-active' : ''}`}
         >
           <NavbarStartStyled className="navbar-start">
-            {menu.links.map(link => (
+            {header.menu.links.map(link => (
               <LinkStyled
-                key={link.path}
+                key={link.url}
                 className="navbar-item"
-                url={link.path}
+                url={link.url}
                 onClick={() => setNavbarActive(false)}
                 navbarStyle={navbarStyle}
               >
@@ -258,7 +254,7 @@ const Header = ({ isTransparent, menu, socialLinks }) => {
           <NavbarEndStyled className="navbar-end">
             <IconLink
               className="navbar-item"
-              url={getSocialLinkUrl('Twitter')}
+              url={socialLinks.twitter}
               onClick={() => setNavbarActive(false)}
               reverse={navbarStyle === 2}
             >
@@ -266,7 +262,7 @@ const Header = ({ isTransparent, menu, socialLinks }) => {
             </IconLink>
             <IconLink
               className="navbar-item"
-              url={getSocialLinkUrl('Instagram')}
+              url={socialLinks.instagram}
               onClick={() => setNavbarActive(false)}
               reverse={navbarStyle === 2}
             >
@@ -274,7 +270,7 @@ const Header = ({ isTransparent, menu, socialLinks }) => {
             </IconLink>
             <IconLink
               className="navbar-item"
-              url={getSocialLinkUrl('Facebook')}
+              url={socialLinks.facebook}
               onClick={() => setNavbarActive(false)}
               reverse={navbarStyle === 2}
             >
@@ -282,7 +278,7 @@ const Header = ({ isTransparent, menu, socialLinks }) => {
             </IconLink>
             <IconLink
               className="navbar-item"
-              url={getSocialLinkUrl('Youtube')}
+              url={socialLinks.youtube}
               onClick={() => setNavbarActive(false)}
               reverse={navbarStyle === 2}
             >
@@ -304,21 +300,24 @@ const Header = ({ isTransparent, menu, socialLinks }) => {
 
 Header.propTypes = {
   isTransparent: PropTypes.bool.isRequired,
-  menu: PropTypes.shape({
-    links: PropTypes.arrayOf(
-      PropTypes.shape({
-        title: PropTypes.string.isRequired,
-        path: PropTypes.string.isRequired,
-      })
-    ).isRequired,
+  header: PropTypes.shape({
+    logo: PropTypes.shape({
+      url: PropTypes.string.isRequired,
+    }).isRequired,
+    menu: PropTypes.shape({
+      links: PropTypes.arrayOf(
+        PropTypes.shape({
+          title: PropTypes.string.isRequired,
+          url: PropTypes.string.isRequired,
+        })
+      ).isRequired,
+    }).isRequired,
   }).isRequired,
   socialLinks: PropTypes.shape({
-    nodes: PropTypes.arrayOf(
-      PropTypes.shape({
-        platform: PropTypes.string.isRequired,
-        url: PropTypes.string.isRequired,
-      })
-    ).isRequired,
+    facebook: PropTypes.string.isRequired,
+    twitter: PropTypes.string.isRequired,
+    instagram: PropTypes.string.isRequired,
+    youtube: PropTypes.string.isRequired,
   }).isRequired,
 };
 
@@ -326,20 +325,22 @@ export default Header;
 
 export const query = graphql`
   fragment Header on Query {
-    headerMenu: contentfulMenu(
-      name: { eq: "Main menu" }
-      node_locale: { eq: $locale }
-    ) {
-      links {
-        title
-        path
-      }
-    }
-    headerSocialLinks: allContentfulSocialLink {
-      nodes {
-        platform
+    header: headerYaml(lang: { eq: $locale }) {
+      logo {
         url
       }
+      menu {
+        links {
+          title
+          url
+        }
+      }
+    }
+    headerSocialLinks: socialLinksYaml {
+      facebook
+      twitter
+      instagram
+      youtube
     }
   }
 `;

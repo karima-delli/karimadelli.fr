@@ -40,15 +40,16 @@ const LinkStyled = styled(Link)`
   }
 `;
 
-const Logo = ({ reverse, ...rest }) => (
+const Logo = ({ url, reverse, ...rest }) => (
   <LogoStyled {...rest}>
-    <LinkStyled url="/" reverse={reverse ? 1 : undefined}>
+    <LinkStyled url={url} reverse={reverse ? 1 : undefined}>
       Karima Delli
     </LinkStyled>
   </LogoStyled>
 );
 
 Logo.propTypes = {
+  url: PropTypes.string.isRequired,
   reverse: PropTypes.bool,
 };
 
