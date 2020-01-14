@@ -16,12 +16,22 @@ const Metadata = ({ metadata, locale, lang, url, alternates }) => {
               siteUrl
               siteName
               twitterNickname
+              socialImages {
+                default
+                twitter
+              }
             }
           }
         }
       `}
       render={data => {
         const globalMetadata = data.site.siteMetadata;
+        const {
+          siteUrl,
+          siteName,
+          twitterNickname,
+          socialImages,
+        } = globalMetadata;
         const { title, description } = metadata;
 
         const alternateLinks = alternates.map(alternate => {
@@ -38,15 +48,8 @@ const Metadata = ({ metadata, locale, lang, url, alternates }) => {
           };
         });
 
-        const ogImageUrl =
-          metadata.socialImages &&
-          metadata.socialImages.default &&
-          `${globalMetadata.siteUrl}${metadata.socialImages.default}`;
-
-        const twitterImageUrl =
-          metadata.socialImages &&
-          metadata.socialImages.twitter &&
-          `${globalMetadata.siteUrl}${metadata.socialImages.twitter}`;
+        const ogImageUrl = `${siteUrl}${socialImages.default}`;
+        const twitterImageUrl = `${siteUrl}${socialImages.twitter}`;
 
         return (
           <>
@@ -62,13 +65,13 @@ const Metadata = ({ metadata, locale, lang, url, alternates }) => {
                 content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no"
               />
               <title>{title}</title>
-              <meta name="description" content={description} />
+              {description && <meta name="description" content={description} />}
             </Helmet>
 
             <LinksMetadata canonicalUrl={url} alternateLinks={alternateLinks} />
 
             <OgMetadata
-              siteName={globalMetadata.siteName}
+              siteName={siteName}
               type="website"
               title={title}
               locales={ogLocales}
@@ -79,7 +82,7 @@ const Metadata = ({ metadata, locale, lang, url, alternates }) => {
 
             <TwitterMetadata
               card="summary"
-              site={globalMetadata.twitterNickname}
+              site={twitterNickname}
               title={title}
               description={description}
               imageUrl={twitterImageUrl}
@@ -95,14 +98,10 @@ Metadata.propTypes = {
   metadata: PropTypes.shape({
     title: PropTypes.string,
     description: PropTypes.string,
-    socialImages: PropTypes.shape({
-      default: PropTypes.string,
-      twitter: PropTypes.string,
-    }),
   }),
-  locale: PropTypes.string.isRequired,
-  lang: PropTypes.string.isRequired,
-  url: PropTypes.string.isRequired,
+  locale: PropTypes.string,
+  lang: PropTypes.string,
+  url: PropTypes.string,
   alternates: PropTypes.arrayOf(
     PropTypes.shape({
       current: PropTypes.bool.isRequired,
@@ -111,11 +110,15 @@ Metadata.propTypes = {
       path: PropTypes.string.isRequired,
       url: PropTypes.string.isRequired,
     })
-  ).isRequired,
+  ),
 };
 
 Metadata.defaultProps = {
   metadata: {},
+  locale: null,
+  lang: null,
+  url: null,
+  alternates: [],
 };
 
 export default Metadata;
