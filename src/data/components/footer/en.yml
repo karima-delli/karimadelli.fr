@@ -8,18 +8,18 @@ text: Karima Delli est une femme politique française, députée européenne et 
 menu: 
   title: Menu
   links:
-    - title: Parcours
+    - title: Get to know me
       url: /en/career/
-    - title: Campagnes
+    - title: Campaigns
       url: /en/campaigns/
-    - title: Actualités
+    - title: News
       url: /en/news/      
     - title: Contact us
       url: /en/contact/      
-    - title: Mentions légales
+    - title: Legal notice
       url: /en/legal/      
     - title: Brief
       url: /en/brief/            
 
 socialLinks:
-  title: Sur les réseaux sociaux
+  title: Follow us 

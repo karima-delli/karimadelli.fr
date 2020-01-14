@@ -4,14 +4,14 @@ slug: ""
 
 metadata:
   title: Karima Delli
-  description: Depuis 2009, je me bats pour une Europe qui trace une voie écologique et sociale. Pour tous. 
+  description: En tant que députée européenne, je m'engage pour une europe écologique et sociale.
 
 hero: 
   image: images/hero.jpg
   button: 
-    title: Toutes mes campagnes
+    title: Toutes nos campagnes
     url: /campagnes/
-  text: Depuis 2009, je me bats pour une Europe qui trace une voie écologique et sociale. Pour tous. 
+  text: En tant que députée européenne, je m'engage pour une europe écologique et sociale.
 
 logos:
   - image: images/eelv.svg
@@ -28,7 +28,7 @@ slider:
 
 campaignsSection:
   title: Nos campagnes
-  text: Pour une **Europe écologique, sociale et heureuse.**
+  text: Pour une Europe **écologique, sociale et heureuse.**
   readMoreButtonTitle: Lire l'article
   campaignsSlug: /campagnes/
   allButton: 
