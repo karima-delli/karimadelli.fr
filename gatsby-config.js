@@ -59,13 +59,6 @@ module.exports = {
     {
       resolve: 'gatsby-source-filesystem',
       options: {
-        name: 'pages',
-        path: `${__dirname}/src/data/pages`,
-      },
-    },
-    {
-      resolve: 'gatsby-source-filesystem',
-      options: {
         path: `${__dirname}/src/images`,
       },
     },
@@ -91,6 +84,10 @@ module.exports = {
           {
             name: 'contentfulCampaignShortContentRichTextNode',
             field: 'shortContent',
+          },
+          {
+            name: 'contentfulPageContentRichTextNode',
+            field: 'content',
           },
         ],
       },

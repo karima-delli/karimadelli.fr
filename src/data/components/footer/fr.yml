@@ -9,11 +9,11 @@ menu:
   title: Menu
   links:
     - title: Parcours
-      url: /parcours/
+      url: /mon-parcours/
     - title: Campagnes
       url: /campagnes/
     - title: Actualités
-      url: /news/      
+      url: /actualites/      
     - title: Nous contacter
       url: /contact/      
     - title: Mentions légales

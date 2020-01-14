@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
 import RichText from '../components/RichText';
-import Hero from '../components/campaign/Hero';
+import HeroContent from '../components/HeroContent';
 import ShortContent from '../components/campaign/ShortContent';
 import Metadata from '../components/Metadata';
 
@@ -23,7 +23,7 @@ const Campaign = ({ data, pageContext }) => {
         url={pageContext.url}
         alternates={pageContext.alternates}
       />
-      <Hero
+      <HeroContent
         image={data.content.image.localFile.childImageSharp}
         readingTime={readingTime}
         readingTimeStr={data.page.readingTime}

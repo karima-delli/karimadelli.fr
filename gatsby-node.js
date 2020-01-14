@@ -201,7 +201,10 @@ exports.createPages = async ({ actions, graphql }) => {
           });
 
           const assetIds = [];
-          if (contentType === 'allContentfulCampaign') {
+          if (
+            contentType === 'allContentfulCampaign' ||
+            contentType === 'allContentfulPage'
+          ) {
             if (rest.content && rest.content.json) {
               assetIds.push(...getAssetIdsFromRichTextJson(rest.content.json));
             }

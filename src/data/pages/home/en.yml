@@ -10,7 +10,7 @@ hero:
   image: images/hero.jpg
   button: 
     title: Toutes mes campagnes
-    url: /campagnes
+    url: /en/campaigns/
   text: Depuis 2009, je me bats pour une Europe qui trace une voie écologique et sociale. Pour tous. 
 
 logos:
@@ -24,13 +24,13 @@ logos:
 slider:
   button:
     title: Mon parcours
-    url: /parcours
+    url: /en/career/
 
 campaignsSection:
   title: Nos campagnes
   text: Pour une **Europe écologique, sociale et heureuse.**
   readMoreButtonTitle: Lire l'article
-  campaignsSlug: /campaigns
+  campaignsSlug: /en/campaigns/
   allButton: 
     title: Voir toutes les campagnes
-    url: /campaigns
+    url: /en/campaigns/

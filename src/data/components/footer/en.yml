@@ -9,17 +9,17 @@ menu:
   title: Menu
   links:
     - title: Parcours
-      url: /parcours/
+      url: /en/career/
     - title: Campagnes
-      url: /campagnes/
+      url: /en/campaigns/
     - title: Actualités
-      url: /news/      
-    - title: Nous contacter
-      url: /contact/      
+      url: /en/news/      
+    - title: Contact us
+      url: /en/contact/      
     - title: Mentions légales
-      url: /mentions-legales/      
-    - title: Brèves
-      url: /breves/            
+      url: /en/legal/      
+    - title: Brief
+      url: /en/brief/            
 
 socialLinks:
   title: Sur les réseaux sociaux
