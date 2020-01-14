@@ -5,6 +5,9 @@
     "node": "13.5.x"
   },
   "scripts": {
+    "install:plugin:gatsby-contentful-rich-text-reading-time": "cd plugins/gatsby-contentful-rich-text-reading-time/ && yarn && cd ../..",
+    "install:plugin:gatsby-source-europarl": "cd plugins/gatsby-source-europarl/ && yarn && cd ../..",
+    "postinstall": "yarn install:plugin:gatsby-contentful-rich-text-reading-time && yarn install:plugin:gatsby-source-europarl",
     "clean": "gatsby clean",
     "build": "gatsby build",
     "serve": "gatsby serve",
