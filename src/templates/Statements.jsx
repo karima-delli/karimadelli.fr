@@ -2,14 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
 
-const BriefListPage = ({ data }) => (
+const StatementsPage = ({ data }) => (
   <div>
-    breves page
+    statements page
     <div>{data.page.title}</div>
   </div>
 );
 
-BriefListPage.propTypes = {
+StatementsPage.propTypes = {
   data: PropTypes.shape({
     page: PropTypes.shape({
       title: PropTypes.string.isRequired,
@@ -17,13 +17,13 @@ BriefListPage.propTypes = {
   }).isRequired,
 };
 
-export default BriefListPage;
+export default StatementsPage;
 
 export const pageQuery = graphql`
-  query BriefListPageQuery($lang: String!) {
+  query StatementsPageQuery($lang: String!) {
     ...Header
     ...Footer
-    page: briefListYaml(lang: { eq: $lang }) {
+    page: statementsYaml(lang: { eq: $lang }) {
       metadata {
         title
         description
