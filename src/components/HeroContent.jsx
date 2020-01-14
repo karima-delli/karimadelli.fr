@@ -117,7 +117,7 @@ const Hero = ({
         <TitleStyled>{title}</TitleStyled>
         <SubTitleStyled>{subTitle}</SubTitleStyled>
         <SeparatorStyled />
-        {displayReadingTime && readingTime && (
+        {displayReadingTime && readingTime && readingTimeStr && (
           <ReadingTimeStyled>
             {readingTime} {readingTimeStr}
           </ReadingTimeStyled>
@@ -136,7 +136,7 @@ Hero.propTypes = {
   displayShareButtons: PropTypes.bool,
   displayReadingTime: PropTypes.bool,
   readingTime: PropTypes.number,
-  readingTimeStr: PropTypes.string.isRequired,
+  readingTimeStr: PropTypes.string,
   subTitle: PropTypes.string,
 };
 
@@ -145,6 +145,7 @@ Hero.defaultProps = {
   displayShareButtons: true,
   displayReadingTime: true,
   readingTime: null,
+  readingTimeStr: null,
   subTitle: null,
 };
 
