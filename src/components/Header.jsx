@@ -35,8 +35,8 @@ const LogoWrapperStyled = styled.div`
 `;
 
 const BurgerStyled = styled.a`
-  color: ${({ navbarStyle, theme }) =>
-    navbarStyle === 1 ? theme.officeGreen : theme.white} !important;
+  color: ${({ navbarstyle, theme }) =>
+    navbarstyle === 1 ? theme.officeGreen : theme.white} !important;
 
   span {
     height: 2px !important;
@@ -59,14 +59,14 @@ const NavbarStartStyled = styled.div`
 const LinkStyled = styled(Link)`
   font-family: ${({ theme }) => theme.fontFamiliesAlternate};
   font-size: 1.2rem;
-  color: ${({ navbarStyle, theme }) =>
-    navbarStyle === 1 ? theme.officeGreen : theme.white} !important;
+  color: ${({ navbarstyle, theme }) =>
+    navbarstyle === 1 ? theme.officeGreen : theme.white} !important;
 
   &:hover {
-    color: ${({ navbarStyle, theme }) =>
+    color: ${({ navbarstyle, theme }) =>
       darken(
         0.05,
-        navbarStyle === 1 ? theme.officeGreen : theme.white
+        navbarstyle === 1 ? theme.officeGreen : theme.white
       )} !important;
   }
 `;
@@ -82,15 +82,15 @@ const NavbarEndStyled = styled.div`
 const ContainerStyled = styled.div``;
 
 const NavbarBrandStyled = styled.div`
-  background-color: ${({ navbarStyle, theme }) =>
-    navbarStyle === 1 ? 'transparent' : theme.officeGreen} !important;
+  background-color: ${({ navbarstyle, theme }) =>
+    navbarstyle === 1 ? 'transparent' : theme.officeGreen} !important;
 `;
 
 const NavbarMenuStyled = styled.div``;
 
 const NavbarStyled = styled.nav`
-  background-color: ${({ navbarStyle, theme }) =>
-    navbarStyle === 1 ? 'transparent' : theme.officeGreen} !important;
+  background-color: ${({ navbarstyle, theme }) =>
+    navbarstyle === 1 ? 'transparent' : theme.officeGreen} !important;
 
   @media (max-width: ${({ theme }) => theme.breakpointDesktopBefore}) {
     &.is-active {
@@ -174,17 +174,17 @@ const Header = ({ isTransparent, header, socialLinks }) => {
   return (
     <NavbarStyled
       className={`navbar ${navbarMenuActive ? 'is-active' : ''}`}
-      navbarStyle={navbarStyle}
+      navbarstyle={navbarStyle}
     >
       <ContainerStyled className="container">
-        <NavbarBrandStyled className="navbar-brand" navbarStyle={navbarStyle}>
+        <NavbarBrandStyled className="navbar-brand" navbarstyle={navbarStyle}>
           <BurgerStyled
             role="button"
             className={`navbar-burger is-marginless is-transparent ${
               navbarMenuActive ? 'is-active' : ''
             }`}
             onClick={() => setNavbarActive(!navbarMenuActive)}
-            navbarStyle={navbarStyle}
+            navbarstyle={navbarStyle}
           >
             <span aria-hidden="true" />
             <span aria-hidden="true" />
@@ -242,7 +242,7 @@ const Header = ({ isTransparent, header, socialLinks }) => {
                 className="navbar-item"
                 url={link.url}
                 onClick={() => setNavbarActive(false)}
-                navbarStyle={navbarStyle}
+                navbarstyle={navbarStyle}
               >
                 {link.title}
               </LinkStyled>

@@ -13,13 +13,17 @@ function getLocaleFromLang(lang) {
   return null;
 }
 
-function getPagePath({ slug, lang }) {
+function getPagePath({ slug, lang, parentSlug }) {
   // Generate page path
   let pagePath = `/${slug}/`;
 
   // Handle home page slug
   if (!slug) {
     pagePath = '/';
+  }
+
+  if (parentSlug) {
+    pagePath = `/${parentSlug}${pagePath}`;
   }
 
   // Add lang to the path
@@ -30,20 +34,47 @@ function getPagePath({ slug, lang }) {
   return pagePath;
 }
 
-function getPageAlternates({ siteUrl, lang, nodes }) {
+function getParentNodes({ data, contentType }) {
+  if (contentType === 'allContentfulCampaign') {
+    return data.allCampaignsYaml.nodes;
+  }
+  return null;
+}
+
+function getParentSlug({ parentNodes, lang }) {
+  if (!parentNodes) {
+    return null;
+  }
+  const parent = parentNodes.find(node => {
+    const nodeLang = node.node_locale || node.lang;
+    return nodeLang === lang;
+  });
+  if (!parent) {
+    return null;
+  }
+  return parent.slug;
+}
+
+function getPageAlternates({ siteUrl, lang, nodes, parentNodes }) {
   return nodes.map(node => {
     const nodeLang = node.node_locale || node.lang;
+    const parentSlug = getParentSlug({ parentNodes, lang: nodeLang });
+
     const pagePath = getPagePath({
-      slug: node.node,
+      slug: node.slug,
       lang: nodeLang,
+      parentSlug,
     });
+
+    const pageUrl = `${siteUrl}${pagePath}`;
+
     return {
       current: nodeLang === lang,
       default: nodeLang === DEFAULT_LANG,
       path: pagePath,
       lang: nodeLang,
       locale: getLocaleFromLang(nodeLang),
-      url: `${siteUrl}${pagePath}`,
+      url: pageUrl,
     };
   });
 }
@@ -124,17 +155,6 @@ exports.createPages = async ({ actions, graphql }) => {
     }
   `);
 
-  const getParentSlug = ({ lang, contentType }) => {
-    if (contentType === 'allContentfulCampaign') {
-      const parent = data.allCampaignsYaml.nodes.find(node => {
-        return node.lang === lang;
-      });
-      return parent.slug;
-    }
-
-    return null;
-  };
-
   const { siteUrl } = data.site.siteMetadata;
 
   // Create static pages
@@ -184,20 +204,21 @@ exports.createPages = async ({ actions, graphql }) => {
 
       data[contentType].nodes.forEach(
         ({ slug, contentful_id: id, node_locale: lang, ...rest }) => {
-          const parentSlug = getParentSlug({ lang, contentType });
+          const parentNodes = getParentNodes({ data, contentType });
+          const parentSlug = getParentSlug({ parentNodes, lang });
           const locale = getLocaleFromLang(lang);
-
-          let fullSlug = slug;
-          if (parentSlug) {
-            fullSlug = `${parentSlug}/${fullSlug}`;
-          }
-          const pagePath = getPagePath({ slug: fullSlug, lang });
+          const pagePath = getPagePath({ slug, lang, parentSlug });
           const pageUrl = `${siteUrl}${pagePath}`;
+
+          const alternateNodes = data[contentType].nodes.filter(node => {
+            return node.contentful_id === id;
+          });
 
           const alternates = getPageAlternates({
             siteUrl,
             lang,
-            nodes: data[contentType].nodes,
+            nodes: alternateNodes,
+            parentNodes,
           });
 
           const assetIds = [];

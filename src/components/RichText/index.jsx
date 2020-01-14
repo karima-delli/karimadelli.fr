@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 import GatsbyImage from 'gatsby-image';
-import { BLOCKS, MARKS } from '@contentful/rich-text-types';
+import { BLOCKS } from '@contentful/rich-text-types';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import './style.scss';
 
@@ -14,16 +13,11 @@ const RichText = ({ json, assets }) => {
   const options = {
     renderNode: {
       // eslint-disable-next-line react/display-name
-      [BLOCKS.EMBEDDED_ASSET]: (node, children) => {
-        console.log(node);
+      [BLOCKS.EMBEDDED_ASSET]: node => {
         const asset = getAsset(node.data.target.sys.contentful_id);
-
         if (!asset) {
           return <></>;
         }
-
-        console.log(asset);
-
         return <GatsbyImage fluid={asset.localFile.childImageSharp.fluid} />;
       },
     },

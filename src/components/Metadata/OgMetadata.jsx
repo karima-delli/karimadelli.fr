@@ -12,11 +12,11 @@ const OgMetadata = ({
   imageUrl,
 }) => (
   <Helmet>
-    <meta property="og:site_name" content={siteName} />
-    <meta property="og:type" content={type} />
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:url" content={url} />
+    {siteName && <meta property="og:site_name" content={siteName} />}
+    {type && <meta property="og:type" content={type} />}
+    {title && <meta property="og:title" content={title} />}
+    {description && <meta property="og:description" content={description} />}
+    {url && <meta property="og:url" content={url} />}
     {locales.map(({ locale, current }) => (
       <meta
         key={locale}
@@ -29,22 +29,27 @@ const OgMetadata = ({
 );
 
 OgMetadata.propTypes = {
-  siteName: PropTypes.string.isRequired,
+  siteName: PropTypes.string,
   type: PropTypes.string,
-  title: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
-  url: PropTypes.string.isRequired,
+  title: PropTypes.string,
+  description: PropTypes.string,
+  url: PropTypes.string,
   locales: PropTypes.arrayOf(
     PropTypes.shape({
       locale: PropTypes.string.isRequired,
       current: PropTypes.bool.isRequired,
     })
-  ).isRequired,
+  ),
   imageUrl: PropTypes.string,
 };
 
 OgMetadata.defaultProps = {
+  siteName: null,
   type: 'website',
+  title: null,
+  description: null,
+  url: null,
+  locales: [],
   imageUrl: null,
 };
 
