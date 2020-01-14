@@ -1,12 +1,16 @@
 @import './node_modules/bulma/sass/utilities/initial-variables.sass';
 @import './theme.scss';
 
+$primary: $office-green;
+$secondary: $fluorescent-orange;
+
 // global
 $family-sans-serif: $font-family-main;
 $body-background-color: $white;
 $widescreen-enabled: false;
 $fullhd-enabled: false;
 $text: $black;
+$radius: 0;
 
 // navbar
 $navbar-item-hover-background-color: transparent;

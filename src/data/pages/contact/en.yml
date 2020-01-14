@@ -5,3 +5,17 @@ slug: contact
 metadata: 
   title: Contact us
   description: Contact Karima Delli, MEP and chairwoman of the transportation and tourism committee
+
+title: Contact us
+text: Drop us a line and we'll get back to you quickly
+
+form: 
+  placeholders: 
+    name: Your name
+    email: Your email address
+    message: Your message
+  messages:
+    success: You message has been sent!
+    error: Oops! An error occured!
+  buttonSend:
+    title: Send
