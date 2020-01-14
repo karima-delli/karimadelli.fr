@@ -19,7 +19,7 @@ const HomePage = ({ data, pageContext }) => (
       alternates={pageContext.alternates}
     />
     <HeroSection
-      image={data.page.hero.image.childImageSharp}
+      image={data.page.hero.image}
       text={data.page.hero.text}
       button={data.page.hero.button}
     />
@@ -101,9 +101,7 @@ HomePage.propTypes = {
         description: PropTypes.string.isRequired,
       }).isRequired,
       hero: PropTypes.shape({
-        image: PropTypes.shape({
-          childImageSharp: PropTypes.shape({}).isRequired,
-        }).isRequired,
+        image: PropTypes.shape({}).isRequired,
         text: PropTypes.string.isRequired,
         button: PropTypes.shape({}).isRequired,
       }).isRequired,
@@ -206,9 +204,25 @@ export const pageQuery = graphql`
       }
       hero {
         image {
-          childImageSharp {
-            fluid(maxWidth: 2000, quality: 100) {
-              ...GatsbyImageSharpFluid
+          mobile {
+            childImageSharp {
+              fluid(maxWidth: 1600, quality: 100) {
+                ...GatsbyImageSharpFluid
+              }
+            }
+          }
+          tablet {
+            childImageSharp {
+              fluid(maxWidth: 2190, quality: 100) {
+                ...GatsbyImageSharpFluid
+              }
+            }
+          }
+          desktop {
+            childImageSharp {
+              fluid(maxWidth: 2800, quality: 100) {
+                ...GatsbyImageSharpFluid
+              }
             }
           }
         }

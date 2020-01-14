@@ -7,7 +7,10 @@ metadata:
   description:  Welcome to the official website of Karima Delli, member of the European Parliament (Greens/EFA) since 2009 and chairwoman of the Committee on Transport and Tourism.
 
 hero: 
-  image: images/hero.jpg
+  image:  
+    mobile: images/hero-mobile.jpg
+    tablet: images/hero-tablet.jpg
+    desktop: images/hero-desktop.jpg
   button: 
     title: Our campaigns
     url: /en/campaigns/
