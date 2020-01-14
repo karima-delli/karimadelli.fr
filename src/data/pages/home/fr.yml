@@ -28,12 +28,3 @@ slider:
   button:
     title: Mon parcours
     url: /mon-parcours/
-
-campaignsSection:
-  title: Nos campagnes
-  text: Pour une Europe **écologique, sociale et heureuse.**
-  readMoreButtonTitle: Lire l'article
-  campaignsSlug: /campagnes/
-  allButton: 
-    title: Voir toutes les campagnes
-    url: /campagnes/

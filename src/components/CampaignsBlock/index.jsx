@@ -1,9 +1,10 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+import { graphql } from 'gatsby';
 import styled, { ThemeContext } from 'styled-components';
-import SectionTitle from '../../SectionTitle';
-import TextMarkdown from '../../TextMarkdown';
-import Button from '../../Button';
+import SectionTitle from '../SectionTitle';
+import TextMarkdown from '../TextMarkdown';
+import Button from '../Button';
 import CampaignBlock from './CampaignBlock';
 
 const TitleStyled = styled(SectionTitle)`
@@ -20,7 +21,8 @@ const ButtonContainerStyled = styled.div`
   text-align: center;
 `;
 
-const CampaignsSection = ({
+const CampaignsBlock = ({
+  onePerLine,
   title,
   text,
   readMoreButtonTitle,
@@ -38,7 +40,9 @@ const CampaignsSection = ({
         <div className="columns is-multiline">
           {campaigns.map((campaign, index) => (
             <div
-              className={`column ${index === 0 ? 'is-full' : 'is-half'}`}
+              className={`column ${
+                index === 0 || onePerLine ? 'is-full' : 'is-half'
+              }`}
               key={campaign.slug}
             >
               <CampaignBlock
@@ -49,19 +53,22 @@ const CampaignsSection = ({
             </div>
           ))}
         </div>
-        <ButtonContainerStyled>
-          <Button
-            {...allButton}
-            background={theme.officeGreen}
-            color={theme.white}
-          />
-        </ButtonContainerStyled>
+        {allButton && (
+          <ButtonContainerStyled>
+            <Button
+              {...allButton}
+              background={theme.officeGreen}
+              color={theme.white}
+            />
+          </ButtonContainerStyled>
+        )}
       </div>
     </section>
   );
 };
 
-CampaignsSection.propTypes = {
+CampaignsBlock.propTypes = {
+  onePerLine: PropTypes.bool,
   title: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
   readMoreButtonTitle: PropTypes.string.isRequired,
@@ -69,7 +76,7 @@ CampaignsSection.propTypes = {
   allButton: PropTypes.shape({
     title: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired,
-  }).isRequired,
+  }),
   campaigns: PropTypes.arrayOf(
     PropTypes.shape({
       image: PropTypes.shape({}).isRequired,
@@ -80,4 +87,24 @@ CampaignsSection.propTypes = {
   ).isRequired,
 };
 
-export default CampaignsSection;
+CampaignsBlock.defaultProps = {
+  onePerLine: false,
+  allButton: null,
+};
+
+export default CampaignsBlock;
+
+export const query = graphql`
+  fragment CampaignsBlock on Query {
+    campaignsBlock: campaignsBlockYaml(lang: { eq: $lang }) {
+      title
+      text
+      readMoreButtonTitle
+      campaignsSlug
+      allButton {
+        title
+        url
+      }
+    }
+  }
+`;

@@ -2,9 +2,9 @@ import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import styled, { ThemeContext } from 'styled-components';
 import GatsbyImage from 'gatsby-image';
-import Triangle from '../../Triangle';
-import Link from '../../Link';
-import Button from '../../Button';
+import Triangle from '../Triangle';
+import Link from '../Link';
+import Button from '../Button';
 
 const ContainerStyled = styled.div`
   position: relative;

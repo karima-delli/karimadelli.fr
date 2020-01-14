@@ -4,7 +4,7 @@ import { graphql } from 'gatsby';
 import HeroSection from '../components/home/Hero';
 import LogosSection from '../components/home/Logos';
 import CarouselSection from '../components/home/Carousel';
-import CampaignsSection from '../components/home/Campaigns';
+import CampaignsBlock from '../components/CampaignsBlock';
 import NewsBlock from '../components/NewsBlock';
 import ContactUs from '../components/ContactUs';
 import Metadata from '../components/Metadata';
@@ -42,12 +42,8 @@ const HomePage = ({ data, pageContext }) => (
         };
       })}
     />
-    <CampaignsSection
-      title={data.page.campaignsSection.title}
-      text={data.page.campaignsSection.text}
-      readMoreButtonTitle={data.page.campaignsSection.readMoreButtonTitle}
-      campaignsSlug={data.page.campaignsSection.campaignsSlug}
-      allButton={data.page.campaignsSection.allButton}
+    <CampaignsBlock
+      {...data.campaignsBlock}
       campaigns={data.campaigns.nodes.map(node => {
         return {
           ...node,
@@ -63,15 +59,10 @@ const HomePage = ({ data, pageContext }) => (
     </section>
 
     <NewsBlock
-      title={data.newsBlock.title}
-      text={data.newsBlock.text}
-      readMoreButtonTitle={data.newsBlock.readMoreButtonTitle}
-      parliamentTitle={data.newsBlock.parliamentTitle}
-      parliamentaryActivities={data.parliamentaryActivities.activities}
+      {...data.newsBlock}
       parliamentaryActivitiesUrl={data.parliamentaryActivities.url}
-      twitterTitle={data.newsBlock.twitterTitle}
+      parliamentaryActivities={data.parliamentaryActivities.activities}
       calendarUrl={data.site.siteMetadata.calendarUrlPublicUrl}
-      calendarTitle={data.newsBlock.calendarTitle}
       calendarEvents={data.events.nodes}
     />
     <ContactUs
@@ -151,10 +142,6 @@ HomePage.propTypes = {
               childImageSharp: PropTypes.shape({}).isRequired,
             }).isRequired,
           }).isRequired,
-          title: PropTypes.string.isRequired,
-          subTitle: PropTypes.string.isRequired,
-          slug: PropTypes.string.isRequired,
-          category: PropTypes.string.isRequired,
         })
       ).isRequired,
     }).isRequired,
@@ -166,14 +153,8 @@ HomePage.propTypes = {
         url: PropTypes.string.isRequired,
       }).isRequired,
     }).isRequired,
-    newsBlock: PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      text: PropTypes.string.isRequired,
-      readMoreButtonTitle: PropTypes.string.isRequired,
-      parliamentTitle: PropTypes.string.isRequired,
-      calendarTitle: PropTypes.string.isRequired,
-      twitterTitle: PropTypes.string.isRequired,
-    }).isRequired,
+    newsBlock: PropTypes.shape({}).isRequired,
+    campaignsBlock: PropTypes.shape({}).isRequired,
     parliamentaryActivities: PropTypes.shape({
       url: PropTypes.string.isRequired,
       activities: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
@@ -191,6 +172,7 @@ export const pageQuery = graphql`
     ...Header
     ...Footer
     ...NewsBlock
+    ...CampaignsBlock
     ...ContactBlock
     site {
       siteMetadata {
@@ -241,16 +223,6 @@ export const pageQuery = graphql`
       }
       slider {
         button {
-          title
-          url
-        }
-      }
-      campaignsSection {
-        title
-        text
-        readMoreButtonTitle
-        campaignsSlug
-        allButton {
           title
           url
         }
