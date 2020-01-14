@@ -1,0 +1,15 @@
+[build]
+  environment = { YARN_VERSION = "1.21.1", APP_ENV = "development" }
+
+[context.production]
+  environment = { APP_ENV = "production" }
+
+[[redirects]]
+  from = "https://karimadelli.netlify.com"
+  to = "https://www.karimadelli.fr/"
+  status = 301
+
+[[redirects]]
+  from = "https://karimadelli.netlify.com/*"
+  to = "https://www.karimadelli.fr/:splat"
+  status = 301

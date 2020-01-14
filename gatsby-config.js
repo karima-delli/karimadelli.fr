@@ -2,7 +2,13 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
-const { NODE_ENV, APP_ENV = 'development', NETLIFY } = process.env;
+const {
+  NODE_ENV,
+  APP_ENV = 'development',
+  NETLIFY,
+  CONTENTFUL_SPACE_ID,
+  CONTENTFUL_ACCESS_TOKEN,
+} = process.env;
 
 // eslint-disable-next-line no-console
 console.log(`NODE_ENV ${NODE_ENV}`);
@@ -75,8 +81,9 @@ module.exports = {
     {
       resolve: 'gatsby-source-contentful',
       options: {
-        spaceId: 'nfkuui87vtpc',
-        accessToken: '7jYbnE24YkxT_A1O_Ub3jm6nJJ18binBZM8CbIvy1do',
+        spaceId: CONTENTFUL_SPACE_ID,
+        accessToken: CONTENTFUL_ACCESS_TOKEN,
+        // Download asset localy to be able to use gatsby image.
         downloadLocal: true,
       },
     },
