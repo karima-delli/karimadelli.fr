@@ -1,0 +1,11 @@
+lang: fr
+
+title: Recevoir nos campagnes par mail
+
+form: 
+  placeholder: Votre adresse mail
+  messages:
+    error: Une erreur est survenue, veuillez réessayer plus tard
+    success: Votre adresse email a bien été enregistrée, merci !
+  button: 
+    title: S'inscrire

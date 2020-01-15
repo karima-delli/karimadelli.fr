@@ -10,6 +10,7 @@ import NewsBlock from '../components/NewsBlock';
 import ContactUs from '../components/ContactUs';
 import Hr from '../components/Hr';
 import Metadata from '../components/Metadata';
+import NewsletterForm from '../components/NewsletterForm';
 
 const HomePage = ({ data, pageContext }) => (
   <>
@@ -57,6 +58,10 @@ const HomePage = ({ data, pageContext }) => (
       />
     )}
 
+    <Hr />
+
+    <NewsletterForm {...data.newsletterForm} />
+
     {data.statements.nodes.length && (
       <>
         <Hr />
@@ -67,12 +72,6 @@ const HomePage = ({ data, pageContext }) => (
         />
       </>
     )}
-
-    <section className="section">
-      <div className="container">
-        <h2>Newsletter</h2>
-      </div>
-    </section>
 
     <NewsBlock
       {...data.newsBlock}
@@ -165,6 +164,7 @@ HomePage.propTypes = {
     newsBlock: PropTypes.shape({}).isRequired,
     campaignsBlock: PropTypes.shape({}).isRequired,
     statementsBlock: PropTypes.shape({}).isRequired,
+    newsletterForm: PropTypes.shape({}).isRequired,
     parliamentaryActivities: PropTypes.shape({
       url: PropTypes.string.isRequired,
       activities: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
@@ -185,6 +185,7 @@ export const pageQuery = graphql`
     ...CampaignsBlock
     ...StatementsBlock
     ...ContactBlock
+    ...NewsletterForm
     site {
       siteMetadata {
         calendarUrlPublicUrl

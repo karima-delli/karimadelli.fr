@@ -10,6 +10,7 @@
     "postinstall": "yarn install:plugin:gatsby-contentful-rich-text-reading-time && yarn install:plugin:gatsby-source-europarl",
     "clean": "gatsby clean",
     "build": "gatsby build",
+    "netlify:dev": "netlify dev",
     "serve": "gatsby serve",
     "develop": "gatsby develop --port 8002 --host 0.0.0.0",
     "start": "npm run develop",
@@ -25,6 +26,7 @@
     "@fortawesome/react-fontawesome": "0.1.8",
     "bulma": "0.8.0",
     "cross-env": "6.0.3",
+    "cross-fetch": "3.0.4",
     "deep-map": "2.0.0",
     "dotenv": "8.2.0",
     "es6-weak-map": "2.0.3",
@@ -67,6 +69,7 @@
     "read-time-estimate": "0.0.2",
     "smoothscroll-polyfill": "0.4.4",
     "styled-components": "4.4.1",
+    "validator": "12.1.0",
     "whatwg-fetch": "3.0.0"
   },
   "devDependencies": {
@@ -78,6 +81,7 @@
     "eslint-plugin-jsx-a11y": "6.2.3",
     "eslint-plugin-prettier": "3.1.2",
     "eslint-plugin-react": "7.17.0",
+    "netlify-cli": "2.30.0",
     "prettier": "1.19.1"
   }
 }

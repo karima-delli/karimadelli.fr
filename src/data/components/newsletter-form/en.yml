@@ -1,0 +1,11 @@
+lang: en
+
+title: Suscribe to receive campaign updates
+
+form: 
+  placeholder: Your email
+  messages:
+    error: An error occurred, please try again later!
+    success: Your email is registered, thanks!
+  button: 
+    title: Subscribe
