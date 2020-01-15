@@ -44,8 +44,6 @@ const RichText = ({ json, assets }) => {
           },
           {}
         );
-        console.log(props);
-
         return <Iframe {...props} />;
       },
       [BLOCKS.EMBEDDED_ASSET]: node => {
