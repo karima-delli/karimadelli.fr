@@ -43,17 +43,23 @@ function createContact(email) {
 }
 
 async function addContactToList(email) {
+  const result = {
+    created: false,
+    added: false,
+  };
   const contact = await getContact(email);
 
   // Contact does not exist, create contact and add it to the list
   if (!contact) {
     createContact(email);
-    return;
+    result.created = true;
+    result.added = true;
+    return result;
   }
 
   // Contact already in list
   if (contact.listIds.includes(Number.parseInt(SENDINBLUE_LIST_ID, 10))) {
-    return;
+    return result;
   }
 
   // Add existing contact to list
@@ -64,15 +70,17 @@ async function addContactToList(email) {
       emails: [email],
     },
   });
+  result.added = true;
+  return result;
 }
 
 exports.handler = async event => {
   try {
     const data = JSON.parse(event.body);
-    await addContactToList(data.email);
+    const result = await addContactToList(data.email);
     return {
       statusCode: 200,
-      body: JSON.stringify({ message: 'ok' }),
+      body: JSON.stringify({ message: 'ok', result }),
     };
   } catch (err) {
     return { statusCode: 500, body: err.toString() };
