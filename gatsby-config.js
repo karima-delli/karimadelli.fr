@@ -149,16 +149,16 @@ module.exports = {
       },
     },
     'gatsby-plugin-react-helmet',
-    // {
-    //   resolve: `gatsby-plugin-google-analytics`,
-    //   options: {
-    //     // Note: the plugin should be able to get the NODE_ENV but because Gatsby
-    //     // override the NODE_ENV when building, it gets ignored.
-    //     trackingId: isProduction ? null : null,
-    //     anonymize: true,
-    //     respectDNT: true,
-    //   },
-    // },
+    {
+      resolve: `gatsby-plugin-google-analytics`,
+      options: {
+        // Note: the plugin should be able to get the NODE_ENV but because Gatsby
+        // override the NODE_ENV when building, it gets ignored.
+        trackingId: isProduction ? 'UA-149773608-1' : null,
+        anonymize: true,
+        respectDNT: true,
+      },
+    },
     {
       resolve: 'gatsby-plugin-google-fonts',
       options: {
