@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
-import styled from 'styled-components';
 import HeroSection from '../components/home/Hero';
 import LogosSection from '../components/home/Logos';
 import CarouselSection from '../components/home/Carousel';
@@ -9,14 +8,8 @@ import CampaignsBlock from '../components/CampaignsBlock';
 import StatementsBlock from '../components/StatementsBlock';
 import NewsBlock from '../components/NewsBlock';
 import ContactUs from '../components/ContactUs';
+import Hr from '../components/Hr';
 import Metadata from '../components/Metadata';
-
-const LongSeparatorStyled = styled.div`
-  margin: 2rem auto;
-  width: 90%;
-  height: 7px;
-  background: ${({ theme }) => theme.officeGreen};
-`;
 
 const HomePage = ({ data, pageContext }) => (
   <>
@@ -66,7 +59,7 @@ const HomePage = ({ data, pageContext }) => (
 
     {data.statements.nodes.length && (
       <>
-        <LongSeparatorStyled />
+        <Hr />
 
         <StatementsBlock
           {...data.statementsBlock}
