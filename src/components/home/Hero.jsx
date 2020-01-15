@@ -45,7 +45,7 @@ const HomeHero = ({ image, text, button }) => {
     image.mobile.childImageSharp.fluid,
     {
       ...image.tablet.childImageSharp.fluid,
-      media: `(min-width: 768px)`,
+      media: `(min-width: 768px) and (max-width: 1023px)`,
     },
     {
       ...image.desktop.childImageSharp.fluid,
@@ -58,7 +58,7 @@ const HomeHero = ({ image, text, button }) => {
       <ImageContainerStyled>
         <GatsbyImage
           fluid={sources}
-          imgStyle={{ objectFit: 'cover', objectPosition: 'center top' }}
+          imgStyle={{ objectFit: 'contain', objectPosition: 'center bottom' }}
         />
       </ImageContainerStyled>
 
@@ -78,9 +78,21 @@ const HomeHero = ({ image, text, button }) => {
 
 HomeHero.propTypes = {
   image: PropTypes.shape({
-    mobile: PropTypes.shape({}).isRequired,
-    tablet: PropTypes.shape({}).isRequired,
-    desktop: PropTypes.shape({}).isRequired,
+    mobile: PropTypes.shape({
+      childImageSharp: PropTypes.shape({
+        fluid: PropTypes.shape({}).isRequired,
+      }).isRequired,
+    }).isRequired,
+    tablet: PropTypes.shape({
+      childImageSharp: PropTypes.shape({
+        fluid: PropTypes.shape({}).isRequired,
+      }).isRequired,
+    }).isRequired,
+    desktop: PropTypes.shape({
+      childImageSharp: PropTypes.shape({
+        fluid: PropTypes.shape({}).isRequired,
+      }).isRequired,
+    }).isRequired,
   }).isRequired,
   text: PropTypes.string.isRequired,
   button: PropTypes.shape({}).isRequired,
