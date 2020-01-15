@@ -1,0 +1,9 @@
+lang: fr
+
+slug: "404"
+
+title: Oups ! Page non trouvée
+text: La page demandée ne semble pas exister.
+button:
+  title: Page d'accueil
+  url: /

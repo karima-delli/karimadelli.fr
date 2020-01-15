@@ -5,7 +5,7 @@ import { graphql } from 'gatsby';
 import Button from '../Button';
 import TextMarkdown from '../TextMarkdown';
 import TwitterTimelineWidget from '../TwitterTimelineWidget';
-import SectionTitle from '../SectionTitle';
+import Title from '../Title';
 import ParliamentaryActivities from './ParliamentaryActivities';
 import Calendar from './Calendar';
 
@@ -13,7 +13,7 @@ const SectionStyled = styled.section`
   background: ${({ theme }) => theme.grey};
 `;
 
-const TitleStyled = styled(SectionTitle)`
+const TitleStyled = styled(Title)`
   margin-bottom: 1rem;
 `;
 
@@ -72,7 +72,7 @@ const NewsBlock = ({
   return (
     <SectionStyled className="section">
       <div className="container">
-        <TitleStyled>{title}</TitleStyled>
+        <TitleStyled section>{title}</TitleStyled>
         <TextStyled>{text}</TextStyled>
         <div className="columns">
           <div className="column">

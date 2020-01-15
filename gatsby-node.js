@@ -135,6 +135,13 @@ exports.createPages = async ({ actions, graphql }) => {
           lang
         }
       }
+      allNotFoundYaml {
+        nodes {
+          id
+          slug
+          lang
+        }
+      }
       allContentfulCampaign {
         nodes {
           contentful_id
@@ -202,6 +209,8 @@ exports.createPages = async ({ actions, graphql }) => {
             alternates,
           },
         };
+        console.log(`Create static page ${pagePath}`);
+
         createPage(page);
       });
     });
@@ -261,6 +270,8 @@ exports.createPages = async ({ actions, graphql }) => {
               assetIds,
             },
           };
+
+          console.log(`Create contentful page ${pagePath}`);
           createPage(page);
         }
       );

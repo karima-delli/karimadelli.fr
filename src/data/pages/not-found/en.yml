@@ -1,0 +1,9 @@
+lang: en
+
+slug: "404"
+
+title: Oops! Page not found
+text: The requested page does not exist.
+button:
+  title: Home page
+  url: /en/

@@ -2,12 +2,12 @@ import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
 import styled, { ThemeContext } from 'styled-components';
-import SectionTitle from '../SectionTitle';
+import Title from '../Title';
 import TextMarkdown from '../TextMarkdown';
 import Button from '../Button';
 import CampaignBlock from './CampaignBlock';
 
-const TitleStyled = styled(SectionTitle)`
+const TitleStyled = styled(Title)`
   margin-bottom: 1rem;
 `;
 
@@ -35,7 +35,7 @@ const CampaignsBlock = ({
   return (
     <section className="section">
       <div className="container">
-        <TitleStyled>{title}</TitleStyled>
+        <TitleStyled section>{title}</TitleStyled>
         <TextStyled>{text}</TextStyled>
         <div className="columns is-multiline">
           {campaigns.map((campaign, index) => (

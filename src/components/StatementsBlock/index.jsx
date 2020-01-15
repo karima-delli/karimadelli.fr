@@ -2,12 +2,12 @@ import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
 import styled, { ThemeContext } from 'styled-components';
-import SectionTitle from '../SectionTitle';
+import Title from '../Title';
 import TextMarkdown from '../TextMarkdown';
 import Button from '../Button';
 import StatementBlock from './StatementBlock';
 
-const TitleStyled = styled(SectionTitle)`
+const TitleStyled = styled(Title)`
   margin-bottom: 1rem;
 `;
 
@@ -38,7 +38,7 @@ const StatementsBlock = ({
   return (
     <section className="section">
       <div className="container">
-        <TitleStyled>{title}</TitleStyled>
+        <TitleStyled section>{title}</TitleStyled>
         <TextStyled>{text}</TextStyled>
 
         <StatementContainerStyled>

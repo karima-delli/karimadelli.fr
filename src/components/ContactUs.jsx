@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
 import styled, { ThemeContext } from 'styled-components';
-import SectionTitle from './SectionTitle';
+import Title from './Title';
 import TextMarkdown from './TextMarkdown';
 import Button from './Button';
 
@@ -20,7 +20,7 @@ const ContactUs = ({ title, text, button }) => {
 
   return (
     <section className="section">
-      <SectionTitle>{title}</SectionTitle>
+      <Title section>{title}</Title>
       <div className="has-text-centered">
         <TextStyled>{text}</TextStyled>
         <Button
