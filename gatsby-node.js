@@ -38,6 +38,9 @@ function getParentNodes({ data, contentType }) {
   if (contentType === 'allContentfulCampaign') {
     return data.allCampaignsYaml.nodes;
   }
+  if (contentType === 'allContentfulStatement') {
+    return data.allStatementsYaml.nodes;
+  }
   return null;
 }
 
@@ -145,6 +148,16 @@ exports.createPages = async ({ actions, graphql }) => {
           }
         }
       }
+      allContentfulStatement {
+        nodes {
+          contentful_id
+          node_locale
+          slug
+          content {
+            json
+          }
+        }
+      }
       allContentfulPage {
         nodes {
           contentful_id
@@ -221,19 +234,18 @@ exports.createPages = async ({ actions, graphql }) => {
             parentNodes,
           });
 
+          // Extract assets from rich text content
           const assetIds = [];
           if (
             contentType === 'allContentfulCampaign' ||
+            contentType === 'allContentfulStatement' ||
             contentType === 'allContentfulPage'
           ) {
-            if (rest.content && rest.content.json) {
-              assetIds.push(...getAssetIdsFromRichTextJson(rest.content.json));
-            }
-            if (rest.shortContent && rest.shortContent.json) {
-              assetIds.push(
-                ...getAssetIdsFromRichTextJson(rest.shortContent.json)
-              );
-            }
+            Object.keys(rest).forEach(key => {
+              if (rest[key] && rest[key].json) {
+                assetIds.push(...getAssetIdsFromRichTextJson(rest[key].json));
+              }
+            });
           }
 
           const page = {
@@ -257,6 +269,19 @@ exports.createPages = async ({ actions, graphql }) => {
 
 exports.createSchemaCustomization = ({ actions, schema }) => {
   const { createTypes } = actions;
+
+  createTypes(`
+  type ContentfulCampaign implements Node {
+    description: String
+  }
+  `);
+
+  createTypes(`
+  type ContentfulStatement implements Node {
+    description: String
+    image: ContentfulAsset
+  }
+  `);
 
   // https://github.com/gatsbyjs/gatsby/issues/17159#issuecomment-549091641
   createTypes([

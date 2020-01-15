@@ -54,6 +54,7 @@ const SectionStyled = styled.section`
 const ContentStyled = styled.div`
   background: white;
   padding: 1.5rem;
+  text-align: center;
 `;
 
 const TriangleStyled = styled(Triangle)`
@@ -61,17 +62,23 @@ const TriangleStyled = styled(Triangle)`
   width: 100%;
 `;
 
+const DateStyled = styled.div`
+  color: ${({ theme }) => theme.brownGrey};
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  margin-bottom: 1rem;
+`;
+
 const TitleStyled = styled.h1`
   font-family: ${({ theme }) => theme.fontFamiliesAlternate};
   font-size: 2rem;
   line-height: 100%;
-  text-align: center;
   margin-bottom: 1rem;
 `;
 
 const SubTitleStyled = styled.h2`
   color: #505050;
-  text-align: center;
 `;
 
 const SeparatorStyled = styled.div`
@@ -85,12 +92,12 @@ const SeparatorStyled = styled.div`
 
 const ReadingTimeStyled = styled.div`
   margin-top: 1rem;
-  text-align: center;
   color: ${({ theme }) => theme.brownGrey};
 `;
 
 const Hero = ({
   image,
+  date,
   title,
   subTitle,
   displayShareButtons,
@@ -104,7 +111,7 @@ const Hero = ({
         <GatsbyImage
           fluid={image.fluid}
           style={{ position: 'absolute' }}
-          imgStyle={{ 'object-position': 'center top' }}
+          imgStyle={{ objectPosition: 'center top' }}
         />
       </ImageContainerStyled>
     )}
@@ -114,9 +121,13 @@ const Hero = ({
         <TriangleStyled color="#ffffff" direction="right" reverse />
       </div>
       <ContentStyled className="container">
+        {date && <DateStyled>{date}</DateStyled>}
         <TitleStyled>{title}</TitleStyled>
-        <SubTitleStyled>{subTitle}</SubTitleStyled>
-        <SeparatorStyled />
+        {subTitle && <SubTitleStyled>{subTitle}</SubTitleStyled>}
+
+        {((displayReadingTime && readingTime && readingTimeStr) ||
+          displayShareButtons) && <SeparatorStyled />}
+
         {displayReadingTime && readingTime && readingTimeStr && (
           <ReadingTimeStyled>
             {readingTime} {readingTimeStr}
@@ -132,21 +143,23 @@ Hero.propTypes = {
   image: PropTypes.shape({
     fluid: PropTypes.shape({}).isRequired,
   }),
+  date: PropTypes.string,
   title: PropTypes.string.isRequired,
+  subTitle: PropTypes.string,
   displayShareButtons: PropTypes.bool,
   displayReadingTime: PropTypes.bool,
   readingTime: PropTypes.number,
   readingTimeStr: PropTypes.string,
-  subTitle: PropTypes.string,
 };
 
 Hero.defaultProps = {
   image: null,
-  displayShareButtons: true,
+  date: null,
+  subTitle: null,
   displayReadingTime: true,
   readingTime: null,
   readingTimeStr: null,
-  subTitle: null,
+  displayShareButtons: true,
 };
 
 export default Hero;

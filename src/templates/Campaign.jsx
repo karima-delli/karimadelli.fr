@@ -16,7 +16,7 @@ const Campaign = ({ data, pageContext }) => {
       <Metadata
         metadata={{
           title: data.content.title,
-          description: data.content.subTitle,
+          description: data.content.description || data.content.subTitle,
         }}
         locale={pageContext.locale}
         lang={pageContext.lang}
@@ -71,6 +71,7 @@ Campaign.propTypes = {
         }).isRequired,
       }).isRequired,
       title: PropTypes.string.isRequired,
+      description: PropTypes.string,
       subTitle: PropTypes.string.isRequired,
       shortContent: PropTypes.shape({
         readingTime: PropTypes.number.isRequired,
@@ -125,6 +126,7 @@ export const pageQuery = graphql`
         }
       }
       title
+      description
       subTitle
       shortContent {
         json

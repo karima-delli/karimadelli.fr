@@ -91,6 +91,7 @@ module.exports = {
       resolve: 'gatsby-contentful-rich-text-reading-time',
       options: {
         types: [
+          { name: 'contentfulStatementContentRichTextNode', field: 'content' },
           { name: 'contentfulCampaignContentRichTextNode', field: 'content' },
           {
             name: 'contentfulCampaignShortContentRichTextNode',

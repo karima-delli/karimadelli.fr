@@ -1,0 +1,9 @@
+lang: en
+
+title: My statements
+text: My reactions
+readMoreButtonTitle: Read more
+statementsSlug: /en/breves/
+allButton: 
+  title: All the statements
+  url: /en/statements/

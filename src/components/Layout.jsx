@@ -30,7 +30,6 @@ Layout.propTypes = {
   data: PropTypes.shape({
     header: PropTypes.shape({}).isRequired,
     headerSocialLinks: PropTypes.shape({}).isRequired,
-    page: PropTypes.shape({}).isRequired,
     footer: PropTypes.shape({}).isRequired,
     footerSocialLinks: PropTypes.shape({}).isRequired,
   }).isRequired,

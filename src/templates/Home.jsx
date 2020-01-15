@@ -1,13 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
+import styled from 'styled-components';
 import HeroSection from '../components/home/Hero';
 import LogosSection from '../components/home/Logos';
 import CarouselSection from '../components/home/Carousel';
 import CampaignsBlock from '../components/CampaignsBlock';
+import StatementsBlock from '../components/StatementsBlock';
 import NewsBlock from '../components/NewsBlock';
 import ContactUs from '../components/ContactUs';
 import Metadata from '../components/Metadata';
+
+const LongSeparatorStyled = styled.div`
+  margin: 2rem auto;
+  width: 90%;
+  height: 7px;
+  background: ${({ theme }) => theme.officeGreen};
+`;
 
 const HomePage = ({ data, pageContext }) => (
   <>
@@ -42,15 +51,29 @@ const HomePage = ({ data, pageContext }) => (
         };
       })}
     />
-    <CampaignsBlock
-      {...data.campaignsBlock}
-      campaigns={data.campaigns.nodes.map(node => {
-        return {
-          ...node,
-          image: node.image.localFile.childImageSharp,
-        };
-      })}
-    />
+
+    {data.campaigns.nodes.length && (
+      <CampaignsBlock
+        {...data.campaignsBlock}
+        campaigns={data.campaigns.nodes.map(node => {
+          return {
+            ...node,
+            image: node.image.localFile.childImageSharp,
+          };
+        })}
+      />
+    )}
+
+    {data.statements.nodes.length && (
+      <>
+        <LongSeparatorStyled />
+
+        <StatementsBlock
+          {...data.statementsBlock}
+          statements={data.statements.nodes}
+        />
+      </>
+    )}
 
     <section className="section">
       <div className="container">
@@ -108,16 +131,6 @@ HomePage.propTypes = {
       slider: PropTypes.shape({
         button: PropTypes.shape({}).isRequired,
       }).isRequired,
-      campaignsSection: PropTypes.shape({
-        title: PropTypes.string.isRequired,
-        text: PropTypes.string.isRequired,
-        readMoreButtonTitle: PropTypes.string.isRequired,
-        campaignsSlug: PropTypes.string.isRequired,
-        allButton: PropTypes.shape({
-          title: PropTypes.string.isRequired,
-          url: PropTypes.string.isRequired,
-        }).isRequired,
-      }).isRequired,
     }),
     slider: PropTypes.shape({
       slides: PropTypes.arrayOf(
@@ -145,6 +158,9 @@ HomePage.propTypes = {
         })
       ).isRequired,
     }).isRequired,
+    statements: PropTypes.shape({
+      nodes: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+    }).isRequired,
     contactUs: PropTypes.shape({
       title: PropTypes.string.isRequired,
       text: PropTypes.string.isRequired,
@@ -155,6 +171,7 @@ HomePage.propTypes = {
     }).isRequired,
     newsBlock: PropTypes.shape({}).isRequired,
     campaignsBlock: PropTypes.shape({}).isRequired,
+    statementsBlock: PropTypes.shape({}).isRequired,
     parliamentaryActivities: PropTypes.shape({
       url: PropTypes.string.isRequired,
       activities: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
@@ -173,6 +190,7 @@ export const pageQuery = graphql`
     ...Footer
     ...NewsBlock
     ...CampaignsBlock
+    ...StatementsBlock
     ...ContactBlock
     site {
       siteMetadata {
@@ -266,6 +284,16 @@ export const pageQuery = graphql`
         title
         subTitle
         category
+      }
+    }
+    statements: allContentfulStatement(
+      limit: 3
+      filter: { node_locale: { eq: $lang } }
+    ) {
+      nodes {
+        slug
+        title
+        date(formatString: "DD/MM/YYYY")
       }
     }
   }

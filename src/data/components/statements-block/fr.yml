@@ -1,0 +1,9 @@
+lang: fr
+
+title: Mes brèves
+text: Mes déclarations sur l'actualité parlementaire
+readMoreButtonTitle: En savoir plus
+statementsSlug: /breves/
+allButton: 
+  title: Voir toutes les brèves
+  url: /breves/
