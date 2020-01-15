@@ -1,5 +1,8 @@
 [build]
   environment = { YARN_VERSION = "1.21.1", APP_ENV = "development" }
+  command = "yarn build"
+  publish = "public/"
+  functions = "functions"
 
 [context.production]
   environment = { APP_ENV = "production" }
