@@ -89,6 +89,7 @@ const HomePage = ({ data, pageContext }) => {
         baseTitleTag={2}
         parliamentaryActivitiesUrl={data.parliamentaryActivities.url}
         parliamentaryActivities={data.parliamentaryActivities.activities}
+        calendarEnabled={false}
         calendarUrl={data.site.siteMetadata.calendarUrlPublicUrl}
         calendarEvents={data.events.nodes}
       />

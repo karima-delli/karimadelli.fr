@@ -64,6 +64,7 @@ const NewsBlock = ({
   parliamentaryActivities,
   parliamentaryActivitiesUrl,
   twitterTitle,
+  calendarEnabled,
   calendarUrl,
   calendarTitle,
   calendarEvents,
@@ -99,18 +100,25 @@ const NewsBlock = ({
                 underlined
               />
             </ReadMoreButtonContainerStyled>
-            <BlockTitleStyled as={`h${baseTitleTag + 1}`}>
-              {calendarTitle}
-            </BlockTitleStyled>
-            <Calendar events={calendarEvents} baseTitleTag={baseTitleTag + 2} />
-            <ReadMoreButtonContainerStyled>
-              <Button
-                title={readMoreButtonTitle}
-                url={calendarUrl}
-                color={theme.brownGrey}
-                underlined
-              />
-            </ReadMoreButtonContainerStyled>
+            {calendarEnabled && (
+              <>
+                <BlockTitleStyled as={`h${baseTitleTag + 1}`}>
+                  {calendarTitle}
+                </BlockTitleStyled>
+                <Calendar
+                  events={calendarEvents}
+                  baseTitleTag={baseTitleTag + 2}
+                />
+                <ReadMoreButtonContainerStyled>
+                  <Button
+                    title={readMoreButtonTitle}
+                    url={calendarUrl}
+                    color={theme.brownGrey}
+                    underlined
+                  />
+                </ReadMoreButtonContainerStyled>
+              </>
+            )}
           </div>
           <TwitterColumnStyled className="column">
             <BlockTitleStyled as={`h${baseTitleTag + 1}`}>
@@ -135,6 +143,7 @@ NewsBlock.propTypes = {
   parliamentaryActivities: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   parliamentaryActivitiesUrl: PropTypes.string.isRequired,
   twitterTitle: PropTypes.string.isRequired,
+  calendarEnabled: PropTypes.bool.isRequired,
   calendarUrl: PropTypes.string.isRequired,
   calendarTitle: PropTypes.string.isRequired,
   calendarEvents: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
