@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
-import styled, { ThemeContext } from 'styled-components';
+import { ThemeContext } from 'styled-components';
 import HeroSection from '../components/home/Hero';
 import LogosSection from '../components/home/Logos';
 import CarouselSection from '../components/home/Carousel';
