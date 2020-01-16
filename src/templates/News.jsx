@@ -22,6 +22,7 @@ const NewsPage = ({ data, pageContext }) => (
       parliamentaryActivities={data.parliamentaryActivities.activities}
       parliamentaryActivitiesUrl={data.parliamentaryActivities.url}
       twitterTitle={data.newsBlock.twitterTitle}
+      calendarEnabled={false}
       calendarUrl={data.site.siteMetadata.calendarUrlPublicUrl}
       calendarTitle={data.newsBlock.calendarTitle}
       calendarEvents={data.events.nodes}
