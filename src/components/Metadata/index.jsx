@@ -30,9 +30,9 @@ const Metadata = ({ metadata, locale, lang, url, alternates }) => {
           siteUrl,
           siteName,
           twitterNickname,
-          socialImages,
+          socialImages: socialImagesDefault,
         } = globalMetadata;
-        const { title, description } = metadata;
+        const { title, description, socialImages = {} } = metadata;
 
         const alternateLinks = alternates.map(alternate => {
           return {
@@ -48,8 +48,10 @@ const Metadata = ({ metadata, locale, lang, url, alternates }) => {
           };
         });
 
-        const ogImageUrl = `${siteUrl}${socialImages.default}`;
-        const twitterImageUrl = `${siteUrl}${socialImages.twitter}`;
+        const ogImageUrl =
+          socialImages.default || `${siteUrl}${socialImagesDefault.default}`;
+        const twitterImageUrl =
+          socialImages.twitter || `${siteUrl}${socialImagesDefault.default}`;
 
         return (
           <>
@@ -98,6 +100,10 @@ Metadata.propTypes = {
   metadata: PropTypes.shape({
     title: PropTypes.string,
     description: PropTypes.string,
+    socialImages: PropTypes.shape({
+      default: PropTypes.string,
+      twitter: PropTypes.string,
+    }),
   }),
   locale: PropTypes.string,
   lang: PropTypes.string,

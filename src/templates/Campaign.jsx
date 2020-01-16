@@ -15,12 +15,22 @@ const Campaign = ({ data, pageContext }) => {
     data.content.shortContent.readingTime + data.content.content.readingTime
   );
 
+  const { siteUrl } = data.site.siteMetadata;
+  const defaultImageUrl =
+    data.content.defaultSocialImage.localFile.childImageSharp.fixed.src;
+  const twitterImageUrl =
+    data.content.twitterSocialImage.localFile.childImageSharp.fixed.src;
+
   return (
     <article>
       <Metadata
         metadata={{
           title: data.content.title,
           description: data.content.description || data.content.subTitle,
+          socialImages: {
+            default: siteUrl + defaultImageUrl,
+            twitter: siteUrl + twitterImageUrl,
+          },
         }}
         locale={pageContext.locale}
         lang={pageContext.lang}
@@ -52,8 +62,6 @@ const Campaign = ({ data, pageContext }) => {
       <Hr className="is-small" color={theme.officeGreen} />
 
       <NewsletterForm {...data.newsletterForm} />
-
-      {/* autres campaigns */}
     </article>
   );
 };
@@ -66,6 +74,11 @@ Campaign.propTypes = {
     alternates: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   }).isRequired,
   data: PropTypes.shape({
+    site: PropTypes.shape({
+      siteMetadata: PropTypes.shape({
+        siteUrl: PropTypes.string.isRequired,
+      }).isRequired,
+    }).isRequired,
     page: PropTypes.shape({
       readingTime: PropTypes.string.isRequired,
       shortContentTitle: PropTypes.string.isRequired,
@@ -75,6 +88,24 @@ Campaign.propTypes = {
         localFile: PropTypes.shape({
           childImageSharp: PropTypes.shape({
             fluid: PropTypes.shape({}).isRequired,
+          }).isRequired,
+        }).isRequired,
+      }).isRequired,
+      defaultSocialImage: PropTypes.shape({
+        localFile: PropTypes.shape({
+          childImageSharp: PropTypes.shape({
+            fixed: PropTypes.shape({
+              src: PropTypes.string.isRequired,
+            }).isRequired,
+          }).isRequired,
+        }).isRequired,
+      }).isRequired,
+      twitterSocialImage: PropTypes.shape({
+        localFile: PropTypes.shape({
+          childImageSharp: PropTypes.shape({
+            fixed: PropTypes.shape({
+              src: PropTypes.string.isRequired,
+            }).isRequired,
           }).isRequired,
         }).isRequired,
       }).isRequired,
@@ -104,6 +135,11 @@ export const pageQuery = graphql`
     ...Header
     ...Footer
     ...NewsletterForm
+    site {
+      siteMetadata {
+        siteUrl
+      }
+    }
     page: campaignYaml(lang: { eq: $lang }) {
       readingTime
       shortContentTitle
@@ -131,6 +167,24 @@ export const pageQuery = graphql`
           childImageSharp {
             fluid(maxWidth: 2000, quality: 100) {
               ...GatsbyImageSharpFluid
+            }
+          }
+        }
+      }
+      defaultSocialImage: image {
+        localFile {
+          childImageSharp {
+            fixed(width: 1200, height: 630, quality: 100) {
+              ...GatsbyImageSharpFixed_noBase64
+            }
+          }
+        }
+      }
+      twitterSocialImage: image {
+        localFile {
+          childImageSharp {
+            fixed(width: 880, height: 440, quality: 100) {
+              ...GatsbyImageSharpFixed_noBase64
             }
           }
         }
