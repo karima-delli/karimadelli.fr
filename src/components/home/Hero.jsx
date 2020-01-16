@@ -10,10 +10,14 @@ const ContainerStyled = styled.div`
   width: 100%;
   margin-top: -4.7rem;
   height: 100vh;
-  min-height: 500px;
   display: flex;
   flex-direction: column;
   align-items: stretch;
+  min-height: 500px;
+
+  @media (min-width: ${({ theme }) => theme.breakpointTablet}) {
+    min-height: 750px;
+  }
 `;
 
 const ImageContainerStyled = styled.div`
@@ -21,7 +25,11 @@ const ImageContainerStyled = styled.div`
   flex: 1;
   overflow: hidden;
 
-  > .gatsby-image-wrapper {
+  .container {
+    height: 100%;
+  }
+
+  .gatsby-image-wrapper {
     position: absolute;
     top: 0;
     left: 0;
@@ -32,11 +40,13 @@ const ImageContainerStyled = styled.div`
 
 const ContentContainerStyled = styled.div`
   width: 100%;
-  padding: 2rem;
-  font-family: ${({ theme }) => theme.fontFamiliesAlternate};
-  background-color: ${({ theme }) => theme.officeGreen};
-  color: ${({ theme }) => theme.white};
-  text-align: center;
+  > .container {
+    padding: 2rem;
+    text-align: center;
+    font-family: ${({ theme }) => theme.fontFamiliesAlternate};
+    color: ${({ theme }) => theme.white};
+    background-color: ${({ theme }) => theme.officeGreen};
+  }
 `;
 
 const TextStyled = styled(TextMarkdown)`
@@ -65,10 +75,12 @@ const HomeHero = ({ image, text, button }) => {
   return (
     <ContainerStyled>
       <ImageContainerStyled>
-        <GatsbyImage
-          fluid={sources}
-          imgStyle={{ objectFit: 'contain', objectPosition: 'center bottom' }}
-        />
+        <div className="container is-flex">
+          <GatsbyImage
+            fluid={sources}
+            imgStyle={{ objectFit: 'cover', objectPosition: 'center bottom' }}
+          />
+        </div>
       </ImageContainerStyled>
 
       <ContentContainerStyled>
