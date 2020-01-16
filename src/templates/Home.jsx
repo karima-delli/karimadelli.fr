@@ -54,6 +54,9 @@ const HomePage = ({ data, pageContext }) => {
         <CampaignsBlock
           {...data.campaignsBlock}
           baseTitleTag={2}
+          allButton={
+            data.campaigns.nodes === 3 ? data.campaignsBlock.allButton : null
+          }
           campaigns={data.campaigns.nodes.map(node => {
             return {
               ...node,
@@ -172,7 +175,9 @@ HomePage.propTypes = {
       }).isRequired,
     }).isRequired,
     newsBlock: PropTypes.shape({}).isRequired,
-    campaignsBlock: PropTypes.shape({}).isRequired,
+    campaignsBlock: PropTypes.shape({
+      allButton: PropTypes.shape({}).isRequired,
+    }).isRequired,
     statementsBlock: PropTypes.shape({}).isRequired,
     newsletterForm: PropTypes.shape({}).isRequired,
     parliamentaryActivities: PropTypes.shape({
