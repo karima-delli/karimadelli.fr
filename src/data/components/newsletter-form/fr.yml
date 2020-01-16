@@ -1,9 +1,9 @@
 lang: fr
 
-title: Recevoir nos campagnes par mail
+title: Recevoir nos campagnes par email
 
 form: 
-  placeholder: Votre adresse mail
+  placeholder: Votre adresse email
   messages:
     error: Une erreur est survenue, veuillez réessayer plus tard
     success: Votre adresse email a bien été enregistrée, merci !

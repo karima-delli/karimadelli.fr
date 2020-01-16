@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
+import { ThemeContext } from 'styled-components';
 import RichText from '../components/RichText';
 import HeroContent from '../components/HeroContent';
 import ShortContent from '../components/campaign/ShortContent';
 import Metadata from '../components/Metadata';
+import NewsletterForm from '../components/NewsletterForm';
+import Hr from '../components/Hr';
 
 const Campaign = ({ data, pageContext }) => {
+  const theme = useContext(ThemeContext);
   const readingTime = Math.ceil(
     data.content.shortContent.readingTime + data.content.content.readingTime
   );
@@ -45,7 +49,10 @@ const Campaign = ({ data, pageContext }) => {
           />
         </div>
       </section>
-      {/* block newsletter */}
+      <Hr className="is-small" color={theme.officeGreen} />
+
+      <NewsletterForm {...data.newsletterForm} />
+
       {/* autres campaigns */}
     </article>
   );
@@ -86,6 +93,7 @@ Campaign.propTypes = {
     contentRichTextAssets: PropTypes.shape({
       nodes: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
     }).isRequired,
+    newsletterForm: PropTypes.shape({}).isRequired,
   }).isRequired,
 };
 
@@ -95,6 +103,7 @@ export const pageQuery = graphql`
   query CampaignQuery($lang: String!, $id: String!, $assetIds: [String!]!) {
     ...Header
     ...Footer
+    ...NewsletterForm
     page: campaignYaml(lang: { eq: $lang }) {
       readingTime
       shortContentTitle
