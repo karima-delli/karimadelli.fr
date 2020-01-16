@@ -1,7 +1,7 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
-import styled, { ThemeContext } from 'styled-components';
+import styled from 'styled-components';
 import FacebookIcon from './Icons/Facebook';
 import InstagramIcon from './Icons/Instagram';
 import TwitterIcon from './Icons/Twitter';
