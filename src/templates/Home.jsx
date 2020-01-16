@@ -281,7 +281,7 @@ export const pageQuery = graphql`
       }
     }
     statements: allContentfulStatement(
-      limit: 3
+      limit: 1
       filter: { node_locale: { eq: $lang } }
     ) {
       nodes {
