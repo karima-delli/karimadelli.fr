@@ -1,6 +1,8 @@
 @import '../../styles/theme.scss';
 
 .rich-text {
+  line-height: 1.8rem;
+
   p:not(:last-child) {
     margin-bottom: 2rem;
   }
@@ -20,6 +22,7 @@
 
   h1, h2, h3, h4, h5, h6 {
     font-family: $font-family-alternate;
+    line-height: 1.5rem;
 
     &:not(:last-child) {
       margin-bottom: 2rem;
@@ -48,5 +51,11 @@
 
   h6 {
     font-size: 1.1rem;
+  }
+
+  ul, ol {
+    li {
+      margin-bottom: 0.5rem;
+    }
   }
 }

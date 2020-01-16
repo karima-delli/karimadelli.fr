@@ -51,7 +51,7 @@ const NavbarStartStyled = styled.div`
 
   ${LangSwitcherContainerStyled} {
     position: absolute;
-    top: ${3.25 + 1}rem;
+    top: ${4.7 + 1}rem;
     right: 1rem;
   }
 `;

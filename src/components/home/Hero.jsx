@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 import GatsbyImage from 'gatsby-image';
 import styled, { ThemeContext } from 'styled-components';
 import Button from '../Button';
+import TextMarkdown from '../TextMarkdown';
 
 const ContainerStyled = styled.div`
   position: relative;
   width: 100%;
-  margin-top: -3.25rem;
+  margin-top: -4.7rem;
   height: 100vh;
   min-height: 500px;
   display: flex;
@@ -36,6 +37,14 @@ const ContentContainerStyled = styled.div`
   background-color: ${({ theme }) => theme.officeGreen};
   color: ${({ theme }) => theme.white};
   text-align: center;
+`;
+
+const TextStyled = styled(TextMarkdown)`
+  font-size: 1.1rem;
+
+  @media (min-width: ${({ theme }) => theme.breakpointTablet}) {
+    font-size: 1.3rem;
+  }
 `;
 
 const HomeHero = ({ image, text, button }) => {
@@ -69,7 +78,7 @@ const HomeHero = ({ image, text, button }) => {
             color={theme.officeGreen}
             background={theme.white}
           />
-          <p>{text}</p>
+          <TextStyled>{text}</TextStyled>
         </div>
       </ContentContainerStyled>
     </ContainerStyled>

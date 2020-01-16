@@ -33,7 +33,7 @@ const ButtonUnderlinedStyled = styled(ButtonBaseStyled)`
   &::after {
     content: '';
     position: absolute;
-    bottom: 0;
+    bottom: 3px;
     left: 1rem;
     right: 1rem;
     height: 2px;

@@ -18,6 +18,10 @@ const IframeStyled = styled(Iframe)`
   margin-bottom: 2rem;
 `;
 
+const GatsbyImageStyled = styled(GatsbyImage)`
+  margin-bottom: 2rem;
+`;
+
 const RichText = ({ json, assets }) => {
   const getAsset = contentfulId => {
     return assets.find(asset => asset.contentful_id === contentfulId);
@@ -60,7 +64,9 @@ const RichText = ({ json, assets }) => {
         if (!asset) {
           return <></>;
         }
-        return <GatsbyImage fluid={asset.localFile.childImageSharp.fluid} />;
+        return (
+          <GatsbyImageStyled fluid={asset.localFile.childImageSharp.fluid} />
+        );
       },
     },
   };
