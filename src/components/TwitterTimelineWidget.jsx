@@ -36,7 +36,7 @@ const TwitterTimelineWidget = ({
       data-height="100%"
       href="https://twitter.com/KarimaDelli"
     >
-      <>Tweets by KarimaDelli</>
+      Tweets by KarimaDelli
     </a>
   </ContainerStyled>
 );
