@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import HeroContent from '../components/HeroContent';
 import Metadata from '../components/Metadata';
 import Form from '../components/contact/Form';
+import FollowUs from '../components/FollowUs';
 
 const SectionStyled = styled.section`
   padding-top: 0 !important;
@@ -33,6 +34,8 @@ const ContactPage = ({ data, pageContext }) => (
         <Form {...data.page.form} />
       </div>
     </SectionStyled>
+
+    <FollowUs {...data.followUs} socialLinks={data.followUsSocialLinks} />
   </>
 );
 
@@ -66,6 +69,8 @@ ContactPage.propTypes = {
         }).isRequired,
       }).isRequired,
     }).isRequired,
+    followUs: PropTypes.shape({}).isRequired,
+    followUsSocialLinks: PropTypes.shape({}).isRequired,
   }).isRequired,
 };
 
@@ -75,6 +80,7 @@ export const pageQuery = graphql`
   query ContactPageQuery($lang: String!) {
     ...Header
     ...Footer
+    ...FollowUs
     page: contactYaml(lang: { eq: $lang }) {
       metadata {
         title
