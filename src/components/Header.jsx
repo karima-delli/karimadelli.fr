@@ -69,6 +69,24 @@ const LinkStyled = styled(Link)`
         navbarstyle === 1 ? theme.officeGreen : theme.white
       )} !important;
   }
+
+  &.is-active {
+    position: relative;
+
+    &:after {
+      content: '';
+      position: absolute;
+      bottom: 1rem;
+      left: 0.75rem;
+      right: 0.75rem;
+      height: 3px;
+      background: ${({ navbarstyle, theme }) =>
+        darken(
+          0.05,
+          navbarstyle === 1 ? theme.officeGreen : theme.white
+        )} !important;
+    }
+  }
 `;
 
 const NavbarEndStyled = styled.div`
@@ -121,6 +139,10 @@ const NavbarStyled = styled.nav`
             &:hover {
               color: ${({ theme }) => darken(0.05, theme.white)} !important;
             }
+
+            &.is-active:after {
+              display: none;
+            }
           }
         }
 
@@ -136,7 +158,7 @@ const NavbarStyled = styled.nav`
   }
 `;
 
-const Header = ({ isTransparent, header, socialLinks }) => {
+const Header = ({ isTransparent, header, socialLinks, currentPath }) => {
   const theme = useContext(ThemeContext);
   const [navbarMenuActive, setNavbarActive] = useState(false);
 
@@ -239,7 +261,9 @@ const Header = ({ isTransparent, header, socialLinks }) => {
             {header.menu.links.map(link => (
               <LinkStyled
                 key={link.url}
-                className="navbar-item"
+                className={`navbar-item ${
+                  currentPath === link.url ? 'is-active' : ''
+                }`}
                 url={link.url}
                 onClick={() => setNavbarActive(false)}
                 navbarstyle={navbarStyle}
@@ -300,6 +324,7 @@ const Header = ({ isTransparent, header, socialLinks }) => {
 
 Header.propTypes = {
   isTransparent: PropTypes.bool.isRequired,
+  currentPath: PropTypes.string.isRequired,
   header: PropTypes.shape({
     logo: PropTypes.shape({
       url: PropTypes.string.isRequired,

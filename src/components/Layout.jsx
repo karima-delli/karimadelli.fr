@@ -5,7 +5,7 @@ import Footer from './Footer';
 import { Provider as LangSwitchProvider } from './LangSwitcher';
 import '../styles/app.scss';
 
-const Layout = ({ data, children, pageContext }) => (
+const Layout = ({ data, children, pageContext, location }) => (
   <LangSwitchProvider
     lang={pageContext.lang}
     alternates={pageContext.alternates}
@@ -14,6 +14,7 @@ const Layout = ({ data, children, pageContext }) => (
       header={data.header}
       socialLinks={data.headerSocialLinks}
       isTransparent={pageContext.name === 'Home'}
+      currentPath={location.pathname}
     />
     {children}
     <Footer footer={data.footer} socialLinks={data.footerSocialLinks} />
@@ -26,6 +27,9 @@ Layout.propTypes = {
     lang: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired,
     alternates: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  }).isRequired,
+  location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired,
   }).isRequired,
   data: PropTypes.shape({
     header: PropTypes.shape({}).isRequired,
