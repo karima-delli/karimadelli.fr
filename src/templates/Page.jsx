@@ -27,6 +27,7 @@ const Page = ({ data, pageContext }) => {
         image={
           data.page.image ? data.page.image.localFile.childImageSharp : null
         }
+        url={pageContext.url}
         title={data.page.title}
         subTitle={data.page.subTitle}
         displayReadingTime={data.page.displayReadingTime}

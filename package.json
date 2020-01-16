@@ -65,6 +65,7 @@
     "react-intersection-observer": "8.25.2",
     "react-interval": "2.1.1",
     "react-markdown": "4.3.1",
+    "react-share": "4.0.1",
     "react-transition-group": "4.3.0",
     "read-time-estimate": "0.0.2",
     "smoothscroll-polyfill": "0.4.4",

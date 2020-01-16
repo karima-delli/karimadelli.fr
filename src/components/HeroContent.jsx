@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { graphql } from 'gatsby';
 import GatsbyImage from 'gatsby-image';
+import ShareButtons from './ShareButtons';
 import Triangle from './Triangle';
 
 const RATIO_MOBILE = 120 / 160;
@@ -97,6 +98,7 @@ const ReadingTimeStyled = styled.div`
 
 const Hero = ({
   image,
+  url,
   date,
   title,
   subTitle,
@@ -133,7 +135,7 @@ const Hero = ({
             {readingTime} {readingTimeStr}
           </ReadingTimeStyled>
         )}
-        {displayShareButtons && <div>share tools</div>}
+        {displayShareButtons && url && <ShareButtons url={url} />}
       </ContentStyled>
     </SectionStyled>
   </ContainerStyled>
@@ -143,6 +145,7 @@ Hero.propTypes = {
   image: PropTypes.shape({
     fluid: PropTypes.shape({}).isRequired,
   }),
+  url: PropTypes.string,
   date: PropTypes.string,
   title: PropTypes.string.isRequired,
   subTitle: PropTypes.string,
@@ -154,6 +157,7 @@ Hero.propTypes = {
 
 Hero.defaultProps = {
   image: null,
+  url: null,
   date: null,
   subTitle: null,
   displayReadingTime: true,

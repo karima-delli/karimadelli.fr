@@ -25,6 +25,7 @@ const Campaign = ({ data, pageContext }) => {
       />
       <HeroContent
         image={data.content.image.localFile.childImageSharp}
+        url={pageContext.url}
         readingTime={readingTime}
         readingTimeStr={data.page.readingTime}
         title={data.content.title}

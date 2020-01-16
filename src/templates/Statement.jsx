@@ -19,6 +19,7 @@ const Statement = ({ data, pageContext }) => (
     />
     <HeroContent
       image={data.content.image && data.content.image.localFile.childImageSharp}
+      url={pageContext.url}
       date={data.content.date}
       title={data.content.title}
     />
