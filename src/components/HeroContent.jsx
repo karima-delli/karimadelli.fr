@@ -58,6 +58,11 @@ const ContentStyled = styled.div`
   text-align: center;
 `;
 
+const TriangleContainerStyled = styled.div`
+  position: relative;
+  top: 0.5px;
+`;
+
 const TriangleStyled = styled(Triangle)`
   display: block;
   width: 100%;
@@ -119,9 +124,9 @@ const Hero = ({
     )}
 
     <SectionStyled className={`section ${image ? 'has-image' : ''}`}>
-      <div className="container">
+      <TriangleContainerStyled className="container">
         <TriangleStyled color="#ffffff" direction="right" reverse />
-      </div>
+      </TriangleContainerStyled>
       <ContentStyled className="container">
         {date && <DateStyled>{date}</DateStyled>}
         <TitleStyled>{title}</TitleStyled>

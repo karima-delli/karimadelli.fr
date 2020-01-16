@@ -46,6 +46,11 @@ const ContentStyled = styled.div`
   border-top: none;
 `;
 
+const TriangleContainerStyled = styled.div`
+  position: relative;
+  top: 0.5px;
+`;
+
 const TriangleStyled = styled(Triangle)`
   display: block;
   width: 100%;
@@ -100,9 +105,9 @@ const CampaignBlock = ({
       </ImageContainerStyled>
 
       <SectionStyled className="section">
-        <div className="container">
+        <TriangleContainerStyled className="container">
           <TriangleStyled color="#ffffff" direction="right" reverse />
-        </div>
+        </TriangleContainerStyled>
         <ContentStyled className="container">
           <CategoryStyled>{category}</CategoryStyled>
           <LinkStyled url={url}>
