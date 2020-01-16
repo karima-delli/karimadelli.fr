@@ -13,7 +13,7 @@ const SectionStyled = styled.section`
   background: ${({ theme }) => theme.grey};
 `;
 
-const TitleStyled = styled(Title)`
+const TitleWrapperStyled = styled.div`
   margin-bottom: 1rem;
 `;
 
@@ -56,6 +56,7 @@ const TwitterWidgetContainer = styled.div`
 `;
 
 const NewsBlock = ({
+  baseTitleTag,
   title,
   text,
   readMoreButtonTitle,
@@ -72,15 +73,22 @@ const NewsBlock = ({
   return (
     <SectionStyled className="section">
       <div className="container">
-        <TitleStyled section>{title}</TitleStyled>
+        <TitleWrapperStyled>
+          <Title section as={`h${baseTitleTag}`}>
+            {title}
+          </Title>
+        </TitleWrapperStyled>
         <TextStyled>{text}</TextStyled>
         <div className="columns">
           <div className="column">
-            <BlockTitleStyled>{parliamentTitle}</BlockTitleStyled>
+            <BlockTitleStyled as={`h${baseTitleTag + 1}`}>
+              {parliamentTitle}
+            </BlockTitleStyled>
             <ParliamentaryActivities
               title={parliamentTitle}
               readMoreButtonTitle={readMoreButtonTitle}
               activities={parliamentaryActivities}
+              titleTag={`h${baseTitleTag + 2}`}
               parliamentActivitiesUrl={parliamentaryActivitiesUrl}
             />
             <ReadMoreButtonContainerStyled>
@@ -91,8 +99,10 @@ const NewsBlock = ({
                 underlined
               />
             </ReadMoreButtonContainerStyled>
-            <BlockTitleStyled>{calendarTitle}</BlockTitleStyled>
-            <Calendar events={calendarEvents} />
+            <BlockTitleStyled as={`h${baseTitleTag + 1}`}>
+              {calendarTitle}
+            </BlockTitleStyled>
+            <Calendar events={calendarEvents} baseTitleTag={baseTitleTag + 2} />
             <ReadMoreButtonContainerStyled>
               <Button
                 title={readMoreButtonTitle}
@@ -103,7 +113,9 @@ const NewsBlock = ({
             </ReadMoreButtonContainerStyled>
           </div>
           <TwitterColumnStyled className="column">
-            <BlockTitleStyled>{twitterTitle}</BlockTitleStyled>
+            <BlockTitleStyled as={`h${baseTitleTag + 1}`}>
+              {twitterTitle}
+            </BlockTitleStyled>
             <TwitterWidgetContainer>
               <TwitterTimelineWidget />
             </TwitterWidgetContainer>
@@ -115,6 +127,7 @@ const NewsBlock = ({
 };
 
 NewsBlock.propTypes = {
+  baseTitleTag: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
   readMoreButtonTitle: PropTypes.string.isRequired,

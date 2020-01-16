@@ -18,6 +18,7 @@ const StatementsPage = ({ data, pageContext }) => (
     />
     <StatementsBlock
       {...data.statementsBlock}
+      baseTitleTag={1}
       allButton={null}
       statements={data.statements.nodes}
     />

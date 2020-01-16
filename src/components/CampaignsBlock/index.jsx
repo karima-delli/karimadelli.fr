@@ -7,7 +7,7 @@ import TextMarkdown from '../TextMarkdown';
 import Button from '../Button';
 import CampaignBlock from './CampaignBlock';
 
-const TitleStyled = styled(Title)`
+const TitleWrapperStyled = styled.div`
   margin-bottom: 1rem;
 `;
 
@@ -22,6 +22,7 @@ const ButtonContainerStyled = styled.div`
 `;
 
 const CampaignsBlock = ({
+  baseTitleTag,
   onePerLine,
   title,
   text,
@@ -35,7 +36,11 @@ const CampaignsBlock = ({
   return (
     <section className="section">
       <div className="container">
-        <TitleStyled section>{title}</TitleStyled>
+        <TitleWrapperStyled>
+          <Title section as={`h${baseTitleTag}`}>
+            {title}
+          </Title>
+        </TitleWrapperStyled>
         <TextStyled>{text}</TextStyled>
         <div className="columns is-multiline">
           {campaigns.map((campaign, index) => (
@@ -47,6 +52,7 @@ const CampaignsBlock = ({
             >
               <CampaignBlock
                 {...campaign}
+                baseTitleTag={baseTitleTag + 1}
                 campaignsSlug={campaignsSlug}
                 readMoreButtonTitle={readMoreButtonTitle}
               />
@@ -68,6 +74,7 @@ const CampaignsBlock = ({
 };
 
 CampaignsBlock.propTypes = {
+  baseTitleTag: PropTypes.number.isRequired,
   onePerLine: PropTypes.bool,
   title: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,

@@ -28,7 +28,7 @@ const SectionTitle = ({ section, page, children, as, ...rest }) => {
   }
 
   return (
-    <Component forwardedAs={as} {...rest}>
+    <Component as={as} {...rest}>
       {children}
     </Component>
   );

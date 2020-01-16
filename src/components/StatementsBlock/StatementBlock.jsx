@@ -27,9 +27,9 @@ const DateStyled = styled.div`
   margin-bottom: 1rem;
 `;
 
-const TitleStyled = styled.h1`
+const TitleStyled = styled.h3`
   font-family: ${({ theme }) => theme.fontFamiliesAlternate};
-  font-size: 2rem;
+  font-size: 1.5rem;
   line-height: 100%;
   margin-bottom: 1rem;
 `;
@@ -45,6 +45,7 @@ const LinkStyled = styled(Link)`
 `;
 
 const CampaignBlock = ({
+  baseTitleTag,
   title,
   slug,
   date,
@@ -59,7 +60,7 @@ const CampaignBlock = ({
       <ContentStyled className="container">
         <DateStyled>{date}</DateStyled>
         <LinkStyled url={url}>
-          <TitleStyled>{title}</TitleStyled>
+          <TitleStyled as={`h${baseTitleTag}`}>{title}</TitleStyled>
         </LinkStyled>
         <Button
           url={url}
@@ -73,6 +74,7 @@ const CampaignBlock = ({
 };
 
 CampaignBlock.propTypes = {
+  baseTitleTag: PropTypes.number.isRequired,
   slug: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,

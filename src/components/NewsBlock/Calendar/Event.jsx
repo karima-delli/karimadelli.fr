@@ -40,6 +40,7 @@ const EventDescriptionStyled = styled.div`
 `;
 
 const CalendarEvent = ({
+  titleTag,
   dateFormattedFr,
   hour,
   location,
@@ -59,7 +60,9 @@ const CalendarEvent = ({
         {dateFormattedFr} - <EventHourStyled>{hour}</EventHourStyled>
       </EventDateStyled>
       {location && <EventLocationStyled>{location}</EventLocationStyled>}
-      {summary && <EventSummaryStyled>{summary}</EventSummaryStyled>}
+      {summary && (
+        <EventSummaryStyled as={titleTag}>{summary}</EventSummaryStyled>
+      )}
       {description && descriptionVisible && (
         <EventDescriptionStyled>{description}</EventDescriptionStyled>
       )}
@@ -68,6 +71,7 @@ const CalendarEvent = ({
 };
 
 CalendarEvent.propTypes = {
+  titleTag: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   dateFormattedFr: PropTypes.string.isRequired,
   dateFormattedEn: PropTypes.string.isRequired,

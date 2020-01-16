@@ -66,12 +66,12 @@ const CategoryStyled = styled.div`
 
 const TitleStyled = styled.h1`
   font-family: ${({ theme }) => theme.fontFamiliesAlternate};
-  font-size: 2rem;
+  font-size: 1.7rem;
   line-height: 100%;
   margin-bottom: 1rem;
 `;
 
-const SubTitleStyled = styled.h2`
+const SubTitleStyled = styled.p`
   color: #505050;
   margin-bottom: 1rem;
 `;
@@ -87,6 +87,7 @@ const LinkStyled = styled(Link)`
 `;
 
 const CampaignBlock = ({
+  baseTitleTag,
   image,
   title,
   subTitle,
@@ -111,9 +112,11 @@ const CampaignBlock = ({
         <ContentStyled className="container">
           <CategoryStyled>{category}</CategoryStyled>
           <LinkStyled url={url}>
-            <TitleStyled>{title}</TitleStyled>
+            <TitleStyled as={`h${baseTitleTag}`}>{title}</TitleStyled>
           </LinkStyled>
-          <SubTitleStyled>{subTitle}</SubTitleStyled>
+          <SubTitleStyled as={`h${baseTitleTag + 1}`}>
+            {subTitle}
+          </SubTitleStyled>
           <Button
             url={url}
             title={readMoreButtonTitle}
@@ -127,6 +130,7 @@ const CampaignBlock = ({
 };
 
 CampaignBlock.propTypes = {
+  baseTitleTag: PropTypes.number.isRequired,
   image: PropTypes.shape({
     fluid: PropTypes.shape({}).isRequired,
   }).isRequired,

@@ -53,7 +53,7 @@ const ActivityContainerStyled = styled(Link)`
   }
 `;
 
-const ParliamentaryActivities = ({ activities }) => (
+const ParliamentaryActivities = ({ titleTag, activities }) => (
   <div>
     {activities.map(activity => (
       <ActivityContainerStyled url={activity.url} key={activity.url}>
@@ -63,7 +63,9 @@ const ParliamentaryActivities = ({ activities }) => (
             <ExternalLinkIcon />
           </ActivityLinkStyled>
         </ActivityHeaderStyled>
-        <ActivityTitleStyled>{activity.title}</ActivityTitleStyled>
+        <ActivityTitleStyled as={titleTag}>
+          {activity.title}
+        </ActivityTitleStyled>
         <ActivityTextStyled>{activity.category}</ActivityTextStyled>
       </ActivityContainerStyled>
     ))}
@@ -71,6 +73,7 @@ const ParliamentaryActivities = ({ activities }) => (
 );
 
 ParliamentaryActivities.propTypes = {
+  titleTag: PropTypes.string.isRequired,
   activities: PropTypes.arrayOf(
     PropTypes.shape({
       url: PropTypes.string.isRequired,

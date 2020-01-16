@@ -7,7 +7,7 @@ import TextMarkdown from '../TextMarkdown';
 import Button from '../Button';
 import StatementBlock from './StatementBlock';
 
-const TitleStyled = styled(Title)`
+const TitleWrapperStyled = styled.div`
   margin-bottom: 1rem;
 `;
 
@@ -26,6 +26,7 @@ const ButtonContainerStyled = styled.div`
 `;
 
 const StatementsBlock = ({
+  baseTitleTag,
   title,
   text,
   readMoreButtonTitle,
@@ -38,7 +39,11 @@ const StatementsBlock = ({
   return (
     <section className="section">
       <div className="container">
-        <TitleStyled section>{title}</TitleStyled>
+        <TitleWrapperStyled>
+          <Title section as={`h${baseTitleTag}`}>
+            {title}
+          </Title>
+        </TitleWrapperStyled>
         <TextStyled>{text}</TextStyled>
 
         <StatementContainerStyled>
@@ -46,6 +51,7 @@ const StatementsBlock = ({
             <StatementBlock
               key={statement.slug}
               {...statement}
+              baseTitleTag={baseTitleTag + 1}
               statementsSlug={statementsSlug}
               readMoreButtonTitle={readMoreButtonTitle}
             />
@@ -67,6 +73,7 @@ const StatementsBlock = ({
 };
 
 StatementsBlock.propTypes = {
+  baseTitleTag: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
   readMoreButtonTitle: PropTypes.string.isRequired,

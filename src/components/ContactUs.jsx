@@ -20,7 +20,9 @@ const ContactUs = ({ title, text, button }) => {
 
   return (
     <section className="section">
-      <Title section>{title}</Title>
+      <Title section as="h2">
+        {title}
+      </Title>
       <div className="has-text-centered">
         <TextStyled>{text}</TextStyled>
         <Button

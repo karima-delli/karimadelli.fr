@@ -14,6 +14,7 @@ const NewsPage = ({ data, pageContext }) => (
       alternates={pageContext.alternates}
     />
     <NewsBlock
+      baseTitleTag={1}
       title={data.newsBlock.title}
       text={data.newsBlock.text}
       readMoreButtonTitle={data.newsBlock.readMoreButtonTitle}

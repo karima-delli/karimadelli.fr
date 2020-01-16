@@ -17,6 +17,7 @@ const CampaignsPage = ({ data, pageContext }) => (
       alternates={pageContext.alternates}
     />
     <CampaignsBlock
+      baseTitleTag={1}
       onePerLine
       {...data.campaignsBlock}
       allButton={null}

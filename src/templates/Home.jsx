@@ -49,6 +49,7 @@ const HomePage = ({ data, pageContext }) => (
     {data.campaigns.nodes.length && (
       <CampaignsBlock
         {...data.campaignsBlock}
+        baseTitleTag={2}
         campaigns={data.campaigns.nodes.map(node => {
           return {
             ...node,
@@ -68,6 +69,7 @@ const HomePage = ({ data, pageContext }) => (
 
         <StatementsBlock
           {...data.statementsBlock}
+          baseTitleTag={2}
           statements={data.statements.nodes}
         />
       </>
@@ -75,6 +77,7 @@ const HomePage = ({ data, pageContext }) => (
 
     <NewsBlock
       {...data.newsBlock}
+      baseTitleTag={2}
       parliamentaryActivitiesUrl={data.parliamentaryActivities.url}
       parliamentaryActivities={data.parliamentaryActivities.activities}
       calendarUrl={data.site.siteMetadata.calendarUrlPublicUrl}
