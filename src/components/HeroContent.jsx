@@ -5,6 +5,7 @@ import { graphql } from 'gatsby';
 import GatsbyImage from 'gatsby-image';
 import ShareButtons from './ShareButtons';
 import Triangle from './Triangle';
+import Hr from './Hr';
 
 const RATIO_MOBILE = 120 / 160;
 const RATIO_DESKTOP = 308 / 720;
@@ -112,17 +113,12 @@ const SubTitleStyled = styled.h2`
   color: #505050;
 `;
 
-const SeparatorStyled = styled.div`
-  width: 3rem;
-  height: 0.3rem;
-  background: ${({ theme }) => theme.licorice};
-  margin: auto;
+const HrStyled = styled(Hr)`
   margin-top: 2rem;
-  transform: rotate(-${({ theme }) => theme.angle}deg);
+  margin-bottom: 2rem;
 `;
 
 const ReadingTimeStyled = styled.div`
-  margin-top: 1rem;
   color: ${({ theme }) => theme.brownGrey};
 `;
 
@@ -160,7 +156,7 @@ const Hero = ({
         {subTitle && <SubTitleStyled>{subTitle}</SubTitleStyled>}
 
         {((displayReadingTime && readingTime && readingTimeStr) ||
-          displayShareButtons) && <SeparatorStyled />}
+          displayShareButtons) && <HrStyled className="is-small" />}
 
         {displayReadingTime && readingTime && readingTimeStr && (
           <ReadingTimeStyled>

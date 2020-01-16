@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
+import styled, { ThemeContext } from 'styled-components';
 import HeroSection from '../components/home/Hero';
 import LogosSection from '../components/home/Logos';
 import CarouselSection from '../components/home/Carousel';
@@ -12,84 +13,90 @@ import Hr from '../components/Hr';
 import Metadata from '../components/Metadata';
 import NewsletterForm from '../components/NewsletterForm';
 
-const HomePage = ({ data, pageContext }) => (
-  <>
-    <Metadata
-      metadata={data.page.metadata}
-      locale={pageContext.locale}
-      lang={pageContext.lang}
-      url={pageContext.url}
-      alternates={pageContext.alternates}
-    />
-    <HeroSection
-      image={data.page.hero.image}
-      text={data.page.hero.text}
-      button={data.page.hero.button}
-    />
-    <LogosSection
-      logos={data.page.logos.map(logo => {
-        return {
-          ...logo,
-          title: logo.title,
-          image: logo.image.publicURL,
-        };
-      })}
-    />
-    <CarouselSection
-      button={data.page.slider.button}
-      slides={data.slider.slides.map(slide => {
-        return {
-          ...slide,
-          text: slide.text.text,
-          image: slide.image.localFile.childImageSharp,
-        };
-      })}
-    />
+const HomePage = ({ data, pageContext }) => {
+  const theme = useContext(ThemeContext);
 
-    {data.campaigns.nodes.length && (
-      <CampaignsBlock
-        {...data.campaignsBlock}
-        baseTitleTag={2}
-        campaigns={data.campaigns.nodes.map(node => {
+  return (
+    <>
+      <Metadata
+        metadata={data.page.metadata}
+        locale={pageContext.locale}
+        lang={pageContext.lang}
+        url={pageContext.url}
+        alternates={pageContext.alternates}
+      />
+      <HeroSection
+        image={data.page.hero.image}
+        text={data.page.hero.text}
+        button={data.page.hero.button}
+      />
+      <LogosSection
+        logos={data.page.logos.map(logo => {
           return {
-            ...node,
-            image: node.image.localFile.childImageSharp,
+            ...logo,
+            title: logo.title,
+            image: logo.image.publicURL,
           };
         })}
       />
-    )}
+      <CarouselSection
+        button={data.page.slider.button}
+        slides={data.slider.slides.map(slide => {
+          return {
+            ...slide,
+            text: slide.text.text,
+            image: slide.image.localFile.childImageSharp,
+          };
+        })}
+      />
 
-    <Hr />
-
-    <NewsletterForm {...data.newsletterForm} />
-
-    {data.statements.nodes.length && (
-      <>
-        <Hr />
-
-        <StatementsBlock
-          {...data.statementsBlock}
+      {data.campaigns.nodes.length && (
+        <CampaignsBlock
+          {...data.campaignsBlock}
           baseTitleTag={2}
-          statements={data.statements.nodes}
+          campaigns={data.campaigns.nodes.map(node => {
+            return {
+              ...node,
+              image: node.image.localFile.childImageSharp,
+            };
+          })}
         />
-      </>
-    )}
+      )}
 
-    <NewsBlock
-      {...data.newsBlock}
-      baseTitleTag={2}
-      parliamentaryActivitiesUrl={data.parliamentaryActivities.url}
-      parliamentaryActivities={data.parliamentaryActivities.activities}
-      calendarUrl={data.site.siteMetadata.calendarUrlPublicUrl}
-      calendarEvents={data.events.nodes}
-    />
-    <ContactUs
-      title={data.contactUs.title}
-      text={data.contactUs.text}
-      button={data.contactUs.button}
-    />
-  </>
-);
+      <Hr className="is-small" color={theme.officeGreen} />
+
+      <NewsletterForm {...data.newsletterForm} />
+
+      {data.statements.nodes.length && (
+        <>
+          <div className="container">
+            <Hr />
+          </div>
+
+          <StatementsBlock
+            {...data.statementsBlock}
+            baseTitleTag={2}
+            statements={data.statements.nodes}
+          />
+        </>
+      )}
+
+      <NewsBlock
+        {...data.newsBlock}
+        baseTitleTag={2}
+        parliamentaryActivitiesUrl={data.parliamentaryActivities.url}
+        parliamentaryActivities={data.parliamentaryActivities.activities}
+        calendarUrl={data.site.siteMetadata.calendarUrlPublicUrl}
+        calendarEvents={data.events.nodes}
+      />
+      <ContactUs
+        title={data.contactUs.title}
+        text={data.contactUs.text}
+        button={data.contactUs.button}
+      />
+    </>
+  );
+};
 
 HomePage.propTypes = {
   pageContext: PropTypes.shape({
