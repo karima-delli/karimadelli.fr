@@ -8,27 +8,43 @@ import Triangle from './Triangle';
 
 const RATIO_MOBILE = 120 / 160;
 const RATIO_DESKTOP = 308 / 720;
+const RATIO_WIDE = 208 / 720;
+
+const CONTENT_OFFSET_MOBILE = 7;
+const CONTENT_OFFSET_TABLET = 6;
+const CONTENT_OFFSET_DESKTOP = 10;
+const CONTENT_OFFSET_WIDESCREEN = 10;
 
 const ContainerStyled = styled.div`
-  position: relative;
   width: 100%;
   &.has-image {
-    padding-top: ${RATIO_MOBILE * 100 * 0.6}%;
-    @media (min-width: 500px) {
-      padding-top: ${RATIO_DESKTOP * 100 * 0.5}%;
+    margin-bottom: -${CONTENT_OFFSET_MOBILE}rem;
+
+    @media (min-width: ${({ theme }) => theme.breakpointTablet}) {
+      margin-bottom: -${CONTENT_OFFSET_TABLET}rem;
+    }
+
+    @media (min-width: ${({ theme }) => theme.breakpointDesktop}) {
+      margin-bottom: -${CONTENT_OFFSET_DESKTOP}rem;
+    }
+
+    @media (min-width: ${({ theme }) => theme.breakpointWidescreen}) {
+      margin-bottom: -${CONTENT_OFFSET_WIDESCREEN}rem;
     }
   }
 `;
 
 const ImageContainerStyled = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
+  position: relative;
   width: 100%;
   padding-bottom: ${RATIO_MOBILE * 100}%;
 
   @media (min-width: 500px) {
     padding-bottom: ${RATIO_DESKTOP * 100}%;
+  }
+
+  @media (min-width: 1300px) {
+    padding-bottom: ${RATIO_WIDE * 100}%;
   }
 
   .gatsby-image-wrapper {
@@ -42,12 +58,21 @@ const ImageContainerStyled = styled.div`
 
 const SectionStyled = styled.section`
   &.has-image {
-    margin: auto;
-    padding: 0 !important;
-    width: 90%;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    position: relative;
+    top: -${CONTENT_OFFSET_MOBILE}rem;
 
     @media (min-width: ${({ theme }) => theme.breakpointTablet}) {
-      width: 80%;
+      top: -${CONTENT_OFFSET_TABLET}rem;
+    }
+
+    @media (min-width: ${({ theme }) => theme.breakpointDesktop}) {
+      top: -${CONTENT_OFFSET_DESKTOP}rem;
+    }
+
+    @media (min-width: ${({ theme }) => theme.breakpointWidescreen}) {
+      top: -${CONTENT_OFFSET_WIDESCREEN}rem;
     }
   }
 `;
@@ -124,9 +149,11 @@ const Hero = ({
     )}
 
     <SectionStyled className={`section ${image ? 'has-image' : ''}`}>
-      <TriangleContainerStyled className="container">
-        <TriangleStyled color="#ffffff" direction="right" reverse />
-      </TriangleContainerStyled>
+      {image && (
+        <TriangleContainerStyled className="container">
+          <TriangleStyled color="#ffffff" direction="right" reverse />
+        </TriangleContainerStyled>
+      )}
       <ContentStyled className="container">
         {date && <DateStyled>{date}</DateStyled>}
         <TitleStyled>{title}</TitleStyled>
