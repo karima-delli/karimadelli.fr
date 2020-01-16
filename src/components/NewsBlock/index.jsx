@@ -5,6 +5,7 @@ import { graphql } from 'gatsby';
 import Button from '../Button';
 import TextMarkdown from '../TextMarkdown';
 import TwitterTimelineWidget from '../TwitterTimelineWidget';
+import useAdblockDetect from '../useAdblockDetect';
 import Title from '../Title';
 import ParliamentaryActivities from './ParliamentaryActivities';
 import Calendar from './Calendar';
@@ -45,13 +46,20 @@ const TwitterColumnStyled = styled.div`
   }
 `;
 
-const TwitterWidgetContainer = styled.div`
-  height: 80vh;
-  min-height: 500px;
-  overflow: hidden;
+const TwitterTimelineWidgetStyled = styled(TwitterTimelineWidget)`
+  &:not(.has-adblock-detected) {
+    height: 80vh;
+    min-height: 500px;
+    overflow: hidden;
+  }
+
+  &.has-adblock-detected {
+    min-height: 200px;
+  }
 
   @media (min-width: ${({ theme }) => theme.breakpointTablet}) {
     flex-grow: 1;
+    display: flex;
   }
 `;
 
@@ -68,8 +76,10 @@ const NewsBlock = ({
   calendarUrl,
   calendarTitle,
   calendarEvents,
+  adblockMessage,
 }) => {
   const theme = useContext(ThemeContext);
+  const adblockDetected = useAdblockDetect();
 
   return (
     <SectionStyled className="section">
@@ -124,9 +134,11 @@ const NewsBlock = ({
             <BlockTitleStyled as={`h${baseTitleTag + 1}`}>
               {twitterTitle}
             </BlockTitleStyled>
-            <TwitterWidgetContainer>
-              <TwitterTimelineWidget />
-            </TwitterWidgetContainer>
+            <TwitterTimelineWidgetStyled
+              adblockMessage={adblockMessage}
+              adblockDetected={adblockDetected}
+              className={`${adblockDetected ? 'has-adblock-detected' : ''}`}
+            />
           </TwitterColumnStyled>
         </div>
       </div>
@@ -147,6 +159,7 @@ NewsBlock.propTypes = {
   calendarUrl: PropTypes.string.isRequired,
   calendarTitle: PropTypes.string.isRequired,
   calendarEvents: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  adblockMessage: PropTypes.string.isRequired,
 };
 
 export default NewsBlock;
@@ -160,6 +173,7 @@ export const query = graphql`
       parliamentTitle
       calendarTitle
       twitterTitle
+      adblockMessage
     }
     parliamentaryActivities(lang: { eq: $lang }) {
       url

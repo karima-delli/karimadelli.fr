@@ -15,16 +15,11 @@ const NewsPage = ({ data, pageContext }) => (
     />
     <NewsBlock
       baseTitleTag={1}
-      title={data.newsBlock.title}
-      text={data.newsBlock.text}
-      readMoreButtonTitle={data.newsBlock.readMoreButtonTitle}
-      parliamentTitle={data.newsBlock.parliamentTitle}
+      {...data.newsBlock}
       parliamentaryActivities={data.parliamentaryActivities.activities}
       parliamentaryActivitiesUrl={data.parliamentaryActivities.url}
-      twitterTitle={data.newsBlock.twitterTitle}
       calendarEnabled={false}
       calendarUrl={data.site.siteMetadata.calendarUrlPublicUrl}
-      calendarTitle={data.newsBlock.calendarTitle}
       calendarEvents={data.events.nodes}
     />
   </>
@@ -49,14 +44,7 @@ NewsPage.propTypes = {
         description: PropTypes.string.isRequired,
       }).isRequired,
     }).isRequired,
-    newsBlock: PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      text: PropTypes.string.isRequired,
-      readMoreButtonTitle: PropTypes.string.isRequired,
-      parliamentTitle: PropTypes.string.isRequired,
-      calendarTitle: PropTypes.string.isRequired,
-      twitterTitle: PropTypes.string.isRequired,
-    }).isRequired,
+    newsBlock: PropTypes.shape({}).isRequired,
     parliamentaryActivities: PropTypes.shape({
       url: PropTypes.string.isRequired,
       activities: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
