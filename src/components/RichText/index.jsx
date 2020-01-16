@@ -1,6 +1,7 @@
 /* eslint-disable react/display-name */
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import GatsbyImage from 'gatsby-image';
 import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
@@ -8,6 +9,10 @@ import Hr from '../Hr';
 import Link from '../Link';
 import Iframe from '../Iframe';
 import './style.scss';
+
+const IframeStyled = styled(Iframe)`
+  margin-bottom: 2rem;
+`;
 
 const RichText = ({ json, assets }) => {
   const getAsset = contentfulId => {
@@ -44,7 +49,7 @@ const RichText = ({ json, assets }) => {
           },
           {}
         );
-        return <Iframe {...props} />;
+        return <IframeStyled {...props} />;
       },
       [BLOCKS.EMBEDDED_ASSET]: node => {
         const asset = getAsset(node.data.target.sys.contentful_id);

@@ -27,7 +27,7 @@ const IframeStyled = styled.iframe`
   height: 100%;
 `;
 
-const Iframe = ({ url, title, width, height }) => {
+const Iframe = ({ url, title, width, height, ...rest }) => {
   let src = url;
   let Container;
 
@@ -49,7 +49,7 @@ const Iframe = ({ url, title, width, height }) => {
   const percentage = Math.round(ratio * 10000) / 100;
 
   return (
-    <Container percentage={percentage} width={width} height={height}>
+    <Container percentage={percentage} width={width} height={height} {...rest}>
       <IframeStyled
         title={title}
         src={src}
