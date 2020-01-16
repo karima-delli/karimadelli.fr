@@ -10,6 +10,10 @@ import Link from '../Link';
 import Iframe from '../Iframe';
 import './style.scss';
 
+const HrStyled = styled(Hr)`
+  margin-bottom: 2rem;
+`;
+
 const IframeStyled = styled(Iframe)`
   margin-bottom: 2rem;
 `;
@@ -34,7 +38,7 @@ const RichText = ({ json, assets }) => {
           <ol>{children}</ol>
         </div>
       ),
-      [BLOCKS.HR]: () => <Hr />,
+      [BLOCKS.HR]: () => <HrStyled />,
       [BLOCKS.EMBEDDED_ENTRY]: node => {
         const props = Object.keys(node.data.target.fields).reduce(
           (acc, key) => {
