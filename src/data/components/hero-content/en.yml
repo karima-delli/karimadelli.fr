@@ -1,3 +1,5 @@
 lang: en
 
-readingTime: minutes read
+readingTime: 
+  plural: minutes read
+  singular: minute read

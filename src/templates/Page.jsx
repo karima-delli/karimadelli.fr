@@ -56,7 +56,7 @@ Page.propTypes = {
   }).isRequired,
   data: PropTypes.shape({
     heroContent: PropTypes.shape({
-      readingTime: PropTypes.string.isRequired,
+      readingTime: PropTypes.shape({}).isRequired,
     }).isRequired,
     page: PropTypes.shape({
       title: PropTypes.string.isRequired,

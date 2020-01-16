@@ -1,3 +1,5 @@
 lang: fr
 
-readingTime: minutes de lecture
+readingTime: 
+  plural: minutes de lecture
+  singular: minute de lecture

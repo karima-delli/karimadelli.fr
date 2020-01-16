@@ -41,7 +41,7 @@ const Campaign = ({ data, pageContext }) => {
         image={data.content.image.localFile.childImageSharp}
         url={pageContext.url}
         readingTime={readingTime}
-        readingTimeStr={data.page.readingTime}
+        readingTimeStr={data.heroContent.readingTime}
         title={data.content.title}
         subTitle={data.content.subTitle}
       />
@@ -79,8 +79,10 @@ Campaign.propTypes = {
         siteUrl: PropTypes.string.isRequired,
       }).isRequired,
     }).isRequired,
+    heroContent: PropTypes.shape({
+      readingTime: PropTypes.shape({}).isRequired,
+    }).isRequired,
     page: PropTypes.shape({
-      readingTime: PropTypes.string.isRequired,
       shortContentTitle: PropTypes.string.isRequired,
     }).isRequired,
     content: PropTypes.shape({
@@ -134,6 +136,7 @@ export const pageQuery = graphql`
   query CampaignQuery($lang: String!, $id: String!, $assetIds: [String!]!) {
     ...Header
     ...Footer
+    ...HeroContent
     ...NewsletterForm
     site {
       siteMetadata {
@@ -141,7 +144,6 @@ export const pageQuery = graphql`
       }
     }
     page: campaignYaml(lang: { eq: $lang }) {
-      readingTime
       shortContentTitle
     }
     contentRichTextAssets: allContentfulAsset(

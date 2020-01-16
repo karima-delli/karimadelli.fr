@@ -160,7 +160,8 @@ const Hero = ({
 
         {displayReadingTime && readingTime && readingTimeStr && (
           <ReadingTimeStyled>
-            {readingTime} {readingTimeStr}
+            {readingTime}{' '}
+            {readingTime > 1 ? readingTimeStr.plural : readingTimeStr.singular}
           </ReadingTimeStyled>
         )}
         {displayShareButtons && url && <ShareButtons url={url} />}
@@ -180,7 +181,10 @@ Hero.propTypes = {
   displayShareButtons: PropTypes.bool,
   displayReadingTime: PropTypes.bool,
   readingTime: PropTypes.number,
-  readingTimeStr: PropTypes.string,
+  readingTimeStr: PropTypes.shape({
+    plural: PropTypes.string.isRequired,
+    singular: PropTypes.string.isRequired,
+  }),
 };
 
 Hero.defaultProps = {
@@ -199,7 +203,10 @@ export default Hero;
 export const query = graphql`
   fragment HeroContent on Query {
     heroContent: heroContentYaml(lang: { eq: $lang }) {
-      readingTime
+      readingTime {
+        plural
+        singular
+      }
     }
   }
 `;
