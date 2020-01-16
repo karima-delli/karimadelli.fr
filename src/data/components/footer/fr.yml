@@ -9,7 +9,7 @@ menu:
   title: Menu
   links:
     - title: Parcours
-      url: /mon-parcours/
+      url: /parcours/
     - title: Campagnes
       url: /campagnes/
     - title: Brèves
