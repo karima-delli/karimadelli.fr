@@ -12,14 +12,15 @@ menu:
       url: /en/career/
     - title: Campaigns
       url: /en/campaigns/
+      - title: Statements
+      url: /en/statements/        
     - title: News
       url: /en/news/      
     - title: Contact us
       url: /en/contact/      
     - title: Legal notice
       url: /en/legal/      
-    - title: Brief
-      url: /en/brief/            
+          
 
 socialLinks:
   title: Follow us 

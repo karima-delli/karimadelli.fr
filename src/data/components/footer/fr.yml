@@ -12,14 +12,14 @@ menu:
       url: /mon-parcours/
     - title: Campagnes
       url: /campagnes/
+    - title: Brèves
+      url: /breves/       
     - title: Actualités
       url: /actualites/      
     - title: Nous contacter
       url: /contact/      
     - title: Mentions légales
-      url: /mentions-legales/      
-    - title: Brèves
-      url: /breves/  
+      url: /mentions-legales/
 
 socialLinks:
   title: Sur les réseaux sociaux

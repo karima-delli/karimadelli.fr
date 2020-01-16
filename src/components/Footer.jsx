@@ -22,7 +22,7 @@ const FooterHeaderStyled = styled.div`
 const LangSwitcherContainerStyled = styled.div``;
 
 const TextStyled = styled.p`
-  margin: 1rem auto;
+  margin-top: 2rem;
 `;
 
 const TitleStyled = styled.div`
@@ -33,6 +33,10 @@ const TitleStyled = styled.div`
   margin-bottom: 1rem;
 `;
 
+const TitleMenuStyled = styled(TitleStyled)`
+  margin-top: 2rem;
+`;
+
 const MenuStyled = styled.div`
   margin-bottom: 1rem;
 `;
@@ -40,8 +44,9 @@ const MenuStyled = styled.div`
 const MenuLinkStyled = styled(Link)`
   display: block;
   color: ${({ theme }) => theme.white};
+
   &:not(:last-child) {
-    margin-bottom: 0.5rem;
+    margin-bottom: 1rem;
   }
 
   &:hover {
@@ -53,9 +58,13 @@ const MenuLinkStyled = styled(Link)`
     display: inline-block;
     &:not(:last-child) {
       margin-bottom: 0;
-      margin-right: 0.5rem;
+      margin-right: 1rem;
     }
   }
+`;
+
+const TitleSocialLinksStyled = styled(TitleStyled)`
+  margin-top: 2rem;
 `;
 
 const IconLinksStyled = styled.div`
@@ -66,7 +75,7 @@ const IconLinksStyled = styled.div`
 const IconLinkStyled = styled(IconLink)`
   display: flex;
   &:not(:last-child) {
-    margin-right: 0.5rem;
+    margin-right: 1rem;
   }
 `;
 
@@ -84,7 +93,8 @@ const Footer = ({ footer, socialLinks }) => {
         </FooterHeaderStyled>
 
         <TextStyled>{footer.text}</TextStyled>
-        <TitleStyled>{footer.menu.title}</TitleStyled>
+
+        <TitleMenuStyled>{footer.menu.title}</TitleMenuStyled>
         <MenuStyled>
           {footer.menu.links.map(link => (
             <MenuLinkStyled key={link.url} url={link.url}>
@@ -92,7 +102,10 @@ const Footer = ({ footer, socialLinks }) => {
             </MenuLinkStyled>
           ))}
         </MenuStyled>
-        <TitleStyled>{footer.socialLinks.title}</TitleStyled>
+
+        <TitleSocialLinksStyled>
+          {footer.socialLinks.title}
+        </TitleSocialLinksStyled>
 
         <IconLinksStyled>
           <IconLinkStyled url={socialLinks.twitter} reverse>
