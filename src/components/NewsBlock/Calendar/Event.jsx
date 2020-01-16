@@ -18,7 +18,7 @@ const EventContainerStyled = styled.div`
 
 const EventDateStyled = styled.div`
   font-size: 0.8rem;
-  font-family: 'Ubuntu Light', sans-serif;
+  font-weight: 300;
 `;
 
 const EventHourStyled = styled.span`
@@ -26,7 +26,7 @@ const EventHourStyled = styled.span`
 `;
 
 const EventLocationStyled = styled.div`
-  font-family: 'Ubuntu Light', sans-serif;
+  font-weight: 300;
   font-style: italic;
 `;
 

@@ -12,7 +12,7 @@ const ActivityHeaderStyled = styled.div`
 
 const ActivityDateStyled = styled.div`
   font-size: 0.8rem;
-  font-family: 'Ubuntu Light', sans-serif;
+  font-weight: 300;
 `;
 
 const ActivityLinkStyled = styled.div`
@@ -30,7 +30,7 @@ const ActivityTitleStyled = styled.h4`
 `;
 
 const ActivityTextStyled = styled.p`
-  font-family: 'Ubuntu Light', sans-serif;
+  font-weight: 300;
 `;
 
 const ActivityContainerStyled = styled(Link)`
