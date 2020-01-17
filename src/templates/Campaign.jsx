@@ -1,16 +1,23 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
-import { ThemeContext } from 'styled-components';
+import styled, { ThemeContext } from 'styled-components';
 import RichText from '../components/RichText';
 import HeroContent from '../components/HeroContent';
 import ShortContent from '../components/campaign/ShortContent';
 import Metadata from '../components/Metadata';
 import NewsletterForm from '../components/NewsletterForm';
 import Hr from '../components/Hr';
+import ReadingProgressBar from '../components/ReadingProgressBar';
+
+const HeroContentStyled = styled(HeroContent)`
+  margin-top: -7px;
+`;
 
 const Campaign = ({ data, pageContext }) => {
   const theme = useContext(ThemeContext);
+  const articleRef = useRef();
+
   const readingTime = Math.ceil(
     data.content.shortContent.readingTime + data.content.content.readingTime
   );
@@ -22,47 +29,49 @@ const Campaign = ({ data, pageContext }) => {
     data.content.twitterSocialImage.localFile.childImageSharp.fixed.src;
 
   return (
-    <article>
-      <Metadata
-        metadata={{
-          title: data.content.title,
-          description: data.content.description || data.content.subTitle,
-          socialImages: {
-            default: siteUrl + defaultImageUrl,
-            twitter: siteUrl + twitterImageUrl,
-          },
-        }}
-        locale={pageContext.locale}
-        lang={pageContext.lang}
-        url={pageContext.url}
-        alternates={pageContext.alternates}
-      />
-      <HeroContent
-        image={data.content.image.localFile.childImageSharp}
-        url={pageContext.url}
-        readingTime={readingTime}
-        readingTimeStr={data.heroContent.readingTime}
-        title={data.content.title}
-        subTitle={data.content.subTitle}
-      />
-      <ShortContent
-        title={data.page.shortContentTitle}
-        content={data.content.shortContent}
-        richTextAssets={data.contentRichTextAssets.nodes}
-      />
+    <>
+      <article ref={articleRef}>
+        <ReadingProgressBar ref={articleRef} color={theme.officeGreen} />
+        <Metadata
+          metadata={{
+            title: data.content.title,
+            description: data.content.description || data.content.subTitle,
+            socialImages: {
+              default: siteUrl + defaultImageUrl,
+              twitter: siteUrl + twitterImageUrl,
+            },
+          }}
+          locale={pageContext.locale}
+          lang={pageContext.lang}
+          url={pageContext.url}
+          alternates={pageContext.alternates}
+        />
+        <HeroContentStyled
+          image={data.content.image.localFile.childImageSharp}
+          url={pageContext.url}
+          readingTime={readingTime}
+          readingTimeStr={data.heroContent.readingTime}
+          title={data.content.title}
+          subTitle={data.content.subTitle}
+        />
+        <ShortContent
+          title={data.page.shortContentTitle}
+          content={data.content.shortContent}
+          richTextAssets={data.contentRichTextAssets.nodes}
+        />
 
-      <section className="section">
-        <div className="container">
-          <RichText
-            json={data.content.content.json}
-            assets={data.contentRichTextAssets.nodes}
-          />
-        </div>
-      </section>
-      <Hr className="is-small" color={theme.officeGreen} />
-
+        <section className="section">
+          <div className="container">
+            <RichText
+              json={data.content.content.json}
+              assets={data.contentRichTextAssets.nodes}
+            />
+          </div>
+        </section>
+        <Hr className="is-small" color={theme.officeGreen} />
+      </article>
       <NewsletterForm {...data.newsletterForm} />
-    </article>
+    </>
   );
 };
 

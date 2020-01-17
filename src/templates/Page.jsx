@@ -1,16 +1,24 @@
-import React from 'react';
+import React, { useContext, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
-// import styled from 'styled-components';
+import styled, { ThemeContext } from 'styled-components';
 import RichText from '../components/RichText';
 import HeroContent from '../components/HeroContent';
 import Metadata from '../components/Metadata';
+import ReadingProgressBar from '../components/ReadingProgressBar';
+
+const HeroContentStyled = styled(HeroContent)`
+  margin-top: -7px;
+`;
 
 const Page = ({ data, pageContext }) => {
+  const theme = useContext(ThemeContext);
   const readingTime = Math.ceil(data.page.content.readingTime);
+  const articleRef = useRef();
 
   return (
-    <article>
+    <article ref={articleRef}>
+      <ReadingProgressBar ref={articleRef} color={theme.officeGreen} />
       <Metadata
         metadata={{
           title: data.page.title,
@@ -23,7 +31,7 @@ const Page = ({ data, pageContext }) => {
         url={pageContext.url}
         alternates={pageContext.alternates}
       />
-      <HeroContent
+      <HeroContentStyled
         image={
           data.page.image ? data.page.image.localFile.childImageSharp : null
         }

@@ -1,40 +1,54 @@
-import React from 'react';
+import React, { useContext, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
+import styled, { ThemeContext } from 'styled-components';
 import RichText from '../components/RichText';
 import HeroContent from '../components/HeroContent';
 import Metadata from '../components/Metadata';
+import ReadingProgressBar from '../components/ReadingProgressBar';
 
-const Statement = ({ data, pageContext }) => (
-  <article>
-    <Metadata
-      metadata={{
-        title: data.content.title,
-        description: data.content.description,
-      }}
-      locale={pageContext.locale}
-      lang={pageContext.lang}
-      url={pageContext.url}
-      alternates={pageContext.alternates}
-    />
-    <HeroContent
-      image={data.content.image && data.content.image.localFile.childImageSharp}
-      url={pageContext.url}
-      date={data.content.date}
-      title={data.content.title}
-    />
-    <section className="section">
-      <div className="container">
-        <RichText
-          json={data.content.content.json}
-          assets={data.contentRichTextAssets.nodes}
+const HeroContentStyled = styled(HeroContent)`
+  margin-top: -7px;
+`;
+
+const Statement = ({ data, pageContext }) => {
+  const theme = useContext(ThemeContext);
+  const articleRef = useRef();
+
+  return (
+    <>
+      <article ref={articleRef}>
+        <ReadingProgressBar ref={articleRef} color={theme.officeGreen} />
+        <Metadata
+          metadata={{
+            title: data.content.title,
+            description: data.content.description,
+          }}
+          locale={pageContext.locale}
+          lang={pageContext.lang}
+          url={pageContext.url}
+          alternates={pageContext.alternates}
         />
-      </div>
-    </section>
-    {/* block newsletter */}
-    {/* autres campaigns */}
-  </article>
-);
+        <HeroContentStyled
+          image={
+            data.content.image && data.content.image.localFile.childImageSharp
+          }
+          url={pageContext.url}
+          date={data.content.date}
+          title={data.content.title}
+        />
+        <section className="section">
+          <div className="container">
+            <RichText
+              json={data.content.content.json}
+              assets={data.contentRichTextAssets.nodes}
+            />
+          </div>
+        </section>
+      </article>
+    </>
+  );
+};
 
 Statement.propTypes = {
   pageContext: PropTypes.shape({

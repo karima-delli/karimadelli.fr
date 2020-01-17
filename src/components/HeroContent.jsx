@@ -132,8 +132,9 @@ const Hero = ({
   displayReadingTime,
   readingTime,
   readingTimeStr,
+  ...rest
 }) => (
-  <ContainerStyled className={`${image ? 'has-image' : ''}`}>
+  <ContainerStyled className={`${image ? 'has-image' : ''}`} {...rest}>
     {image && (
       <ImageContainerStyled>
         <GatsbyImage
