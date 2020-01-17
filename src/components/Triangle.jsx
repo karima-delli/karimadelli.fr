@@ -37,7 +37,12 @@ const Triangle = ({ color, direction, reverse, ...rest }) => {
   }
 
   return (
-    <svg version="1.1" viewBox={`0 0 ${width} ${height}`} {...rest}>
+    <svg
+      version="1.1"
+      viewBox={`0 0 ${width} ${height}`}
+      preserveAspectRatio="none"
+      {...rest}
+    >
       <PolygonStyled points={points.join(' ')} fill={color} />
     </svg>
   );
