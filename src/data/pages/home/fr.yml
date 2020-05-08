@@ -14,7 +14,7 @@ hero:
   button: 
     title: Toutes nos campagnes
     url: /campagnes/
-  text: En tant que députée européenne, je m'engage pour une europe écologique et sociale.
+  text: En tant que députée européenne, je m'engage pour une Europe écologique et sociale.
 
 logos:
   - image: images/eelv.svg
