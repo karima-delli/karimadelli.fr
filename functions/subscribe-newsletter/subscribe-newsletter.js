@@ -1,6 +1,11 @@
+const dotenv = require('dotenv');
+
+dotenv.config();
+
 const fetch = require('cross-fetch');
 
 const SENDINBLUE_API_ENDPOINT = 'https://api.sendinblue.com/v3/';
+
 const { SENDINBLUE_API_KEY, SENDINBLUE_LIST_ID } = process.env;
 
 async function sendInBlueRequest({ uri, method, body }) {
@@ -16,11 +21,14 @@ async function sendInBlueRequest({ uri, method, body }) {
     params.body = JSON.stringify(body);
   }
   const response = await fetch(`${SENDINBLUE_API_ENDPOINT}${uri}`, params);
+  if (response.status === 204) {
+    return '';
+  }
   const data = await response.json();
   return data;
 }
 
-async function getContact(email) {
+async function getContactByEmail(email) {
   const response = await sendInBlueRequest({
     uri: `contacts/${email}`,
     method: 'get',
@@ -31,56 +39,75 @@ async function getContact(email) {
   return response;
 }
 
-function createContact(email) {
+function createContact(email, attributes) {
   return sendInBlueRequest({
     uri: 'contacts',
     method: 'post',
     body: {
       email,
-      listIds: [Number.parseInt(SENDINBLUE_LIST_ID, 10)],
+      attributes: attributes || undefined,
     },
   });
 }
 
-async function addContactToList(email) {
-  const result = {
-    created: false,
-    added: false,
-  };
-  const contact = await getContact(email);
+function updateContact(email, attributes) {
+  return sendInBlueRequest({
+    uri: `contacts/${email}`,
+    method: 'put',
+    body: {
+      attributes,
+    },
+  });
+}
+
+async function updateOrCreateContact(email, attributes) {
+  const contact = await getContactByEmail(email);
+
+  // Nothing to update
+  if (contact && !attributes) {
+    return contact;
+  }
 
   // Contact does not exist, create contact and add it to the list
   if (!contact) {
-    createContact(email);
-    result.created = true;
-    result.added = true;
-    return result;
+    await createContact(email, attributes);
+  } else {
+    // Update contact
+    await updateContact(email, attributes);
   }
 
+  return getContactByEmail(email);
+}
+
+async function addContactToList(contact, listId) {
   // Contact already in list
   if (contact.listIds.includes(Number.parseInt(SENDINBLUE_LIST_ID, 10))) {
-    return result;
+    return;
   }
 
   // Add existing contact to list
-  sendInBlueRequest({
-    uri: `contacts/lists/${SENDINBLUE_LIST_ID}/contacts/add`,
+  await sendInBlueRequest({
+    uri: `contacts/lists/${listId}/contacts/add`,
     method: 'post',
     body: {
-      emails: [email],
+      emails: [contact.email],
     },
   });
-  result.added = true;
-  return result;
 }
 
 exports.handler = async event => {
   try {
     const data = JSON.parse(event.body);
-    const result = await addContactToList(data.email);
+
+    // Update or create the contact
+    const contact = await updateOrCreateContact(data.email, {});
+
+    // Add the contact the new newsletter list
+    await addContactToList(contact, SENDINBLUE_LIST_ID);
+
     return {
       statusCode: 200,
-      body: JSON.stringify({ message: 'ok', result }),
+      body: JSON.stringify({ message: 'ok' }),
     };
   } catch (err) {
     return { statusCode: 500, body: err.toString() };
