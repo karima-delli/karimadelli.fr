@@ -182,6 +182,10 @@ export const query = graphql`
         date
         title
         url
+        docUrls {
+          pdf
+          doc
+        }
       }
     }
     events: allIcal(

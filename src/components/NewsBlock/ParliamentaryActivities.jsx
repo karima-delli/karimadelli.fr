@@ -55,20 +55,24 @@ const ActivityContainerStyled = styled(Link)`
 
 const ParliamentaryActivities = ({ titleTag, activities }) => (
   <div>
-    {activities.map(activity => (
-      <ActivityContainerStyled url={activity.url} key={activity.url}>
-        <ActivityHeaderStyled>
-          <ActivityDateStyled>{activity.date}</ActivityDateStyled>
-          <ActivityLinkStyled>
-            <ExternalLinkIcon />
-          </ActivityLinkStyled>
-        </ActivityHeaderStyled>
-        <ActivityTitleStyled as={titleTag}>
-          {activity.title}
-        </ActivityTitleStyled>
-        <ActivityTextStyled>{activity.category}</ActivityTextStyled>
-      </ActivityContainerStyled>
-    ))}
+    {activities.map(activity => {
+      const url = activity.url || activity.docUrls.pdf || activity.docUrls.doc;
+
+      return (
+        <ActivityContainerStyled url={url} key={url}>
+          <ActivityHeaderStyled>
+            <ActivityDateStyled>{activity.date}</ActivityDateStyled>
+            <ActivityLinkStyled>
+              <ExternalLinkIcon />
+            </ActivityLinkStyled>
+          </ActivityHeaderStyled>
+          <ActivityTitleStyled as={titleTag}>
+            {activity.title}
+          </ActivityTitleStyled>
+          <ActivityTextStyled>{activity.category}</ActivityTextStyled>
+        </ActivityContainerStyled>
+      );
+    })}
   </div>
 );
 
@@ -77,6 +81,10 @@ ParliamentaryActivities.propTypes = {
   activities: PropTypes.arrayOf(
     PropTypes.shape({
       url: PropTypes.string.isRequired,
+      docUrls: PropTypes.shape({
+        pdf: PropTypes.string.isRequired,
+        doc: PropTypes.string.isRequired,
+      }).isRequired,
       title: PropTypes.string.isRequired,
       category: PropTypes.string.isRequired,
       date: PropTypes.string.isRequired,
