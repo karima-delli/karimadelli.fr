@@ -209,6 +209,7 @@ exports.createPages = async ({ actions, graphql }) => {
             alternates,
           },
         };
+        // eslint-disable-next-line no-console
         console.log(`Create static page ${pagePath}`);
 
         createPage(page);
@@ -271,6 +272,7 @@ exports.createPages = async ({ actions, graphql }) => {
             },
           };
 
+          // eslint-disable-next-line no-console
           console.log(`Create contentful page ${pagePath}`);
           createPage(page);
         }
