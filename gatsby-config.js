@@ -41,9 +41,9 @@ const siteMetadata = {
     twitter: '/images/social/twitter.png',
   },
   calendarUrlPublicUrl:
-    'https://calendar.google.com/calendar/ical/6vu133k9t7tbd2h811ov5b6uvc%40group.calendar.google.com/private-7a32091834bcb8e180b8abc4928ba0ac/basic.ics',
+    'https://calendar.google.com/calendar/ical/97abtkibvlg5psuo05bt4s00i4%40group.calendar.google.com/private-a46b1848fbf5042dbb893590cdcd8362/basic.ics',
   calendarUrlIcalUrl:
-    'https://calendar.google.com/calendar/ical/6vu133k9t7tbd2h811ov5b6uvc%40group.calendar.google.com/private-7a32091834bcb8e180b8abc4928ba0ac/basic.ics',
+    'https://calendar.google.com/calendar/ical/97abtkibvlg5psuo05bt4s00i4%40group.calendar.google.com/private-a46b1848fbf5042dbb893590cdcd8362/basic.ics',
 };
 
 module.exports = {
