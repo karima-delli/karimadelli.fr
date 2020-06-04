@@ -216,21 +216,21 @@ export const pageQuery = graphql`
         image {
           mobile {
             childImageSharp {
-              fluid(maxWidth: 1600, quality: 85) {
+              fluid(maxWidth: 1600) {
                 ...GatsbyImageSharpFluid_withWebp
               }
             }
           }
           tablet {
             childImageSharp {
-              fluid(maxWidth: 2190, quality: 85) {
+              fluid(maxWidth: 2190) {
                 ...GatsbyImageSharpFluid_withWebp
               }
             }
           }
           desktop {
             childImageSharp {
-              fluid(maxWidth: 2800, quality: 85) {
+              fluid(maxWidth: 2800) {
                 ...GatsbyImageSharpFluid_withWebp
               }
             }
@@ -264,7 +264,7 @@ export const pageQuery = graphql`
         image {
           localFile {
             childImageSharp {
-              fluid(maxWidth: 2000, quality: 85) {
+              fluid(maxWidth: 2000) {
                 ...GatsbyImageSharpFluid_withWebp
               }
             }
@@ -284,7 +284,7 @@ export const pageQuery = graphql`
         image {
           localFile {
             childImageSharp {
-              fluid(maxWidth: 2000, quality: 85) {
+              fluid(maxWidth: 2000) {
                 ...GatsbyImageSharpFluid_withWebp
               }
             }

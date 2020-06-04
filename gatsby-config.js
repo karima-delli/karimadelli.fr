@@ -51,7 +51,12 @@ module.exports = {
   siteMetadata,
   plugins: [
     'gatsby-transformer-sharp',
-    'gatsby-plugin-sharp',
+    {
+      resolve: 'gatsby-plugin-sharp',
+      options: {
+        defaultQuality: 75,
+      },
+    },
     {
       resolve: 'gatsby-source-ical',
       options: {
