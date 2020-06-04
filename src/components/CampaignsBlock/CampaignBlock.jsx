@@ -97,7 +97,7 @@ const CampaignBlock = ({
   readMoreButtonTitle,
 }) => {
   const theme = useContext(ThemeContext);
-  const url = `${campaignsSlug}/${slug}`;
+  const url = `${campaignsSlug}${slug}`;
 
   return (
     <ContainerStyled>
