@@ -1,6 +1,6 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import styled, { ThemeContext } from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 import { graphql } from 'gatsby';
 import Button from '../Button';
 import TextMarkdown from '../TextMarkdown';
@@ -78,7 +78,7 @@ const NewsBlock = ({
   calendarEvents,
   adblockMessage,
 }) => {
-  const theme = useContext(ThemeContext);
+  const theme = useTheme();
   const adblockDetected = useAdblockDetect();
 
   return (

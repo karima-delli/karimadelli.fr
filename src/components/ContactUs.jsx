@@ -1,7 +1,7 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
-import styled, { ThemeContext } from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 import Title from './Title';
 import TextMarkdown from './TextMarkdown';
 import Button from './Button';
@@ -16,7 +16,7 @@ const TextStyled = styled(TextMarkdown)`
 `;
 
 const ContactUs = ({ title, text, button }) => {
-  const theme = useContext(ThemeContext);
+  const theme = useTheme();
 
   return (
     <section className="section">

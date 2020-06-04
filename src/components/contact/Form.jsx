@@ -1,6 +1,6 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import styled, { ThemeContext } from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 import { lighten } from 'polished';
 import AnimatedCheck from '../AnimatedCheck';
 
@@ -41,7 +41,7 @@ const encode = data => {
 };
 
 const ContactForm = ({ placeholders, buttonSend, messages }) => {
-  const theme = useContext(ThemeContext);
+  const theme = useTheme();
   const [formDisabled, setFormDisabled] = useState(false);
   const [formSent, setFormSent] = useState(false);
   const [hasError, setHasError] = useState(false);

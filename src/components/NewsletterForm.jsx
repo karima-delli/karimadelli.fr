@@ -1,6 +1,6 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import styled, { ThemeContext } from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 import { lighten } from 'polished';
 import { graphql } from 'gatsby';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -41,7 +41,7 @@ const AnimatedCheckContainerStyled = styled.div`
 `;
 
 const NewsletterForm = ({ title, form }) => {
-  const theme = useContext(ThemeContext);
+  const theme = useTheme();
   const [email, setEmail] = useState('');
   const [emailIsValid, setEmailValid] = useState(false);
   const [formIsLoading, setFormLoading] = useState(false);

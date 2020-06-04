@@ -1,6 +1,6 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import styled, { ThemeContext } from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 import GatsbyImage from 'gatsby-image';
 import Triangle from '../Triangle';
 import Link from '../Link';
@@ -96,7 +96,7 @@ const CampaignBlock = ({
   campaignsSlug,
   readMoreButtonTitle,
 }) => {
-  const theme = useContext(ThemeContext);
+  const theme = useTheme();
   const url = `${campaignsSlug}${slug}`;
 
   return (

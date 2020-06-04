@@ -1,6 +1,6 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import styled, { ThemeContext } from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 import GatsbyImage from 'gatsby-image';
 import { lighten } from 'polished';
 import Carousel, { Context as CarouselContext, Slide } from '../../Carousel';
@@ -83,7 +83,7 @@ const SlideContentTitleStyled = styled.h3`
 const SlideContentTextStyled = styled.p``;
 
 const HomeCarousel = ({ button, slides }) => {
-  const theme = useContext(ThemeContext);
+  const theme = useTheme();
 
   return (
     <div className="container">

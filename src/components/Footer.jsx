@@ -1,7 +1,7 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
-import styled, { ThemeContext } from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 import { transparentize } from 'polished';
 import Link from './Link';
 import Logo from './Logo';
@@ -80,7 +80,7 @@ const IconLinkStyled = styled(IconLink)`
 `;
 
 const Footer = ({ footer, socialLinks }) => {
-  const theme = useContext(ThemeContext);
+  const theme = useTheme();
 
   return (
     <FooterStyled className="footer">
@@ -96,7 +96,7 @@ const Footer = ({ footer, socialLinks }) => {
 
         <TitleMenuStyled>{footer.menu.title}</TitleMenuStyled>
         <MenuStyled>
-          {footer.menu.links.map(link => (
+          {footer.menu.links.map((link) => (
             <MenuLinkStyled key={link.url} url={link.url}>
               {link.title}
             </MenuLinkStyled>

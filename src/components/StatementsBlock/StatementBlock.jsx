@@ -1,6 +1,6 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import styled, { ThemeContext } from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 import Link from '../Link';
 import Button from '../Button';
 
@@ -52,7 +52,7 @@ const CampaignBlock = ({
   statementsSlug,
   readMoreButtonTitle,
 }) => {
-  const theme = useContext(ThemeContext);
+  const theme = useTheme();
   const url = `${statementsSlug}/${slug}`;
 
   return (

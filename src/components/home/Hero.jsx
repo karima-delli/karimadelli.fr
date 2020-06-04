@@ -1,7 +1,7 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import GatsbyImage from 'gatsby-image';
-import styled, { ThemeContext } from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 import Button from '../Button';
 import TextMarkdown from '../TextMarkdown';
 
@@ -58,7 +58,7 @@ const TextStyled = styled(TextMarkdown)`
 `;
 
 const HomeHero = ({ image, text, button }) => {
-  const theme = useContext(ThemeContext);
+  const theme = useTheme();
 
   const sources = [
     image.mobile.childImageSharp.fluid,

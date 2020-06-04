@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
-import styled, { ThemeContext } from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 import { darken } from 'polished';
 import FacebookIcon from './Icons/Facebook';
 import InstagramIcon from './Icons/Instagram';
@@ -159,7 +159,7 @@ const NavbarStyled = styled.nav`
 `;
 
 const Header = ({ isTransparent, header, socialLinks, currentPath }) => {
-  const theme = useContext(ThemeContext);
+  const theme = useTheme();
   const [navbarMenuActive, setNavbarActive] = useState(false);
 
   if (typeof document !== 'undefined') {
@@ -258,7 +258,7 @@ const Header = ({ isTransparent, header, socialLinks, currentPath }) => {
           className={`navbar-menu ${navbarMenuActive ? 'is-active' : ''}`}
         >
           <NavbarStartStyled className="navbar-start">
-            {header.menu.links.map(link => (
+            {header.menu.links.map((link) => (
               <LinkStyled
                 key={link.url}
                 className={`navbar-item ${

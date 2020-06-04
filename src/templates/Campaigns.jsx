@@ -1,14 +1,14 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
-import { ThemeContext } from 'styled-components';
+import { useTheme } from 'styled-components';
 import Metadata from '../components/Metadata';
 import CampaignsBlock from '../components/CampaignsBlock';
 import NewsletterForm from '../components/NewsletterForm';
 import Hr from '../components/Hr';
 
 const CampaignsPage = ({ data, pageContext }) => {
-  const theme = useContext(ThemeContext);
+  const theme = useTheme();
 
   return (
     <>

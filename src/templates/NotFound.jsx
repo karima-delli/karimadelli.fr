@@ -1,7 +1,7 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
-import styled, { ThemeContext } from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 import Button from '../components/Button';
 import Title from '../components/Title';
 import TextMarkdown from '../components/TextMarkdown';
@@ -18,7 +18,7 @@ const TextStyled = styled(TextMarkdown)`
 `;
 
 const NotFound = ({ data, pageContext }) => {
-  const theme = useContext(ThemeContext);
+  const theme = useTheme();
   return (
     <>
       <Metadata

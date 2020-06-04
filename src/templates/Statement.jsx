@@ -1,7 +1,7 @@
-import React, { useContext, useRef } from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
-import styled, { ThemeContext } from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 import RichText from '../components/RichText';
 import HeroContent from '../components/HeroContent';
 import Metadata from '../components/Metadata';
@@ -12,7 +12,7 @@ const HeroContentStyled = styled(HeroContent)`
 `;
 
 const Statement = ({ data, pageContext }) => {
-  const theme = useContext(ThemeContext);
+  const theme = useTheme();
   const articleRef = useRef();
 
   return (

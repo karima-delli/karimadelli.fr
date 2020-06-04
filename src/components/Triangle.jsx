@@ -1,13 +1,13 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import styled, { ThemeContext } from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 
 const PolygonStyled = styled.polygon`
   fill: ${({ color }) => color};
 `;
 
 const Triangle = ({ color, direction, reverse, ...rest }) => {
-  const theme = useContext(ThemeContext);
+  const theme = useTheme();
 
   const width = 320;
   const angleDegrees = theme.angle;

@@ -1,7 +1,7 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
-import { ThemeContext } from 'styled-components';
+import { useTheme } from 'styled-components';
 import HeroSection from '../components/home/Hero';
 import LogosSection from '../components/home/Logos';
 import CarouselSection from '../components/home/Carousel';
@@ -14,7 +14,7 @@ import Metadata from '../components/Metadata';
 import NewsletterForm from '../components/NewsletterForm';
 
 const HomePage = ({ data, pageContext }) => {
-  const theme = useContext(ThemeContext);
+  const theme = useTheme();
 
   return (
     <>
