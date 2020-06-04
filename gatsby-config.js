@@ -131,6 +131,7 @@ module.exports = {
       options: {
         develop: false, // Activates purging in npm run develop
         printRejected: false,
+        ignore: ['src/styles/styledComponentsTheme.module.scss'],
       },
     },
     'gatsby-plugin-twitter',

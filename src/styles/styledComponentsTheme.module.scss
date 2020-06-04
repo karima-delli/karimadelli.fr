@@ -1,5 +1,6 @@
 @import './variables.scss';
 
+/* purgecss start ignore */
 :export {
   // theme
   office-green: $office-green;
@@ -33,3 +34,4 @@
     fullhdBefore: $fullhd - 1px;
   }
 }
+/* purgecss end ignore */
