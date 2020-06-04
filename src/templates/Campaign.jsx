@@ -162,8 +162,8 @@ export const pageQuery = graphql`
         contentful_id
         localFile {
           childImageSharp {
-            fluid(maxWidth: 2000, quality: 100) {
-              ...GatsbyImageSharpFluid
+            fluid(maxWidth: 2000, quality: 85) {
+              ...GatsbyImageSharpFluid_withWebp
             }
           }
         }
@@ -176,8 +176,8 @@ export const pageQuery = graphql`
       image {
         localFile {
           childImageSharp {
-            fluid(maxWidth: 2000, quality: 100) {
-              ...GatsbyImageSharpFluid
+            fluid(maxWidth: 2000, quality: 85) {
+              ...GatsbyImageSharpFluid_withWebp
             }
           }
         }
@@ -185,8 +185,8 @@ export const pageQuery = graphql`
       defaultSocialImage: image {
         localFile {
           childImageSharp {
-            fixed(width: 1200, height: 630, quality: 100) {
-              ...GatsbyImageSharpFixed_noBase64
+            fixed(width: 1200, height: 630, quality: 85) {
+              ...GatsbyImageSharpFixed_withWebp_noBase64
             }
           }
         }
@@ -194,8 +194,8 @@ export const pageQuery = graphql`
       twitterSocialImage: image {
         localFile {
           childImageSharp {
-            fixed(width: 880, height: 440, quality: 100) {
-              ...GatsbyImageSharpFixed_noBase64
+            fixed(width: 880, height: 440, quality: 85) {
+              ...GatsbyImageSharpFixed_withWebp_noBase64
             }
           }
         }

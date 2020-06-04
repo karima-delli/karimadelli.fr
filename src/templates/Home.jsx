@@ -216,22 +216,22 @@ export const pageQuery = graphql`
         image {
           mobile {
             childImageSharp {
-              fluid(maxWidth: 1600, quality: 100) {
-                ...GatsbyImageSharpFluid
+              fluid(maxWidth: 1600, quality: 85) {
+                ...GatsbyImageSharpFluid_withWebp
               }
             }
           }
           tablet {
             childImageSharp {
-              fluid(maxWidth: 2190, quality: 100) {
-                ...GatsbyImageSharpFluid
+              fluid(maxWidth: 2190, quality: 85) {
+                ...GatsbyImageSharpFluid_withWebp
               }
             }
           }
           desktop {
             childImageSharp {
-              fluid(maxWidth: 2800, quality: 100) {
-                ...GatsbyImageSharpFluid
+              fluid(maxWidth: 2800, quality: 85) {
+                ...GatsbyImageSharpFluid_withWebp
               }
             }
           }
@@ -264,8 +264,8 @@ export const pageQuery = graphql`
         image {
           localFile {
             childImageSharp {
-              fluid(maxWidth: 2000, quality: 100) {
-                ...GatsbyImageSharpFluid
+              fluid(maxWidth: 2000, quality: 85) {
+                ...GatsbyImageSharpFluid_withWebp
               }
             }
           }
@@ -284,8 +284,8 @@ export const pageQuery = graphql`
         image {
           localFile {
             childImageSharp {
-              fluid(maxWidth: 2000, quality: 100) {
-                ...GatsbyImageSharpFluid
+              fluid(maxWidth: 2000, quality: 85) {
+                ...GatsbyImageSharpFluid_withWebp
               }
             }
           }
