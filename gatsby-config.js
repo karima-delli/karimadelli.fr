@@ -1,4 +1,5 @@
 const dotenv = require('dotenv');
+const { defaultLang, localesEnabled } = require('./i18n.config');
 
 dotenv.config();
 
@@ -140,12 +141,14 @@ module.exports = {
         display: 'standalone',
         icon: 'src/images/favicon.png',
         legacy: true,
-        localize: [
-          {
-            start_url: '/en/',
-            lang: 'en',
-          },
-        ],
+        localize: Object.keys(localesEnabled)
+          .filter(lang => lang !== defaultLang)
+          .map(lang => {
+            return {
+              start_url: `/${lang}/`,
+              lang,
+            };
+          }),
       },
     },
     'gatsby-plugin-react-helmet',
@@ -173,7 +176,9 @@ module.exports = {
     {
       resolve: 'gatsby-plugin-sitemap',
       options: {
-        exclude: ['/en/404'],
+        exclude: Object.keys(localesEnabled)
+          .filter(lang => lang !== defaultLang)
+          .map(lang => `/${lang}/404`),
       },
     },
   ],

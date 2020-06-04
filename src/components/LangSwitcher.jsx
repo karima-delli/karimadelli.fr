@@ -2,6 +2,7 @@ import React, { createContext, useContext } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import GatsbyLink from 'gatsby-link';
+import { localesEnabled } from '../../i18n.config';
 
 export const Context = createContext();
 
@@ -72,8 +73,14 @@ const LangStyled = styled.div`
 const LangSwitcher = ({ color, hasLightBackground, onClick }) => {
   const { lang, alternates } = useContext(Context);
 
-  const { path: alternateUrl } = alternates.find(({ current }) => !current);
-  const langs = ['fr', 'en'];
+  const alternate = alternates.find(({ current }) => !current);
+
+  if (!alternate) {
+    return <></>;
+  }
+
+  const { path: alternateUrl } = alternate;
+  const langs = Object.keys(localesEnabled);
 
   return (
     <ContainerStyled

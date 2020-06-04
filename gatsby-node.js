@@ -1,16 +1,8 @@
 const path = require('path');
-
-const DEFAULT_LANG = 'fr';
+const { defaultLang, localesEnabled } = require('./i18n.config');
 
 function getLocaleFromLang(lang) {
-  if (lang === 'fr') {
-    return 'fr-FR';
-  }
-  if (lang === 'en') {
-    return 'en-US';
-  }
-
-  return null;
+  return localesEnabled[lang] || null;
 }
 
 function getPagePath({ slug, lang, parentSlug }) {
@@ -27,7 +19,7 @@ function getPagePath({ slug, lang, parentSlug }) {
   }
 
   // Add lang to the path
-  if (lang !== DEFAULT_LANG) {
+  if (lang !== defaultLang) {
     pagePath = `/${lang}${pagePath}`;
   }
 
@@ -59,27 +51,35 @@ function getParentSlug({ parentNodes, lang }) {
 }
 
 function getPageAlternates({ siteUrl, lang, nodes, parentNodes }) {
-  return nodes.map(node => {
-    const nodeLang = node.node_locale || node.lang;
-    const parentSlug = getParentSlug({ parentNodes, lang: nodeLang });
+  return (
+    nodes
+      // Keep only the nodes with an enabled lang
+      .filter(node => {
+        const nodeLang = node.node_locale || node.lang;
+        return !!localesEnabled[nodeLang];
+      })
+      .map(node => {
+        const nodeLang = node.node_locale || node.lang;
+        const parentSlug = getParentSlug({ parentNodes, lang: nodeLang });
 
-    const pagePath = getPagePath({
-      slug: node.slug,
-      lang: nodeLang,
-      parentSlug,
-    });
+        const pagePath = getPagePath({
+          slug: node.slug,
+          lang: nodeLang,
+          parentSlug,
+        });
 
-    const pageUrl = `${siteUrl}${pagePath}`;
+        const pageUrl = `${siteUrl}${pagePath}`;
 
-    return {
-      current: nodeLang === lang,
-      default: nodeLang === DEFAULT_LANG,
-      path: pagePath,
-      lang: nodeLang,
-      locale: getLocaleFromLang(nodeLang),
-      url: pageUrl,
-    };
-  });
+        return {
+          current: nodeLang === lang,
+          default: nodeLang === defaultLang,
+          path: pagePath,
+          lang: nodeLang,
+          locale: getLocaleFromLang(nodeLang),
+          url: pageUrl,
+        };
+      })
+  );
 }
 
 function getAssetIdsFromRichTextJson(json) {
@@ -189,6 +189,11 @@ exports.createPages = async ({ actions, graphql }) => {
       data[contentType].nodes.forEach(({ slug, id, lang }) => {
         const pagePath = getPagePath({ slug, lang });
         const pageUrl = `${siteUrl}${pagePath}`;
+
+        if (!localesEnabled[lang]) {
+          return;
+        }
+
         const locale = getLocaleFromLang(lang);
 
         const alternates = getPageAlternates({
@@ -210,7 +215,7 @@ exports.createPages = async ({ actions, graphql }) => {
           },
         };
         // eslint-disable-next-line no-console
-        console.log(`Create static page ${pagePath}`);
+        console.log(`Create static page ${pagePath} (lang: ${lang})`);
 
         createPage(page);
       });
