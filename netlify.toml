@@ -16,3 +16,6 @@
   from = "https://karimadelli.netlify.com/*"
   to = "https://www.karimadelli.fr/:splat"
   status = 301
+
+[[plugins]]
+  package = "netlify-plugin-gatsby-cache"  
