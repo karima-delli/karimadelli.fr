@@ -5,7 +5,7 @@ import { Helmet } from 'react-helmet';
 const LinksMetadata = ({ canonicalUrl, alternateLinks }) => (
   <Helmet>
     {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
-    {alternateLinks.map(link => (
+    {alternateLinks.map((link) => (
       <link
         key={link.lang}
         rel="alternate"

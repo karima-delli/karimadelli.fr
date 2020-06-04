@@ -27,7 +27,7 @@ const CampaignsPage = ({ data, pageContext }) => {
         onePerLine
         {...data.campaignsBlock}
         allButton={null}
-        campaigns={data.campaigns.nodes.map(node => {
+        campaigns={data.campaigns.nodes.map((node) => {
           return {
             ...node,
             image: node.image.localFile.childImageSharp,

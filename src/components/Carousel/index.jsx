@@ -18,7 +18,7 @@ const Carousel = ({ timeout, slideCount, children }) => {
     setAutoPlay(true);
   }
 
-  const loadSlide = async index => {
+  const loadSlide = async (index) => {
     setCurrentSlideIndex(index);
     setAutoPlay(false);
   };

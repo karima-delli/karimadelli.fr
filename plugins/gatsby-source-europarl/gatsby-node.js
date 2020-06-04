@@ -93,7 +93,7 @@ exports.sourceNodes = async ({
   const { createNode } = actions;
 
   await Promise.all(
-    ['fr', 'en'].map(async lang => {
+    ['fr', 'en'].map(async (lang) => {
       const url = `https://www.europarl.europa.eu/meps/${lang}/96868/KARIMA_DELLI/home`;
 
       const response = await fetch(url);

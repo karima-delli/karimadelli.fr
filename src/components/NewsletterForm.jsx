@@ -27,7 +27,7 @@ const InputStyled = styled.input``;
 
 const ButtonStyled = styled.button`
   font-family: ${({ theme }) => theme.fontFamiliesAlternate};
-  color: ${props => props.theme.white} !important;
+  color: ${(props) => props.theme.white} !important;
   text-transform: uppercase;
   padding: 0.5rem 1rem;
 
@@ -48,13 +48,13 @@ const NewsletterForm = ({ title, form }) => {
   const [formIsSent, setFormSent] = useState(false);
   const [formHasError, setFormHasError] = useState(false);
 
-  const handleEmailChange = e => {
+  const handleEmailChange = (e) => {
     const { value } = e.target;
     setEmail(value);
     setEmailValid(isEmail(value));
   };
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (formIsLoading) {

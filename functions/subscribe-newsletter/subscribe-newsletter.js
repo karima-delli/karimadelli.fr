@@ -95,7 +95,7 @@ async function addContactToList(contact, listId) {
   });
 }
 
-exports.handler = async event => {
+exports.handler = async (event) => {
   try {
     const data = JSON.parse(event.body);
 

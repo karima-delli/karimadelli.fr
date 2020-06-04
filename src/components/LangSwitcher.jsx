@@ -87,7 +87,7 @@ const LangSwitcher = ({ color, hasLightBackground, onClick }) => {
       className={`${hasLightBackground ? 'has-light-background' : ''}`}
     >
       <GatsbyLink to={alternateUrl} onClick={onClick}>
-        {langs.map(aLang => (
+        {langs.map((aLang) => (
           <LangStyled
             key={aLang}
             color={color}

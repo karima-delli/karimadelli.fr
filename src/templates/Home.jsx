@@ -31,7 +31,7 @@ const HomePage = ({ data, pageContext }) => {
         button={data.page.hero.button}
       />
       <LogosSection
-        logos={data.page.logos.map(logo => {
+        logos={data.page.logos.map((logo) => {
           return {
             ...logo,
             title: logo.title,
@@ -41,7 +41,7 @@ const HomePage = ({ data, pageContext }) => {
       />
       <CarouselSection
         button={data.page.slider.button}
-        slides={data.slider.slides.map(slide => {
+        slides={data.slider.slides.map((slide) => {
           return {
             ...slide,
             text: slide.text.text,
@@ -57,7 +57,7 @@ const HomePage = ({ data, pageContext }) => {
           allButton={
             data.campaigns.nodes === 3 ? data.campaignsBlock.allButton : null
           }
-          campaigns={data.campaigns.nodes.map(node => {
+          campaigns={data.campaigns.nodes.map((node) => {
             return {
               ...node,
               image: node.image.localFile.childImageSharp,

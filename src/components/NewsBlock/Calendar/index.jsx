@@ -5,7 +5,7 @@ import CalendarEvent from './Event';
 const Calendar = ({ baseTitleTag, events }) => {
   return (
     <div>
-      {events.map(event => (
+      {events.map((event) => (
         <CalendarEvent
           key={event.id}
           {...event}

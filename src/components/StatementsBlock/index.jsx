@@ -47,7 +47,7 @@ const StatementsBlock = ({
         <TextStyled>{text}</TextStyled>
 
         <StatementContainerStyled>
-          {statements.map(statement => (
+          {statements.map((statement) => (
             <StatementBlock
               key={statement.slug}
               {...statement}

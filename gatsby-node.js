@@ -40,7 +40,7 @@ function getParentSlug({ parentNodes, lang }) {
   if (!parentNodes) {
     return null;
   }
-  const parent = parentNodes.find(node => {
+  const parent = parentNodes.find((node) => {
     const nodeLang = node.node_locale || node.lang;
     return nodeLang === lang;
   });
@@ -54,11 +54,11 @@ function getPageAlternates({ siteUrl, lang, nodes, parentNodes }) {
   return (
     nodes
       // Keep only the nodes with an enabled lang
-      .filter(node => {
+      .filter((node) => {
         const nodeLang = node.node_locale || node.lang;
         return !!localesEnabled[nodeLang];
       })
-      .map(node => {
+      .map((node) => {
         const nodeLang = node.node_locale || node.lang;
         const parentSlug = getParentSlug({ parentNodes, lang: nodeLang });
 
@@ -84,10 +84,10 @@ function getPageAlternates({ siteUrl, lang, nodes, parentNodes }) {
 
 function getAssetIdsFromRichTextJson(json) {
   return json.content
-    .filter(node => {
+    .filter((node) => {
       return node.nodeType === 'embedded-asset-block';
     })
-    .map(node => node.data.target.sys.contentful_id);
+    .map((node) => node.data.target.sys.contentful_id);
 }
 
 exports.createPages = async ({ actions, graphql }) => {
@@ -179,10 +179,10 @@ exports.createPages = async ({ actions, graphql }) => {
 
   // Create static pages
   Object.keys(data)
-    .filter(contentType => {
+    .filter((contentType) => {
       return !!contentType.match(/all(.*)Yaml/);
     })
-    .forEach(contentType => {
+    .forEach((contentType) => {
       // Generate template name
       const templateName = contentType.replace(/all(.*)Yaml/, '$1');
 
@@ -223,10 +223,10 @@ exports.createPages = async ({ actions, graphql }) => {
 
   // Create contentful pages
   Object.keys(data)
-    .filter(contentType => {
+    .filter((contentType) => {
       return contentType.indexOf('allContentful') === 0;
     })
-    .forEach(contentType => {
+    .forEach((contentType) => {
       // Generate template name
       const templateName = contentType.replace('allContentful', '');
 
@@ -238,7 +238,7 @@ exports.createPages = async ({ actions, graphql }) => {
           const pagePath = getPagePath({ slug, lang, parentSlug });
           const pageUrl = `${siteUrl}${pagePath}`;
 
-          const alternateNodes = data[contentType].nodes.filter(node => {
+          const alternateNodes = data[contentType].nodes.filter((node) => {
             return node.contentful_id === id;
           });
 
@@ -256,7 +256,7 @@ exports.createPages = async ({ actions, graphql }) => {
             contentType === 'allContentfulStatement' ||
             contentType === 'allContentfulPage'
           ) {
-            Object.keys(rest).forEach(key => {
+            Object.keys(rest).forEach((key) => {
               if (rest[key] && rest[key].json) {
                 assetIds.push(...getAssetIdsFromRichTextJson(rest[key].json));
               }
@@ -309,7 +309,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
       fields: {
         isFuture: {
           type: 'Boolean!',
-          resolve: source => new Date(source.start) > new Date(),
+          resolve: (source) => new Date(source.start) > new Date(),
         },
       },
     }),

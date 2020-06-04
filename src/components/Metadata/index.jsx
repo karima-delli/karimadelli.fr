@@ -24,7 +24,7 @@ const Metadata = ({ metadata, locale, lang, url, alternates }) => {
           }
         }
       `}
-      render={data => {
+      render={(data) => {
         const globalMetadata = data.site.siteMetadata;
         const {
           siteUrl,
@@ -34,14 +34,14 @@ const Metadata = ({ metadata, locale, lang, url, alternates }) => {
         } = globalMetadata;
         const { title, description, socialImages = {} } = metadata;
 
-        const alternateLinks = alternates.map(alternate => {
+        const alternateLinks = alternates.map((alternate) => {
           return {
             lang: alternate.lang,
             href: alternate.url,
           };
         });
 
-        const ogLocales = alternates.map(alternate => {
+        const ogLocales = alternates.map((alternate) => {
           return {
             locale: alternate.locale,
             current: alternate.locale === locale,

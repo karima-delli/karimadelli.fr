@@ -34,9 +34,9 @@ const ButtonStyled = styled.button`
   }
 `;
 
-const encode = data => {
+const encode = (data) => {
   return Object.keys(data)
-    .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}`)
+    .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}`)
     .join('&');
 };
 
@@ -53,12 +53,12 @@ const ContactForm = ({ placeholders, buttonSend, messages }) => {
     message: '',
   });
 
-  const handleInputChange = e => {
+  const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const formDomEl = e.target;

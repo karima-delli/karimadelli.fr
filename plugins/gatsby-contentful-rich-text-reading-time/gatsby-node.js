@@ -41,7 +41,7 @@ exports.createSchemaCustomization = ({ actions, schema }, { types }) => {
         fields: {
           readingTime: {
             type: 'Float!',
-            resolve: source => {
+            resolve: (source) => {
               const json = JSON.parse(source[field]);
               const readingTime = calculateRichTextReadingTime(json);
               return readingTime;

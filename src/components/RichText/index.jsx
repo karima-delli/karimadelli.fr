@@ -23,8 +23,8 @@ const GatsbyImageStyled = styled(GatsbyImage)`
 `;
 
 const RichText = ({ json, assets }) => {
-  const getAsset = contentfulId => {
-    return assets.find(asset => asset.contentful_id === contentfulId);
+  const getAsset = (contentfulId) => {
+    return assets.find((asset) => asset.contentful_id === contentfulId);
   };
 
   const options = {
@@ -43,7 +43,7 @@ const RichText = ({ json, assets }) => {
         </div>
       ),
       [BLOCKS.HR]: () => <HrStyled />,
-      [BLOCKS.EMBEDDED_ENTRY]: node => {
+      [BLOCKS.EMBEDDED_ENTRY]: (node) => {
         const props = Object.keys(node.data.target.fields).reduce(
           (acc, key) => {
             const value = node.data.target.fields[key];
@@ -59,7 +59,7 @@ const RichText = ({ json, assets }) => {
         );
         return <IframeStyled {...props} />;
       },
-      [BLOCKS.EMBEDDED_ASSET]: node => {
+      [BLOCKS.EMBEDDED_ASSET]: (node) => {
         const asset = getAsset(node.data.target.sys.contentful_id);
         if (!asset) {
           return <></>;

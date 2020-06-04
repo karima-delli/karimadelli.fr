@@ -148,8 +148,8 @@ module.exports = {
         icon: 'src/images/favicon.png',
         legacy: true,
         localize: Object.keys(localesEnabled)
-          .filter(lang => lang !== defaultLang)
-          .map(lang => {
+          .filter((lang) => lang !== defaultLang)
+          .map((lang) => {
             return {
               start_url: `/${lang}/`,
               lang,
@@ -183,8 +183,8 @@ module.exports = {
       resolve: 'gatsby-plugin-sitemap',
       options: {
         exclude: Object.keys(localesEnabled)
-          .filter(lang => lang !== defaultLang)
-          .map(lang => `/${lang}/404`),
+          .filter((lang) => lang !== defaultLang)
+          .map((lang) => `/${lang}/404`),
       },
     },
   ],

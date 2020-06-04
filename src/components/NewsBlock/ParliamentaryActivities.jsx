@@ -55,7 +55,7 @@ const ActivityContainerStyled = styled(Link)`
 
 const ParliamentaryActivities = ({ titleTag, activities }) => (
   <div>
-    {activities.map(activity => {
+    {activities.map((activity) => {
       const url = activity.url || activity.docUrls.pdf || activity.docUrls.doc;
 
       return (
