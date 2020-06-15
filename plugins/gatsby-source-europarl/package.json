@@ -1,8 +1,0 @@
-{
-  "name": "gatsby-source-europarl",
-  "dependencies": {
-    "cheerio": "^1.0.0-rc.3",
-    "cross-fetch": "^3.0.4",
-    "xml2js": "^0.4.23"
-  }
-}

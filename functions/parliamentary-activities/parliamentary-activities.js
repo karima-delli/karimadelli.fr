@@ -9,17 +9,13 @@ function getCategory($parent) {
   return el.text().trim();
 }
 
-function getDate($parent, lang) {
+function getDate($parent) {
   const el = $parent.find('.erpl_document-subtitle-fragment').eq(0);
   if (!(el && el.length)) {
     return '';
   }
   const date = el.text().trim();
-  if (lang === 'fr') {
-    return date.replace(/-/g, '/');
-  }
-  const sp = date.split('-');
-  return `${sp[1]}/${sp[0]}/${sp[2]}`;
+  return date.replace(/-/g, '/');
 }
 
 function getTitle($parent) {
@@ -59,7 +55,7 @@ function getDocUrls($parent) {
   };
 }
 
-function getActivitiesFromPage(html, lang) {
+function getActivitiesFromPage(html) {
   const $ = cheerio.load(html);
 
   const items = $('.erpl_meps-activities-list .erpl_document')
@@ -69,7 +65,7 @@ function getActivitiesFromPage(html, lang) {
       const url = getUrl($el);
       const docUrls = getDocUrls($el);
       const title = getTitle($el);
-      const date = getDate($el, lang);
+      const date = getDate($el);
       const category = getCategory($el);
 
       return {
@@ -85,37 +81,25 @@ function getActivitiesFromPage(html, lang) {
   return items;
 }
 
-exports.sourceNodes = async ({
-  actions,
-  createNodeId,
-  createContentDigest,
-}) => {
-  const { createNode } = actions;
+exports.handler = async () => {
+  try {
+    const response = await fetch(process.env.EUROPARL_PAGE_URL);
+    const html = await response.text();
+    const activities = getActivitiesFromPage(html);
 
-  await Promise.all(
-    ['fr', 'en'].map(async (lang) => {
-      const url = `https://www.europarl.europa.eu/meps/${lang}/96868/KARIMA_DELLI/home`;
-
-      const response = await fetch(url);
-      const html = await response.text();
-      const activities = getActivitiesFromPage(html, lang);
-
-      const nodeData = {
-        url,
-        lang,
+    return {
+      statusCode: 200,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers':
+          'Origin, X-Requested-With, Content-Type, Accept',
+        'Cache-Control': 'public, s-maxage=1800',
+      },
+      body: JSON.stringify({
         activities,
-      };
-
-      createNode({
-        ...nodeData,
-        id: createNodeId(lang),
-        parent: null,
-        children: [],
-        internal: {
-          type: 'ParliamentaryActivities',
-          contentDigest: createContentDigest(JSON.stringify(nodeData)),
-        },
-      });
-    })
-  );
+      }),
+    };
+  } catch (err) {
+    return { statusCode: 500, body: err.toString() };
+  }
 };

@@ -69,8 +69,7 @@ const NewsBlock = ({
   text,
   readMoreButtonTitle,
   parliamentTitle,
-  parliamentaryActivities,
-  parliamentaryActivitiesUrl,
+  europarlPageUrl,
   twitterTitle,
   calendarEnabled,
   calendarTitle,
@@ -96,14 +95,12 @@ const NewsBlock = ({
             <ParliamentaryActivities
               title={parliamentTitle}
               readMoreButtonTitle={readMoreButtonTitle}
-              activities={parliamentaryActivities}
               titleTag={`h${baseTitleTag + 2}`}
-              parliamentActivitiesUrl={parliamentaryActivitiesUrl}
             />
             <ReadMoreButtonContainerStyled>
               <Button
                 title={readMoreButtonTitle}
-                url={parliamentaryActivitiesUrl}
+                url={europarlPageUrl}
                 color={theme.brownGrey}
                 underlined
               />
@@ -139,8 +136,7 @@ NewsBlock.propTypes = {
   text: PropTypes.string.isRequired,
   readMoreButtonTitle: PropTypes.string.isRequired,
   parliamentTitle: PropTypes.string.isRequired,
-  parliamentaryActivities: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  parliamentaryActivitiesUrl: PropTypes.string.isRequired,
+  europarlPageUrl: PropTypes.string.isRequired,
   twitterTitle: PropTypes.string.isRequired,
   calendarEnabled: PropTypes.bool.isRequired,
   calendarTitle: PropTypes.string.isRequired,
@@ -160,17 +156,9 @@ export const query = graphql`
       twitterTitle
       adblockMessage
     }
-    parliamentaryActivities(lang: { eq: $lang }) {
-      url
-      activities {
-        category
-        date
-        title
-        url
-        docUrls {
-          pdf
-          doc
-        }
+    site {
+      siteMetadata {
+        europarlPageUrl
       }
     }
   }

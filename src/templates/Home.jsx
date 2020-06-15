@@ -87,8 +87,7 @@ const HomePage = ({ data, pageContext }) => {
       <NewsBlock
         {...data.newsBlock}
         baseTitleTag={2}
-        parliamentaryActivitiesUrl={data.parliamentaryActivities.url}
-        parliamentaryActivities={data.parliamentaryActivities.activities}
+        europarlPageUrl={data.site.siteMetadata.europarlPageUrl}
         calendarEnabled
       />
       <ContactUs
@@ -108,6 +107,11 @@ HomePage.propTypes = {
     alternates: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   }).isRequired,
   data: PropTypes.shape({
+    site: PropTypes.shape({
+      siteMetadata: PropTypes.shape({
+        europarlPageUrl: PropTypes.string.isRequired,
+      }).isRequired,
+    }).isRequired,
     page: PropTypes.shape({
       metadata: PropTypes.shape({
         title: PropTypes.string.isRequired,

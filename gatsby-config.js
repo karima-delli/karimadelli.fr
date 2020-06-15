@@ -43,6 +43,7 @@ const siteMetadata = {
   },
   calendarUrlPublicUrl: process.env.ICAL_URL,
   calendarUrlIcalUrl: process.env.ICAL_URL,
+  europarlPageUrl: process.env.EUROPARL_PAGE_URL,
 };
 
 module.exports = {
@@ -55,7 +56,6 @@ module.exports = {
         defaultQuality: 75,
       },
     },
-    'gatsby-source-europarl',
     'gatsby-transformer-yaml',
     {
       resolve: 'gatsby-source-filesystem',

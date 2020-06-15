@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { darken } from 'polished';
@@ -53,43 +53,47 @@ const ActivityContainerStyled = styled(Link)`
   }
 `;
 
-const ParliamentaryActivities = ({ titleTag, activities }) => (
-  <div>
-    {activities.map((activity) => {
-      const url = activity.url || activity.docUrls.pdf || activity.docUrls.doc;
+const FUNCTION_ENDPOINT = '/.netlify/functions/parliamentary-activities';
 
-      return (
-        <ActivityContainerStyled url={url} key={url}>
-          <ActivityHeaderStyled>
-            <ActivityDateStyled>{activity.date}</ActivityDateStyled>
-            <ActivityLinkStyled>
-              <ExternalLinkIcon />
-            </ActivityLinkStyled>
-          </ActivityHeaderStyled>
-          <ActivityTitleStyled as={titleTag}>
-            {activity.title}
-          </ActivityTitleStyled>
-          <ActivityTextStyled>{activity.category}</ActivityTextStyled>
-        </ActivityContainerStyled>
-      );
-    })}
-  </div>
-);
+const ParliamentaryActivities = ({ titleTag }) => {
+  const [activities, setActivities] = useState([]);
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      const response = await fetch(FUNCTION_ENDPOINT);
+      const data = await response.json();
+      setActivities(data.activities);
+    };
+    fetchEvents();
+  }, []);
+
+  return (
+    <div>
+      {activities.map((activity) => {
+        const url =
+          activity.url || activity.docUrls.pdf || activity.docUrls.doc;
+
+        return (
+          <ActivityContainerStyled url={url} key={url}>
+            <ActivityHeaderStyled>
+              <ActivityDateStyled>{activity.date}</ActivityDateStyled>
+              <ActivityLinkStyled>
+                <ExternalLinkIcon />
+              </ActivityLinkStyled>
+            </ActivityHeaderStyled>
+            <ActivityTitleStyled as={titleTag}>
+              {activity.title}
+            </ActivityTitleStyled>
+            <ActivityTextStyled>{activity.category}</ActivityTextStyled>
+          </ActivityContainerStyled>
+        );
+      })}
+    </div>
+  );
+};
 
 ParliamentaryActivities.propTypes = {
   titleTag: PropTypes.string.isRequired,
-  activities: PropTypes.arrayOf(
-    PropTypes.shape({
-      url: PropTypes.string.isRequired,
-      docUrls: PropTypes.shape({
-        pdf: PropTypes.string.isRequired,
-        doc: PropTypes.string.isRequired,
-      }).isRequired,
-      title: PropTypes.string.isRequired,
-      category: PropTypes.string.isRequired,
-      date: PropTypes.string.isRequired,
-    })
-  ).isRequired,
 };
 
 export default ParliamentaryActivities;
