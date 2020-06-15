@@ -3,107 +3,112 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const fetch = require('cross-fetch');
+const md5 = require('md5');
+const isEmail = require('validator/lib/isEmail');
 
-const SENDINBLUE_API_ENDPOINT = 'https://api.sendinblue.com/v3/';
+const { MAILCHIMP_API_KEY, MAILCHIMP_LIST_ID } = process.env;
+const apiRegion = MAILCHIMP_API_KEY.split('-').pop();
 
-const { SENDINBLUE_API_KEY, SENDINBLUE_LIST_ID } = process.env;
+const API_URL = `https://${apiRegion}.api.mailchimp.com/3.0/`;
 
-async function sendInBlueRequest({ uri, method, body }) {
-  const params = {
-    method,
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      'api-key': SENDINBLUE_API_KEY,
-    },
-  };
-  if (body) {
-    params.body = JSON.stringify(body);
-  }
-  const response = await fetch(`${SENDINBLUE_API_ENDPOINT}${uri}`, params);
-  if (response.status === 204) {
-    return '';
-  }
-  const data = await response.json();
-  return data;
+function getAuthorization() {
+  return `Basic ${Buffer.from(`user:${MAILCHIMP_API_KEY}`).toString('base64')}`;
 }
 
-async function getContactByEmail(email) {
-  const response = await sendInBlueRequest({
-    uri: `contacts/${email}`,
-    method: 'get',
+async function makeRequest({ path, method, body }) {
+  const response = await fetch(API_URL + path, {
+    method,
+    body: body ? JSON.stringify(body) : null,
+    headers: {
+      authorization: getAuthorization(),
+    },
   });
-  if (!response || response.code === 'document_not_found') {
-    return null;
-  }
   return response;
 }
 
-function createContact(email, attributes) {
-  return sendInBlueRequest({
-    uri: 'contacts',
-    method: 'post',
-    body: {
-      email,
-      attributes: attributes || undefined,
-    },
-  });
+function generateMemberId(email) {
+  if (!email) {
+    return null;
+  }
+  return md5(email.toLowerCase());
 }
 
-function updateContact(email, attributes) {
-  return sendInBlueRequest({
-    uri: `contacts/${email}`,
-    method: 'put',
-    body: {
-      attributes,
-    },
+async function getContactListStatus({ email, listId }) {
+  const contactId = generateMemberId(email);
+  const res = await makeRequest({
+    method: 'GET',
+    path: `lists/${listId}/members/${contactId}`,
   });
+  if (res.status === 404) {
+    return null;
+  }
+  if (res.status !== 200) {
+    throw new Error('An error occured');
+  }
+  const data = await res.json();
+  return data.status;
 }
 
-async function updateOrCreateContact(email, attributes) {
-  const contact = await getContactByEmail(email);
-
-  // Nothing to update
-  if (contact && !attributes) {
-    return contact;
-  }
-
-  // Contact does not exist, create contact and add it to the list
-  if (!contact) {
-    await createContact(email, attributes);
-  } else {
-    // Update contact
-    await updateContact(email, attributes);
-  }
-
-  return getContactByEmail(email);
+function mapDataFields(data = {}) {
+  return {
+    FNAME: data.firstname || '',
+    LNAME: data.lastname || '',
+    PHONE: data.phone || '',
+  };
 }
 
-async function addContactToList(contact, listId) {
-  // Contact already in list
-  if (contact.listIds.includes(Number.parseInt(SENDINBLUE_LIST_ID, 10))) {
-    return;
-  }
-
-  // Add existing contact to list
-  await sendInBlueRequest({
-    uri: `contacts/lists/${listId}/contacts/add`,
-    method: 'post',
+async function updateListMember({ email, listId, data }) {
+  const memberId = generateMemberId(email);
+  const response = await makeRequest({
+    method: 'PUT',
+    path: `lists/${listId}/members/${memberId}`,
     body: {
-      emails: [contact.email],
+      email_address: email,
+      status: 'subscribed',
+      merge_fields: mapDataFields(data),
     },
   });
+  return response.status === 200;
+}
+
+async function addListMember({ email, listId, data }) {
+  const response = await makeRequest({
+    method: 'POST',
+    path: `lists/${listId}/members`,
+    body: {
+      email_address: email,
+      status: 'subscribed',
+      merge_fields: mapDataFields(data),
+    },
+  });
+  return response.status === 200;
+}
+
+async function addListMemberHelper({ email, listId, data }) {
+  const status = await getContactListStatus({ email, listId });
+
+  if (status === 'bounced') {
+    return false;
+  }
+
+  if (status) {
+    // Update member
+    return updateListMember({ email, listId, data });
+  }
+
+  // Create new member
+  return addListMember({ email, listId, data });
 }
 
 exports.handler = async (event) => {
   try {
     const data = JSON.parse(event.body);
 
-    // Update or create the contact
-    const contact = await updateOrCreateContact(data.email, {});
+    if (!data.email || !isEmail(data.email)) {
+      return { statusCode: 400, body: '' };
+    }
 
-    // Add the contact the new newsletter list
-    await addContactToList(contact, SENDINBLUE_LIST_ID);
+    await addListMemberHelper({ email: data.email, listId: MAILCHIMP_LIST_ID });
 
     return {
       statusCode: 200,
