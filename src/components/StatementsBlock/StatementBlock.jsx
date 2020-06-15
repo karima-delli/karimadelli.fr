@@ -53,7 +53,7 @@ const CampaignBlock = ({
   readMoreButtonTitle,
 }) => {
   const theme = useTheme();
-  const url = `${statementsSlug}/${slug}`;
+  const url = `${statementsSlug}${slug}`;
 
   return (
     <SectionStyled className="section">
