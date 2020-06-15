@@ -110,7 +110,7 @@ const NewsBlock = ({
                 underlined
               />
             </ReadMoreButtonContainerStyled>
-            {calendarEnabled && (
+            {calendarEnabled && !!calendarEvents.length && (
               <>
                 <BlockTitleStyled as={`h${baseTitleTag + 1}`}>
                   {calendarTitle}
