@@ -61,8 +61,16 @@ const ParliamentaryActivities = ({ titleTag }) => {
   useEffect(() => {
     const fetchEvents = async () => {
       const response = await fetch(FUNCTION_ENDPOINT);
-      const data = await response.json();
-      setActivities(data.activities);
+      if (!response.ok) {
+        return;
+      }
+      const text = await response.text();
+      try {
+        const data = text ? JSON.parse(text) : {};
+        setActivities(data.activities);
+      } catch (err) {
+        //
+      }
     };
     fetchEvents();
   }, []);

@@ -178,10 +178,6 @@ HomePage.propTypes = {
     }).isRequired,
     statementsBlock: PropTypes.shape({}).isRequired,
     newsletterForm: PropTypes.shape({}).isRequired,
-    parliamentaryActivities: PropTypes.shape({
-      url: PropTypes.string.isRequired,
-      activities: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-    }).isRequired,
   }).isRequired,
 };
 

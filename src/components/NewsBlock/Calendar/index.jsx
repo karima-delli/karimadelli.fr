@@ -10,8 +10,16 @@ const Calendar = ({ baseTitleTag }) => {
   useEffect(() => {
     const fetchEvents = async () => {
       const response = await fetch(FUNCTION_ENDPOINT);
-      const data = await response.json();
-      setEvents(data.events);
+      if (!response.ok) {
+        return;
+      }
+      const text = await response.text();
+      try {
+        const data = text ? JSON.parse(text) : {};
+        setEvents(data.events);
+      } catch (err) {
+        //
+      }
     };
     fetchEvents();
   }, []);
