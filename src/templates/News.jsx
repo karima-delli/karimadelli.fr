@@ -19,8 +19,6 @@ const NewsPage = ({ data, pageContext }) => (
       parliamentaryActivities={data.parliamentaryActivities.activities}
       parliamentaryActivitiesUrl={data.parliamentaryActivities.url}
       calendarEnabled
-      calendarUrl={data.site.siteMetadata.calendarUrlPublicUrl}
-      calendarEvents={data.events.nodes}
     />
   </>
 );
@@ -33,11 +31,6 @@ NewsPage.propTypes = {
     alternates: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   }).isRequired,
   data: PropTypes.shape({
-    site: PropTypes.shape({
-      siteMetadata: PropTypes.shape({
-        calendarUrlPublicUrl: PropTypes.string.isRequired,
-      }).isRequired,
-    }).isRequired,
     page: PropTypes.shape({
       metadata: PropTypes.shape({
         title: PropTypes.string.isRequired,
@@ -49,9 +42,6 @@ NewsPage.propTypes = {
       url: PropTypes.string.isRequired,
       activities: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
     }).isRequired,
-    events: PropTypes.shape({
-      nodes: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-    }).isRequired,
   }).isRequired,
 };
 
@@ -62,11 +52,6 @@ export const pageQuery = graphql`
     ...Header
     ...Footer
     ...NewsBlock
-    site {
-      siteMetadata {
-        calendarUrlPublicUrl
-      }
-    }
     page: newsYaml(lang: { eq: $lang }) {
       metadata {
         title

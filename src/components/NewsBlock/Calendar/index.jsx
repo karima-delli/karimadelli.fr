@@ -1,8 +1,21 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import CalendarEvent from './Event';
 
-const Calendar = ({ baseTitleTag, events }) => {
+const FUNCTION_ENDPOINT = '/.netlify/functions/calendar-events';
+
+const Calendar = ({ baseTitleTag }) => {
+  const [events, setEvents] = useState([]);
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      const response = await fetch(FUNCTION_ENDPOINT);
+      const data = await response.json();
+      setEvents(data.events);
+    };
+    fetchEvents();
+  }, []);
+
   return (
     <div>
       {events.map((event) => (
@@ -18,11 +31,6 @@ const Calendar = ({ baseTitleTag, events }) => {
 
 Calendar.propTypes = {
   baseTitleTag: PropTypes.number.isRequired,
-  events: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-    })
-  ).isRequired,
 };
 
 export default Calendar;

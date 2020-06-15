@@ -41,10 +41,8 @@ const siteMetadata = {
     default: '/images/social/default.png',
     twitter: '/images/social/twitter.png',
   },
-  calendarUrlPublicUrl:
-    'https://calendar.google.com/calendar/ical/97abtkibvlg5psuo05bt4s00i4%40group.calendar.google.com/private-a46b1848fbf5042dbb893590cdcd8362/basic.ics',
-  calendarUrlIcalUrl:
-    'https://calendar.google.com/calendar/ical/97abtkibvlg5psuo05bt4s00i4%40group.calendar.google.com/private-a46b1848fbf5042dbb893590cdcd8362/basic.ics',
+  calendarUrlPublicUrl: process.env.ICAL_URL,
+  calendarUrlIcalUrl: process.env.ICAL_URL,
 };
 
 module.exports = {
@@ -55,13 +53,6 @@ module.exports = {
       resolve: 'gatsby-plugin-sharp',
       options: {
         defaultQuality: 75,
-      },
-    },
-    {
-      resolve: 'gatsby-source-ical',
-      options: {
-        name: 'events',
-        url: siteMetadata.calendarUrlIcalUrl,
       },
     },
     'gatsby-source-europarl',

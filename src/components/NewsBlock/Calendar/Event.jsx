@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { parseISO, format } from 'date-fns';
 
 const EventContainerStyled = styled.div`
   display: block;
@@ -41,8 +42,7 @@ const EventDescriptionStyled = styled.div`
 
 const CalendarEvent = ({
   titleTag,
-  dateFormattedFr,
-  hour,
+  startDate,
   location,
   summary,
   description,
@@ -57,7 +57,10 @@ const CalendarEvent = ({
       onClick={() => setDescriptionVisibility(!descriptionVisible)}
     >
       <EventDateStyled>
-        {dateFormattedFr} - <EventHourStyled>{hour}</EventHourStyled>
+        {format(parseISO(startDate), 'dd/MM/yyyy')} -{' '}
+        <EventHourStyled>
+          {format(parseISO(startDate), 'HH:mm')}
+        </EventHourStyled>
       </EventDateStyled>
       {location && <EventLocationStyled>{location}</EventLocationStyled>}
       {summary && (
@@ -73,9 +76,7 @@ const CalendarEvent = ({
 CalendarEvent.propTypes = {
   titleTag: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
-  dateFormattedFr: PropTypes.string.isRequired,
-  dateFormattedEn: PropTypes.string.isRequired,
-  hour: PropTypes.string.isRequired,
+  startDate: PropTypes.string.isRequired,
   location: PropTypes.string.isRequired,
   summary: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,

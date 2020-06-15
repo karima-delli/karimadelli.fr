@@ -73,9 +73,7 @@ const NewsBlock = ({
   parliamentaryActivitiesUrl,
   twitterTitle,
   calendarEnabled,
-  calendarUrl,
   calendarTitle,
-  calendarEvents,
   adblockMessage,
 }) => {
   const theme = useTheme();
@@ -110,23 +108,12 @@ const NewsBlock = ({
                 underlined
               />
             </ReadMoreButtonContainerStyled>
-            {calendarEnabled && !!calendarEvents.length && (
+            {calendarEnabled && (
               <>
                 <BlockTitleStyled as={`h${baseTitleTag + 1}`}>
                   {calendarTitle}
                 </BlockTitleStyled>
-                <Calendar
-                  events={calendarEvents}
-                  baseTitleTag={baseTitleTag + 2}
-                />
-                <ReadMoreButtonContainerStyled>
-                  <Button
-                    title={readMoreButtonTitle}
-                    url={calendarUrl}
-                    color={theme.brownGrey}
-                    underlined
-                  />
-                </ReadMoreButtonContainerStyled>
+                <Calendar baseTitleTag={baseTitleTag + 2} />
               </>
             )}
           </div>
@@ -156,9 +143,7 @@ NewsBlock.propTypes = {
   parliamentaryActivitiesUrl: PropTypes.string.isRequired,
   twitterTitle: PropTypes.string.isRequired,
   calendarEnabled: PropTypes.bool.isRequired,
-  calendarUrl: PropTypes.string.isRequired,
   calendarTitle: PropTypes.string.isRequired,
-  calendarEvents: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   adblockMessage: PropTypes.string.isRequired,
 };
 
@@ -186,21 +171,6 @@ export const query = graphql`
           pdf
           doc
         }
-      }
-    }
-    events: allIcal(
-      limit: 3
-      sort: { fields: start, order: ASC }
-      filter: { isFuture: { eq: true }, summary: { ne: "" } }
-    ) {
-      nodes {
-        id
-        dateFormattedFr: start(formatString: "DD/MM/YYYY")
-        dateFormattedEn: start(formatString: "MM/DD/YYYY")
-        hour: start(formatString: "HH:mm")
-        summary
-        location
-        description
       }
     }
   }
