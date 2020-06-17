@@ -33,6 +33,21 @@ const RichText = ({ json, assets }) => {
       [INLINES.HYPERLINK]: (node, children) => (
         <Link url={node.data.uri}>{children}</Link>
       ),
+      [INLINES.ASSET_HYPERLINK]: (node, children) => {
+        const asset = getAsset(node.data.target.sys.contentful_id);
+        if (!(asset && asset.localFile && asset.localFile.publicURL)) {
+          return <>{children}</>;
+        }
+        return (
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href={asset.localFile.publicURL}
+          >
+            {children}
+          </a>
+        );
+      },
       [BLOCKS.UL_LIST]: (node, children) => (
         <div className="content">
           <ul>{children}</ul>
