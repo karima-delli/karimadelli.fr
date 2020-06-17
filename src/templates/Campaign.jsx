@@ -160,7 +160,11 @@ export const pageQuery = graphql`
     ) {
       nodes {
         contentful_id
+        file {
+          contentType
+        }
         localFile {
+          publicURL
           childImageSharp {
             fluid(maxWidth: 2000) {
               ...GatsbyImageSharpFluid_withWebp

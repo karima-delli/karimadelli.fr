@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import GatsbyImage from 'gatsby-image';
 import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
+import PdfDocument from '../PdfDocument';
 import Hr from '../Hr';
 import Link from '../Link';
 import Iframe from '../Iframe';
@@ -64,9 +65,21 @@ const RichText = ({ json, assets }) => {
         if (!asset) {
           return <></>;
         }
-        return (
-          <GatsbyImageStyled fluid={asset.localFile.childImageSharp.fluid} />
-        );
+
+        if (
+          asset.file.contentType === 'application/pdf' &&
+          asset.localFile.publicURL
+        ) {
+          return <PdfDocument url={asset.localFile.publicURL} />;
+        }
+
+        if (asset.localFile.childImageSharp.fluid) {
+          return (
+            <GatsbyImageStyled fluid={asset.localFile.childImageSharp.fluid} />
+          );
+        }
+
+        return <></>;
       },
     },
   };
@@ -80,9 +93,13 @@ RichText.propTypes = {
   json: PropTypes.shape({}).isRequired,
   assets: PropTypes.arrayOf(
     PropTypes.shape({
-      contentful_id: PropTypes.string.isRequired,
+      contentful_id: PropTypes.string,
+      file: PropTypes.shape({
+        contentType: PropTypes.string,
+      }),
       localFile: PropTypes.shape({
-        childImageSharp: PropTypes.shape({}).isRequired,
+        publicURL: PropTypes.string,
+        childImageSharp: PropTypes.shape({}),
       }).isRequired,
     })
   ),

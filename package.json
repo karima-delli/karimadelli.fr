@@ -67,6 +67,7 @@
     "react-intersection-observer": "8.26.2",
     "react-interval": "2.1.1",
     "react-markdown": "4.3.1",
+    "react-pdf": "4.1.0",
     "react-share": "4.1.0",
     "react-transition-group": "4.4.1",
     "read-time-estimate": "0.0.2",
