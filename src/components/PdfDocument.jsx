@@ -1,15 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Document, Page } from 'react-pdf';
 import styled from 'styled-components';
 
 const TitleContainerStyled = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   width: 100%;
-  padding: 2rem;
   transition: opacity 250ms ease;
 `;
 
@@ -40,7 +35,17 @@ const LinkStyled = styled.a`
   max-width: 100%;
   overflow: hidden;
   margin: auto;
-  border: 1rem solid ${({ theme }) => theme.officeGreen};
+
+  &.loaded {
+    border: 1rem solid ${({ theme }) => theme.officeGreen};
+    ${TitleContainerStyled} {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);    
+      padding: 2rem;      
+    }
+  }
 
   &:hover {
     ${DocumentStyled} {
@@ -52,21 +57,34 @@ const LinkStyled = styled.a`
   }
 `;
 
-const PdfDocument = ({ url }) => (
-  <LinkStyled href={url} target="_blank" rel="noreferrer">
-    <DocumentStyled
-      file={url}
-      loading="Chargement du document..."
-      noData="Erreur de chargement du document."
-      error="Erreur de chargement du document."
+const PdfDocument = ({ url }) => {
+  const [loaded, setLoaded] = useState(false);
+  const onLoadSuccess = () => {
+    setLoaded(true);
+  };
+
+  return (
+    <LinkStyled
+      href={url}
+      target="_blank"
+      rel="noreferrer"
+      className={`${loaded ? 'loaded' : false}`}
     >
-      <PageStyled pageNumber={1} width={240} />
-    </DocumentStyled>
-    <TitleContainerStyled>
-      <TitleStyled>Voir le document</TitleStyled>
-    </TitleContainerStyled>
-  </LinkStyled>
-);
+      <DocumentStyled
+        file={url}
+        loading=""
+        noData=""
+        error=""
+        onLoadSuccess={onLoadSuccess}
+      >
+        <PageStyled pageNumber={1} width={240} />
+      </DocumentStyled>
+      <TitleContainerStyled>
+        <TitleStyled>Voir le document</TitleStyled>
+      </TitleContainerStyled>
+    </LinkStyled>
+  );
+};
 
 PdfDocument.propTypes = {
   url: PropTypes.string.isRequired,
