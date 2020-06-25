@@ -4,14 +4,12 @@ import GatsbyImage from 'gatsby-image';
 import styled from 'styled-components';
 import TextMarkdown from '../TextMarkdown';
 import Link from '../Link';
+import Logo from '../Logo';
 
 const ContainerStyled = styled.div`
   position: relative;
   width: 100%;
   margin-top: -4.7rem;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
   height: 100vh;
   min-height: 500px;
   max-height: 800px;
@@ -22,13 +20,11 @@ const ContainerStyled = styled.div`
 `;
 
 const ImageContainerStyled = styled.div`
-  position: relative;
-  flex: 1;
-  overflow: hidden;
-
-  .container {
-    height: 100%;
-  }
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 
   .gatsby-image-wrapper {
     position: absolute;
@@ -40,25 +36,73 @@ const ImageContainerStyled = styled.div`
 `;
 
 const ContentContainerStyled = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 0;
   width: 100%;
-  > .container {
+
+  @media (min-width: 600px) {
+    bottom: auto;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    transform: translateY(-50%);
+  }
+`;
+
+const ContentWrapperStyled = styled.div`
+  padding: 2rem;
+
+  @media (min-width: 600px) {
+    max-width: 300px;
+  }
+
+  @media (min-width: ${({ theme }) => theme.breakpointTablet}) {
     padding: 2rem;
-    text-align: center;
-    font-family: ${({ theme }) => theme.fontFamiliesAlternate};
-    color: ${({ theme }) => theme.white};
-    background-color: ${({ theme }) => theme.officeGreen};
+    max-width: 400px;
   }
 `;
 
 const TextStyled = styled(TextMarkdown)`
+  text-align: center;
+  font-family: ${({ theme }) => theme.fontFamiliesAlternate};
   font-size: 1.1rem;
+  color: ${({ theme }) => theme.white};
+  background: ${({ theme }) => theme.officeGreen};
+  padding: 1rem;
+
+  @media (min-width: 600px) {
+    color: ${({ theme }) => theme.officeGreen};
+    background: transparent;
+    padding: 0;
+  }
 
   @media (min-width: ${({ theme }) => theme.breakpointTablet}) {
     font-size: 1.3rem;
   }
 `;
 
+const TitleStyled = styled.div`
+  display: none;
+
+  @media (min-width: 600px) {
+    display: block;
+    font-family: ${({ theme }) => theme.fontFamiliesAlternate};
+    text-align: center;
+    color: ${({ theme }) => theme.officeGreen};
+    font-size: 2rem;
+  }
+
+  @media (min-width: ${({ theme }) => theme.breakpointTablet}) {
+    font-size: 3rem;
+  }
+`;
+
 const LogoLinkStyled = styled(Link)`
+  &:not(:last-child) {
+    margin-right: 1rem;
+  }
+
   &:hover {
     transition: opacity 230ms ease;
     opacity: 0.9;
@@ -70,33 +114,8 @@ const LogoStyled = styled.img`
 `;
 
 const LogosContainerStyled = styled.div`
-  position: absolute;
-  top: 4.7rem;
-  width: 100%;
-
-  > .container {
-    padding: 1rem;
-  }
-
-  ${LogoLinkStyled} {
-    display: block;
-    &:not(:last-child) {
-      margin-bottom: 1rem;
-    }
-
-    @media (min-width: ${({ theme }) => theme.breakpointTablet}) {
-      display: inline-block;
-      margin-bottom: 0;
-
-      &:not(:last-child) {
-        margin-right: 1rem;
-      }
-    }
-  }
-
-  @media (min-width: ${({ theme }) => theme.breakpointTablet}) {
-    text-align: right;
-  }
+  text-align: center;
+  margin-top: 1rem;
 `;
 
 const HomeHero = ({ image, text, logos }) => {
@@ -115,29 +134,28 @@ const HomeHero = ({ image, text, logos }) => {
   return (
     <ContainerStyled>
       <ImageContainerStyled>
-        <div className="container is-flex">
-          <GatsbyImage
-            fluid={sources}
-            imgStyle={{ objectFit: 'cover', objectPosition: 'center top' }}
-          />
-        </div>
+        <GatsbyImage
+          fluid={sources}
+          imgStyle={{ objectFit: 'cover', objectPosition: 'center top' }}
+        />
       </ImageContainerStyled>
 
       <ContentContainerStyled>
         <div className="container">
-          <TextStyled>{text}</TextStyled>
+          <ContentWrapperStyled>
+            {/* <Logo url="/" /> */}
+            <TitleStyled>Karima Delli</TitleStyled>
+            <TextStyled>{text}</TextStyled>
+            <LogosContainerStyled>
+              {logos.map(({ url, image: logoImage, title }) => (
+                <LogoLinkStyled key={url} url={url}>
+                  <LogoStyled src={logoImage} alt={title} />
+                </LogoLinkStyled>
+              ))}
+            </LogosContainerStyled>
+          </ContentWrapperStyled>
         </div>
       </ContentContainerStyled>
-
-      <LogosContainerStyled>
-        <div className="container">
-          {logos.map(({ url, image: logoImage, title }) => (
-            <LogoLinkStyled key={url} url={url}>
-              <LogoStyled src={logoImage} alt={title} />
-            </LogoLinkStyled>
-          ))}
-        </div>
-      </LogosContainerStyled>
     </ContainerStyled>
   );
 };
