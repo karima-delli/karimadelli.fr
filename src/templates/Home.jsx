@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
 import { useTheme } from 'styled-components';
 import HeroSection from '../components/home/Hero';
-import LogosSection from '../components/home/Logos';
 import CarouselSection from '../components/home/Carousel';
 import CampaignsBlock from '../components/CampaignsBlock';
 import StatementsBlock from '../components/StatementsBlock';
@@ -28,9 +27,6 @@ const HomePage = ({ data, pageContext }) => {
       <HeroSection
         image={data.page.hero.image}
         text={data.page.hero.text}
-        button={data.page.hero.button}
-      />
-      <LogosSection
         logos={data.page.logos.map((logo) => {
           return {
             ...logo,
@@ -39,16 +35,18 @@ const HomePage = ({ data, pageContext }) => {
           };
         })}
       />
-      <CarouselSection
-        button={data.page.slider.button}
-        slides={data.slider.slides.map((slide) => {
-          return {
-            ...slide,
-            text: slide.text.text,
-            image: slide.image.localFile.childImageSharp,
-          };
-        })}
-      />
+      <section className="section">
+        <CarouselSection
+          button={data.page.slider.button}
+          slides={data.slider.slides.map((slide) => {
+            return {
+              ...slide,
+              text: slide.text.text,
+              image: slide.image.localFile.childImageSharp,
+            };
+          })}
+        />
+      </section>
 
       {data.campaigns.nodes.length && (
         <CampaignsBlock

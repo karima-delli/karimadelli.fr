@@ -1,22 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import GatsbyImage from 'gatsby-image';
-import styled, { useTheme } from 'styled-components';
-import Button from '../Button';
+import styled from 'styled-components';
 import TextMarkdown from '../TextMarkdown';
+import Link from '../Link';
 
 const ContainerStyled = styled.div`
   position: relative;
   width: 100%;
   margin-top: -4.7rem;
-  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: stretch;
+  height: 100vh;
   min-height: 500px;
+  max-height: 800px;
 
   @media (min-width: ${({ theme }) => theme.breakpointTablet}) {
-    min-height: 750px;
+    min-height: 600px;
   }
 `;
 
@@ -57,9 +58,48 @@ const TextStyled = styled(TextMarkdown)`
   }
 `;
 
-const HomeHero = ({ image, text, button }) => {
-  const theme = useTheme();
+const LogoLinkStyled = styled(Link)`
+  &:hover {
+    transition: opacity 230ms ease;
+    opacity: 0.9;
+  }
+`;
 
+const LogoStyled = styled.img`
+  width: 75px;
+`;
+
+const LogosContainerStyled = styled.div`
+  position: absolute;
+  top: 4.7rem;
+  width: 100%;
+
+  > .container {
+    padding: 1rem;
+  }
+
+  ${LogoLinkStyled} {
+    display: block;
+    &:not(:last-child) {
+      margin-bottom: 1rem;
+    }
+
+    @media (min-width: ${({ theme }) => theme.breakpointTablet}) {
+      display: inline-block;
+      margin-bottom: 0;
+
+      &:not(:last-child) {
+        margin-right: 1rem;
+      }
+    }
+  }
+
+  @media (min-width: ${({ theme }) => theme.breakpointTablet}) {
+    text-align: right;
+  }
+`;
+
+const HomeHero = ({ image, text, logos }) => {
   const sources = [
     image.mobile.childImageSharp.fluid,
     {
@@ -78,21 +118,26 @@ const HomeHero = ({ image, text, button }) => {
         <div className="container is-flex">
           <GatsbyImage
             fluid={sources}
-            imgStyle={{ objectFit: 'cover', objectPosition: 'center bottom' }}
+            imgStyle={{ objectFit: 'cover', objectPosition: 'center top' }}
           />
         </div>
       </ImageContainerStyled>
 
       <ContentContainerStyled>
         <div className="container">
-          <Button
-            {...button}
-            color={theme.officeGreen}
-            background={theme.white}
-          />
           <TextStyled>{text}</TextStyled>
         </div>
       </ContentContainerStyled>
+
+      <LogosContainerStyled>
+        <div className="container">
+          {logos.map(({ url, image: logoImage, title }) => (
+            <LogoLinkStyled key={url} url={url}>
+              <LogoStyled src={logoImage} alt={title} />
+            </LogoLinkStyled>
+          ))}
+        </div>
+      </LogosContainerStyled>
     </ContainerStyled>
   );
 };
@@ -116,7 +161,13 @@ HomeHero.propTypes = {
     }).isRequired,
   }).isRequired,
   text: PropTypes.string.isRequired,
-  button: PropTypes.shape({}).isRequired,
+  logos: PropTypes.arrayOf(
+    PropTypes.shape({
+      image: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      url: PropTypes.string.isRequired,
+    })
+  ).isRequired,
 };
 
 export default HomeHero;
