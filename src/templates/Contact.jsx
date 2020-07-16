@@ -1,43 +1,53 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
+
 import HeroContent from '../components/HeroContent';
 import Metadata from '../components/Metadata';
 import Form from '../components/contact/Form';
+import NewsletterForm from '../components/NewsletterForm';
 import FollowUs from '../components/FollowUs';
+import Hr from '../components/Hr';
 
 const SectionStyled = styled.section`
   padding-top: 0 !important;
 `;
 
-const ContactPage = ({ data, pageContext }) => (
-  <>
-    <Metadata
-      metadata={{
-        title: data.page.metadata.title,
-        description: data.page.metadata.description,
-      }}
-      locale={pageContext.locale}
-      lang={pageContext.lang}
-      url={pageContext.url}
-      alternates={pageContext.alternates}
-    />
-    <HeroContent
-      title={data.page.title}
-      subTitle={data.page.text}
-      displayReadingTime={false}
-      displayShareButtons={false}
-    />
-    <SectionStyled className="section">
-      <div className="container">
-        <Form {...data.page.form} />
-      </div>
-    </SectionStyled>
+const ContactPage = ({ data, pageContext }) => {
+  const theme = useTheme();
+  return (
+    <>
+      <Metadata
+        metadata={{
+          title: data.page.metadata.title,
+          description: data.page.metadata.description,
+        }}
+        locale={pageContext.locale}
+        lang={pageContext.lang}
+        url={pageContext.url}
+        alternates={pageContext.alternates}
+      />
+      <HeroContent
+        title={data.page.title}
+        subTitle={data.page.text}
+        displayReadingTime={false}
+        displayShareButtons={false}
+      />
+      <SectionStyled className="section">
+        <div className="container">
+          <Form {...data.page.form} />
+        </div>
+      </SectionStyled>
 
-    <FollowUs {...data.followUs} socialLinks={data.followUsSocialLinks} />
-  </>
-);
+      <Hr className="is-small" color={theme.officeGreen} />
+      <NewsletterForm {...data.newsletterForm} />
+
+      <Hr className="is-small" color={theme.officeGreen} />
+      <FollowUs {...data.followUs} socialLinks={data.followUsSocialLinks} />
+    </>
+  );
+};
 
 ContactPage.propTypes = {
   pageContext: PropTypes.shape({
@@ -71,6 +81,7 @@ ContactPage.propTypes = {
     }).isRequired,
     followUs: PropTypes.shape({}).isRequired,
     followUsSocialLinks: PropTypes.shape({}).isRequired,
+    newsletterForm: PropTypes.shape({}).isRequired,
   }).isRequired,
 };
 
@@ -81,6 +92,7 @@ export const pageQuery = graphql`
     ...Header
     ...Footer
     ...FollowUs
+    ...NewsletterForm
     page: contactYaml(lang: { eq: $lang }) {
       metadata {
         title

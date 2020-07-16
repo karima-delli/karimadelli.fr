@@ -1,7 +1,7 @@
 lang: fr
 
-title: Nous contacter
-text: Écrivez-nous et nous vous répondrons rapidement
+title: Me contacter
+text: Écrivez-moi et je vous répondrai rapidement
 button:
-  title: Nous écrire
-  url: /contact/
+  title: M’écrire
+  url: /me-contacter/
