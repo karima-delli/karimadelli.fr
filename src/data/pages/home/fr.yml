@@ -26,5 +26,5 @@ logos:
 
 slider:
   button:
-    title: Mon parcours
-    url: /parcours/
+    title: Me connaître
+    url: /me-connaitre/

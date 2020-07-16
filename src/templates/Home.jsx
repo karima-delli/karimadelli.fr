@@ -5,7 +5,6 @@ import { useTheme } from 'styled-components';
 import HeroSection from '../components/home/Hero';
 import CarouselSection from '../components/home/Carousel';
 import CampaignsBlock from '../components/CampaignsBlock';
-import StatementsBlock from '../components/StatementsBlock';
 import NewsBlock from '../components/NewsBlock';
 import ContactUs from '../components/ContactUs';
 import Hr from '../components/Hr';
