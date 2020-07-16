@@ -4,34 +4,25 @@ import styled from 'styled-components';
 import { graphql } from 'gatsby';
 import GatsbyImage from 'gatsby-image';
 import ShareButtons from './ShareButtons';
-import Triangle from './Triangle';
 import Hr from './Hr';
 
 const RATIO_MOBILE = 120 / 160;
 const RATIO_DESKTOP = 308 / 720;
-const RATIO_WIDE = 208 / 720;
-
-const CONTENT_OFFSET_MOBILE = 7;
-const CONTENT_OFFSET_TABLET = 6;
-const CONTENT_OFFSET_DESKTOP = 10;
-const CONTENT_OFFSET_WIDESCREEN = 10;
+const RATIO_WIDE = 308 / 720;
 
 const ContainerStyled = styled.div`
   width: 100%;
   &.has-image {
-    margin-bottom: -${CONTENT_OFFSET_MOBILE}rem;
+  }
+`;
 
-    @media (min-width: ${({ theme }) => theme.breakpointTablet}) {
-      margin-bottom: -${CONTENT_OFFSET_TABLET}rem;
-    }
+const ImageContainerWrapperStyled = styled.div`
+  position: relative;
+  width: 100%;
 
-    @media (min-width: ${({ theme }) => theme.breakpointDesktop}) {
-      margin-bottom: -${CONTENT_OFFSET_DESKTOP}rem;
-    }
-
-    @media (min-width: ${({ theme }) => theme.breakpointWidescreen}) {
-      margin-bottom: -${CONTENT_OFFSET_WIDESCREEN}rem;
-    }
+  @media (min-width: 1300px) {
+    max-width: 960px;
+    margin: auto;
   }
 `;
 
@@ -57,41 +48,12 @@ const ImageContainerStyled = styled.div`
   }
 `;
 
-const SectionStyled = styled.section`
-  &.has-image {
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-    position: relative;
-    top: -${CONTENT_OFFSET_MOBILE}rem;
-
-    @media (min-width: ${({ theme }) => theme.breakpointTablet}) {
-      top: -${CONTENT_OFFSET_TABLET}rem;
-    }
-
-    @media (min-width: ${({ theme }) => theme.breakpointDesktop}) {
-      top: -${CONTENT_OFFSET_DESKTOP}rem;
-    }
-
-    @media (min-width: ${({ theme }) => theme.breakpointWidescreen}) {
-      top: -${CONTENT_OFFSET_WIDESCREEN}rem;
-    }
-  }
-`;
+const SectionStyled = styled.section``;
 
 const ContentStyled = styled.div`
   background: white;
   padding: 1.5rem;
   text-align: center;
-`;
-
-const TriangleContainerStyled = styled.div`
-  position: relative;
-  top: 0.5px;
-`;
-
-const TriangleStyled = styled(Triangle)`
-  display: block;
-  width: 100%;
 `;
 
 const DateStyled = styled.div`
@@ -136,21 +98,18 @@ const Hero = ({
 }) => (
   <ContainerStyled className={`${image ? 'has-image' : ''}`} {...rest}>
     {image && (
-      <ImageContainerStyled>
-        <GatsbyImage
-          fluid={image.fluid}
-          style={{ position: 'absolute' }}
-          imgStyle={{ objectPosition: 'center top' }}
-        />
-      </ImageContainerStyled>
+      <ImageContainerWrapperStyled>
+        <ImageContainerStyled>
+          <GatsbyImage
+            fluid={image.fluid}
+            style={{ position: 'absolute' }}
+            imgStyle={{ objectPosition: 'center top' }}
+          />
+        </ImageContainerStyled>
+      </ImageContainerWrapperStyled>
     )}
 
     <SectionStyled className={`section ${image ? 'has-image' : ''}`}>
-      {image && (
-        <TriangleContainerStyled className="container">
-          <TriangleStyled color="#ffffff" direction="right" reverse />
-        </TriangleContainerStyled>
-      )}
       <ContentStyled className="container">
         {date && <DateStyled>{date}</DateStyled>}
         <TitleStyled>{title}</TitleStyled>
