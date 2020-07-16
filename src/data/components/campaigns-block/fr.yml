@@ -3,7 +3,7 @@ lang: fr
 title: Nos campagnes
 text: Pour une Europe **écologique, sociale et heureuse.**
 readMoreButtonTitle: Lire l'article
-campaignsSlug: /campagnes/
+campaignsSlug: /mes-campagnes/
 allButton: 
   title: Voir toutes les campagnes
-  url: /campagnes/
+  url: /mes-campagnes/

@@ -13,7 +13,7 @@ hero:
     desktop: images/hero-desktop.jpg
   button: 
     title: Toutes nos campagnes
-    url: /campagnes/
+    url: /mes-campagnes/
   text: Karima Delli, Présidente de la commission Transport et Tourisme au Parlement européen, s’engage pour une Europe écologique et sociale
 
 logos:
