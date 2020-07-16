@@ -34,6 +34,10 @@ const RichText = ({ json, assets }) => {
         <Link url={node.data.uri}>{children}</Link>
       ),
       [INLINES.ASSET_HYPERLINK]: (node, children) => {
+        // eslint-disable-next-line camelcase
+        if (!node.data?.target?.sys?.contentful_id) {
+          return <>{children}</>;
+        }
         const asset = getAsset(node.data.target.sys.contentful_id);
         if (!(asset && asset.localFile && asset.localFile.publicURL)) {
           return <>{children}</>;
@@ -60,6 +64,9 @@ const RichText = ({ json, assets }) => {
       ),
       [BLOCKS.HR]: () => <HrStyled />,
       [BLOCKS.EMBEDDED_ENTRY]: (node) => {
+        if (!node?.data?.target?.fields) {
+          return null;
+        }
         const props = Object.keys(node.data.target.fields).reduce(
           (acc, key) => {
             const value = node.data.target.fields[key];
