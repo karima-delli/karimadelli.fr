@@ -7,6 +7,7 @@ const {
   NODE_ENV,
   APP_ENV = 'development',
   NETLIFY,
+  CONTENTFUL_HOST,
   CONTENTFUL_SPACE_ID,
   CONTENTFUL_ACCESS_TOKEN,
 } = process.env;
@@ -78,6 +79,7 @@ module.exports = {
     {
       resolve: 'gatsby-source-contentful',
       options: {
+        host: CONTENTFUL_HOST || undefined,
         spaceId: CONTENTFUL_SPACE_ID,
         accessToken: CONTENTFUL_ACCESS_TOKEN,
         // Download asset localy to be able to use gatsby image.
