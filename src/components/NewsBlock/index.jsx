@@ -7,7 +7,7 @@ import TextMarkdown from '../TextMarkdown';
 import TwitterTimelineWidget from '../TwitterTimelineWidget';
 import useAdblockDetect from '../useAdblockDetect';
 import Title from '../Title';
-import ParliamentaryActivities from './ParliamentaryActivities';
+import NewsStatements from './Statements';
 import Calendar from './Calendar';
 
 const SectionStyled = styled.section`
@@ -68,12 +68,12 @@ const NewsBlock = ({
   title,
   text,
   readMoreButtonTitle,
-  parliamentTitle,
-  europarlPageUrl,
   twitterTitle,
-  calendarEnabled,
-  calendarTitle,
   adblockMessage,
+  calendarTitle,
+  statementsTitle,
+  statementsPageUrl,
+  statements,
 }) => {
   const theme = useTheme();
   const adblockDetected = useAdblockDetect();
@@ -90,29 +90,25 @@ const NewsBlock = ({
         <div className="columns">
           <div className="column">
             <BlockTitleStyled as={`h${baseTitleTag + 1}`}>
-              {parliamentTitle}
+              {statementsTitle}
             </BlockTitleStyled>
-            <ParliamentaryActivities
-              title={parliamentTitle}
-              readMoreButtonTitle={readMoreButtonTitle}
+            <NewsStatements
+              statements={statements}
               titleTag={`h${baseTitleTag + 2}`}
             />
             <ReadMoreButtonContainerStyled>
               <Button
                 title={readMoreButtonTitle}
-                url={europarlPageUrl}
+                url={statementsPageUrl}
                 color={theme.brownGrey}
                 underlined
               />
             </ReadMoreButtonContainerStyled>
-            {calendarEnabled && (
-              <>
-                <BlockTitleStyled as={`h${baseTitleTag + 1}`}>
-                  {calendarTitle}
-                </BlockTitleStyled>
-                <Calendar baseTitleTag={baseTitleTag + 2} />
-              </>
-            )}
+
+            <BlockTitleStyled as={`h${baseTitleTag + 1}`}>
+              {calendarTitle}
+            </BlockTitleStyled>
+            <Calendar baseTitleTag={baseTitleTag + 2} />
           </div>
           <TwitterColumnStyled className="column">
             <BlockTitleStyled as={`h${baseTitleTag + 1}`}>
@@ -135,12 +131,12 @@ NewsBlock.propTypes = {
   title: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
   readMoreButtonTitle: PropTypes.string.isRequired,
-  parliamentTitle: PropTypes.string.isRequired,
-  europarlPageUrl: PropTypes.string.isRequired,
   twitterTitle: PropTypes.string.isRequired,
-  calendarEnabled: PropTypes.bool.isRequired,
   calendarTitle: PropTypes.string.isRequired,
   adblockMessage: PropTypes.string.isRequired,
+  statementsTitle: PropTypes.string.isRequired,
+  statementsPageUrl: PropTypes.string.isRequired,
+  statements: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
 };
 
 export default NewsBlock;
@@ -155,6 +151,8 @@ export const query = graphql`
       calendarTitle
       twitterTitle
       adblockMessage
+      statementsTitle
+      statementsPageUrl
     }
     site {
       siteMetadata {

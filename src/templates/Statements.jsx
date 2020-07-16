@@ -59,7 +59,10 @@ export const pageQuery = graphql`
         description
       }
     }
-    statements: allContentfulStatement(filter: { node_locale: { eq: $lang } }) {
+    statements: allContentfulStatement(
+      sort: { fields: date, order: DESC }
+      filter: { node_locale: { eq: $lang } }
+    ) {
       nodes {
         slug
         title

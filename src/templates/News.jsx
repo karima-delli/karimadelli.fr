@@ -16,8 +16,7 @@ const NewsPage = ({ data, pageContext }) => (
     <NewsBlock
       baseTitleTag={1}
       {...data.newsBlock}
-      europarlPageUrl={data.site.siteMetadata.europarlPageUrl}
-      calendarEnabled
+      statements={data.statements.nodes}
     />
   </>
 );
@@ -42,6 +41,9 @@ NewsPage.propTypes = {
       }).isRequired,
     }).isRequired,
     newsBlock: PropTypes.shape({}).isRequired,
+    statements: PropTypes.shape({
+      nodes: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+    }).isRequired,
   }).isRequired,
 };
 
@@ -56,6 +58,17 @@ export const pageQuery = graphql`
       metadata {
         title
         description
+      }
+    }
+    statements: allContentfulStatement(
+      limit: 3
+      sort: { fields: date, order: DESC }
+      filter: { node_locale: { eq: $lang } }
+    ) {
+      nodes {
+        slug
+        title
+        date(formatString: "DD/MM/YYYY")
       }
     }
   }

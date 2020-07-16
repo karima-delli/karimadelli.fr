@@ -73,20 +73,13 @@ const HomePage = ({ data, pageContext }) => {
           <div className="container">
             <Hr />
           </div>
-
-          <StatementsBlock
-            {...data.statementsBlock}
-            baseTitleTag={2}
-            statements={data.statements.nodes}
-          />
         </>
       )}
 
       <NewsBlock
         {...data.newsBlock}
         baseTitleTag={2}
-        europarlPageUrl={data.site.siteMetadata.europarlPageUrl}
-        calendarEnabled
+        statements={data.statements.nodes}
       />
       <ContactUs
         title={data.contactUs.title}
@@ -280,7 +273,8 @@ export const pageQuery = graphql`
       }
     }
     statements: allContentfulStatement(
-      limit: 1
+      limit: 3
+      sort: { fields: date, order: DESC }
       filter: { node_locale: { eq: $lang } }
     ) {
       nodes {

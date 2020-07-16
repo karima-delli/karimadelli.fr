@@ -1,9 +1,10 @@
 lang: fr
 
 title: Mes actualités 
-text: Le quotidien de mon travail parlementaire et politique
+text: Mes déclarations sur l’actualité nationale et européenne
 readMoreButtonTitle: Voir plus
-parliamentTitle: Au parlement
 calendarTitle: Mon agenda
 twitterTitle: L’actualité politique
 adblockMessage: Il semblerait que vous ayez un bloqueur de publicités et les tweets de Karima Delli ne peuvent pas être chargés.
+statementsTitle: Mes communiqués
+statementsPageUrl: /mes-actualites/communiques/

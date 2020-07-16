@@ -5,9 +5,11 @@ logo:
 
 menu:
   links: 
-    - title: Parcours
-      url: /parcours/
-    - title: Actualités
-      url: /actualites/
-    - title: Campagnes
-      url: /campagnes/
+    - title: Me connaître
+      url: /me-connaitre/
+    - title: Mes actualités
+      url: /mes-actualites/
+    - title: Au parlement
+      url: /au-parlement/
+    - title: Me contacter
+      url: /me-contacter/      

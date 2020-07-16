@@ -1,13 +1,13 @@
 lang: fr
 
-slug: contact
+slug: me-contacter
 
 metadata: 
-  title: Nous contacter
+  title: Me contacter
   description: Prendre contact avec la députée européenne et présidente de la commission des transports et du tourisme Karima Delli. 
 
-title: Nous contacter
-text: Ecrivez-nous et vous répondrons rapidement
+title: Me contacter
+text: ""
 
 form: 
   placeholders: 

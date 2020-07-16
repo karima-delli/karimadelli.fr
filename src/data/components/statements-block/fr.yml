@@ -1,9 +1,9 @@
 lang: fr
 
-title: Mes brèves
-text: Mes déclarations sur l'actualité parlementaire
+title: Mes actualités
+text: Mes déclarations sur l’actualité nationale et européenne
 readMoreButtonTitle: En savoir plus
-statementsSlug: /breves/
+statementsSlug: /mes-actualites/communiques/
 allButton: 
-  title: Voir toutes les brèves
-  url: /breves/
+  title: Voir tous les communiqués
+  url: /mes-actualites/communiques/
