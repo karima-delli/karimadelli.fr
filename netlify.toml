@@ -9,13 +9,63 @@
 
 [[redirects]]
   from = "https://karimadelli.netlify.com"
-  to = "https://www.karimadelli.fr/"
+  to = "https://karimadelli.fr/"
   status = 301
 
 [[redirects]]
   from = "https://karimadelli.netlify.com/*"
-  to = "https://www.karimadelli.fr/:splat"
+  to = "https://karimadelli.fr/:splat"
   status = 301
+
+[[redirects]]
+  from = "https://www.karimadelli.fr"
+  to = "https://karimadelli.fr/"
+  status = 301
+
+[[redirects]]
+  from = "https://www.karimadelli.fr/*"
+  to = "https://karimadelli.fr/:splat"
+  status = 301  
+
+[[redirects]]
+  from = "https://www.karimadelli.com"
+  to = "https://karimadelli.fr/"
+  status = 301
+
+[[redirects]]
+  from = "https://www.karimadelli.com/*"
+  to = "https://karimadelli.fr/:splat"
+  status = 301  
+
+[[redirects]]
+  from = "https://karimadelli.com"
+  to = "https://karimadelli.fr/"
+  status = 301
+
+[[redirects]]
+  from = "https://karimadelli.com/*"
+  to = "https://karimadelli.fr/:splat"
+  status = 301  
+
+[[redirects]]
+  from = "https://www.karimadelli.eu"
+  to = "https://karimadelli.fr/"
+  status = 301
+
+[[redirects]]
+  from = "https://www.karimadelli.eu/*"
+  to = "https://karimadelli.fr/:splat"
+  status = 301  
+
+[[redirects]]
+  from = "https://karimadelli.eu"
+  to = "https://karimadelli.fr/"
+  status = 301
+
+[[redirects]]
+  from = "https://karimadelli.eu/*"
+  to = "https://karimadelli.fr/:splat"
+  status = 301  
 
 [[plugins]]
   package = "netlify-plugin-gatsby-cache"  
