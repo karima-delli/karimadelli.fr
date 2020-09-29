@@ -67,7 +67,7 @@ const CalendarEvent = ({
         <EventSummaryStyled as={titleTag}>{summary}</EventSummaryStyled>
       )}
       {description && descriptionVisible && (
-        <EventDescriptionStyled>{description}</EventDescriptionStyled>
+        <EventDescriptionStyled dangerouslySetInnerHTML={{__html: description}} />
       )}
     </EventContainerStyled>
   );
