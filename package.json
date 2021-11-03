@@ -73,7 +73,7 @@
     "read-time-estimate": "0.0.2",
     "smoothscroll-polyfill": "0.4.4",
     "styled-components": "5.1.1",
-    "validator": "13.0.0",
+    "validator": "13.7.0",
     "whatwg-fetch": "3.0.0"
   },
   "devDependencies": {
